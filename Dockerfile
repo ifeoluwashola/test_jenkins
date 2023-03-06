@@ -11,8 +11,8 @@ WORKDIR /app
 COPY requirements.txt ./
 
 # Install required packages using pip
-RUN pip install --upgrade pip &&\
-        pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install --upgrade --no-cache-dir pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code to the container
 COPY . /app
