@@ -13,11 +13,11 @@ def notifyFailure() {
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE_NAME = 'your-docker-hub-username/your-image-name'
+        DOCKER_IMAGE_NAME = 'ifeoluwashola/my-image'
         DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
-        DOCKER_HUB_USERNAME = 'your-docker-hub-username'
-        DOCKER_HUB_PASSWORD = 'your-docker-hub-password'
-        VIRTUALENV = 'name-of-env'
+        DOCKER_HUB_USERNAME = 'ifeoluwashola'
+        DOCKER_HUB_PASSWORD = 'ifebabis.1'
+        VIRTUALENV = 'myenv'
     }
 
     stages {
@@ -65,7 +65,7 @@ pipeline {
             steps {
                 script {
                     notifyStart()
-                    sh 'make lint-python VIRTUALENV="${VIRTUALENV}"'
+                    sh 'make lint-python VIRTUALENV=$"{VIRTUALENV}"'
                     notifySuccess()
                 }
             }
