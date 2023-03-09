@@ -47,7 +47,7 @@ install-hadolint:
 
 # Define a target that checks the Dockerfile for linting issues using Hadolint
 .PHONY: lint-docker
-lint-docker:
+lint-docker: install-hadolint
 	hadolint --ignore DL3013 Dockerfile
 
 # Define a target that checks the Python source code for linting issues using Pylint
