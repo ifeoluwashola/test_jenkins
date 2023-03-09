@@ -1,0 +1,2824 @@
+
+Sat Apr 30 21:13:54.647 UTC
+Building configuration...
+!! IOS XR Configuration 7.0.14
+!! Last configuration change at Sat Apr 30 17:31:30 2022 by anp_dcfx_rw2
+!
+hostname LVL01-0101-0200-09T2
+group BGP_SHUT
+ router bgp '.*' 
+ router bgp '.*'  neighbor '.*:.*:.*::.*' 
+ router bgp '.*'  neighbor '.*:.*:.*::.*'  shutdown
+ router bgp '.*'  neighbor '[0-9]*\..*\..*\..*' 
+ router bgp '.*'  neighbor '[0-9]*\..*\..*\..*'  shutdown
+end-group
+usergroup priv15 
+usergroup priv15 taskgroup root-lr
+usergroup priv15 taskgroup netadmin
+usergroup priv15 taskgroup operator
+usergroup priv15 taskgroup sysadmin
+usergroup priv15 taskgroup serviceadmin
+usergroup priv15 taskgroup cisco-support
+logging trap informational
+logging events threshold 75
+logging archive device harddisk
+logging archive severity informational
+logging archive file-size 10
+logging archive frequency weekly
+logging archive archive-size 500
+logging archive archive-length 52
+logging console disable
+logging monitor disable
+logging buffered 10000000
+logging facility local1
+logging 10.20.2.38 vrf MGMT severity info
+logging 10.20.6.16 vrf MGMT severity info
+logging 10.46.252.16 vrf MGMT severity info
+logging source-interface MgmtEth0/RP0/CPU0/0
+logging hostnameprefix LVL01-0101-0200-09T2
+logging suppress duplicates
+logging events link-status disable
+tacacs source-interface MgmtEth0/RP0/CPU0/0 vrf MGMT
+username admin 
+username admin group root-lr
+username admin group cisco-support
+username admin secret 10 $PASS$
+username failback 
+username failback group root-lr
+username failback group serviceadmin
+username failback group cisco-support
+username failback secret 10 $PASS$
+aaa accounting exec VTY-DEFAULT start-stop group TACACS-DEFAULT none
+aaa accounting exec CONSOLE-DEFAULT start-stop group TACACS-DEFAULT none
+aaa accounting commands VTY-DEFAULT start-stop group TACACS-DEFAULT none
+aaa accounting commands CONSOLE-DEFAULT start-stop group TACACS-DEFAULT
+aaa group server tacacs+ TACACS-DEFAULT 
+aaa group server tacacs+ TACACS-DEFAULT vrf MGMT
+aaa group server tacacs+ TACACS-DEFAULT server-private 10.20.17.3 port 49 
+aaa group server tacacs+ TACACS-DEFAULT server-private 10.20.17.3 port 49 key 7 $PASS$
+aaa group server tacacs+ TACACS-DEFAULT server-private 10.20.17.3 port 49 timeout 3
+aaa group server tacacs+ TACACS-DEFAULT server-private 10.20.17.1 port 49 
+aaa group server tacacs+ TACACS-DEFAULT server-private 10.20.17.1 port 49 key 7 $PASS$
+aaa group server tacacs+ TACACS-DEFAULT server-private 10.20.17.1 port 49 timeout 3
+aaa group server tacacs+ TACACS-DEFAULT server-private 10.20.17.2 port 49 
+aaa group server tacacs+ TACACS-DEFAULT server-private 10.20.17.2 port 49 key 7 $PASS$
+aaa group server tacacs+ TACACS-DEFAULT server-private 10.20.17.2 port 49 timeout 3
+aaa authorization exec VTY-DEFAULT group TACACS-DEFAULT local none
+aaa authorization exec CONSOLE-DEFAULT group TACACS-DEFAULT local none
+aaa authorization commands VTY-DEFAULT group TACACS-DEFAULT none
+aaa authorization commands CONSOLE-DEFAULT group TACACS-DEFAULT none
+aaa authentication login default local
+aaa authentication login VTY-DEFAULT group TACACS-DEFAULT local
+aaa authentication login CONSOLE-DEFAULT group TACACS-DEFAULT local
+vrf MGMT 
+vrf MGMT address-family ipv4 unicast 
+vrf MGMT address-family ipv6 unicast 
+line console accounting exec CONSOLE-DEFAULT
+line console accounting commands CONSOLE-DEFAULT
+line console authorization exec CONSOLE-DEFAULT
+line console authorization commands CONSOLE-DEFAULT
+line console login authentication CONSOLE-DEFAULT
+line console timestamp
+line console exec-timeout 15 0
+line console escape-character 0x3
+line console transport input telnet ssh
+line console transport output none
+line default timestamp
+line default exec-timeout 15 0
+line default transport input ssh
+line default transport output none
+line template VTY-DEFAULT accounting exec VTY-DEFAULT
+line template VTY-DEFAULT accounting commands VTY-DEFAULT
+line template VTY-DEFAULT authorization exec VTY-DEFAULT
+line template VTY-DEFAULT authorization commands VTY-DEFAULT
+line template VTY-DEFAULT login authentication VTY-DEFAULT
+line template VTY-DEFAULT timestamp
+line template VTY-DEFAULT exec-timeout 15 0
+line template VTY-DEFAULT transport input ssh
+line template VTY-DEFAULT transport output none
+vty-pool default 0 29 line-template VTY-DEFAULT
+ztp bootscript ztp disable noprompt
+http client vrf MGMT
+http client source-interface ipv4 MgmtEth0/RP0/CPU0/0
+snmp-server ifmib ifalias long
+snmp-server ifindex persist
+snmp-server ifmib stats cache
+snmp-server trap link ietf
+snmp-server vrf MGMT 
+snmp-server host 10.20.6.16 traps version 2c $PASS$
+snmp-server community $PASS$ RO SystemOwner IPv4 SNMP_ACL IPv6 SNMP_ACL_IPv6
+snmp-server community $PASS$ RO SystemOwner IPv4 SNMP_ACL IPv6 SNMP_ACL_IPv6
+snmp-server community $PASS$ RO SystemOwner IPv4 SNMP_ACL IPv6 SNMP_ACL_IPv6
+snmp-server community $PASS$ RO SystemOwner IPv4 SNMP_ACL IPv6 SNMP_ACL_IPv6
+snmp-server traps rf
+snmp-server traps bfd
+snmp-server traps ntp
+snmp-server traps otn
+snmp-server traps copy-complete
+snmp-server traps snmp linkup
+snmp-server traps snmp linkdown
+snmp-server traps snmp coldstart
+snmp-server traps snmp warmstart
+snmp-server traps snmp authentication
+snmp-server traps flash removal
+snmp-server traps flash insertion
+snmp-server traps power
+snmp-server traps config
+snmp-server traps entity
+snmp-server traps selective-vrf-download role-change
+snmp-server traps syslog
+snmp-server traps system
+snmp-server traps frequency synchronization
+snmp-server traps bridgemib
+snmp-server traps optical
+snmp-server traps addrpool low
+snmp-server traps addrpool high
+snmp-server traps cisco-entity-ext
+snmp-server traps entity-state operstatus
+snmp-server traps entity-state switchover
+snmp-server traps entity-redundancy all
+snmp-server traps entity-redundancy status
+snmp-server traps entity-redundancy switchover
+snmp-server trap-source MgmtEth0/RP0/CPU0/0
+monitor-session ERSPAN ethernet 
+udf I-IP-IPID header inner l3 offset 4 length 2
+udf I-IP-PROT header inner l3 offset 9 length 1
+udf O-IP-IPID header outer l3 offset 4 length 2
+udf I-IP-DSTIP header inner l3 offset 18 length 2
+udf I-IP-SRCIP header inner l3 offset 14 length 2
+udf I-TCP-DSTP header inner l4 offset 2 length 2
+udf I-TCP-FLAG header inner l4 offset 12 length 2
+udf I-TCP-SRCP header inner l4 offset 0 length 2
+priority-flow-control watchdog mode on
+priority-flow-control watchdog interval 100
+priority-flow-control watchdog auto-restore-multiplier 2
+priority-flow-control watchdog shutdown-multiplier 2
+ntp server vrf MGMT 25.66.230.0
+ntp server vrf MGMT 25.66.230.1
+ntp server vrf MGMT 25.66.230.2
+ntp server vrf MGMT 25.66.230.3
+ntp server vrf MGMT 25.66.230.4
+ntp server vrf MGMT 25.66.230.5
+ntp source MgmtEth0/RP0/CPU0/0
+key $PASS$ $PASS$ 
+key chain macsec-primary macsec 
+key chain macsec-primary macsec key $PASS$
+key chain macsec-primary macsec key $PASS$
+key chain macsec-primary macsec key $PASS$
+key $PASS$ $PASS$ 
+key chain macsec-fallback macsec 
+key chain macsec-fallback macsec key $PASS$
+key chain macsec-fallback macsec key $PASS$
+key chain macsec-fallback macsec key $PASS$
+key $PASS$ $PASS$ 
+key chain macsec-primary-two macsec 
+key chain macsec-primary-two macsec key $PASS$
+key chain macsec-primary-two macsec key $PASS$
+key chain macsec-primary-two macsec key $PASS$
+key $PASS$ $PASS$ 
+key chain macsec-fallback-two macsec 
+key chain macsec-fallback-two macsec key $PASS$
+key chain macsec-fallback-two macsec key $PASS$
+key chain macsec-fallback-two macsec key $PASS$
+call-home service active
+call-home contact smart-licensing
+call-home profile CiscoTAC-1 
+call-home profile CiscoTAC-1 active
+call-home profile CiscoTAC-1 destination transport-method http
+control-plane management-plane inband interface all allow SSH peer address ipv4 10.0.0.0/8
+control-plane management-plane inband interface all allow SSH peer address ipv4 25.0.0.0/8
+control-plane management-plane inband interface all allow SSH peer address ipv4 100.64.0.0/10
+control-plane management-plane inband interface all allow XML peer address ipv4 10.0.0.0/8
+control-plane management-plane inband interface all allow XML peer address ipv4 25.0.0.0/8
+control-plane management-plane inband interface all allow XML peer address ipv4 100.64.0.0/10
+control-plane management-plane inband interface all allow HTTP peer address ipv4 10.0.0.0/8
+control-plane management-plane inband interface all allow HTTP peer address ipv4 25.0.0.0/8
+control-plane management-plane inband interface all allow HTTP peer address ipv4 100.64.0.0/10
+control-plane management-plane inband interface all allow SNMP peer address ipv4 10.0.0.0/8
+control-plane management-plane inband interface all allow SNMP peer address ipv4 25.0.0.0/8
+control-plane management-plane inband interface all allow SNMP peer address ipv4 100.64.0.0/10
+control-plane management-plane inband interface all allow NETCONF peer address ipv4 10.0.0.0/8
+control-plane management-plane inband interface all allow NETCONF peer address ipv4 25.0.0.0/8
+control-plane management-plane inband interface all allow NETCONF peer address ipv4 100.64.0.0/10
+ipv6 access-list everflowV6 10 remark everflowV6
+ipv6 access-list everflowV6 20 permit tcp host ::1 eq 0 host ::1 eq 0
+ipv6 access-list SNMP_ACL_IPv6 10 remark SNMP_ACL_IPv6
+ipv6 access-list SNMP_ACL_IPv6 20 permit udp 2603:10e2::/36 any eq snmp
+ipv6 access-list SNMP_ACL_IPv6 30 permit udp 2001:506:28::/48 any eq snmp
+ipv6 access-list ipv6-ssh-only 10 remark ipv6-ssh-only
+ipv6 access-list ipv6-ssh-only 20 permit tcp 2603:10e2::/36 any eq ssh
+ipv6 access-list ipv6-ssh-only 30 permit tcp 2001:506:28:200::/56 any eq ssh
+ipv6 access-list ipv6-ssh-only 40 permit tcp 2001:506:28:300::/56 any eq ssh
+ipv6 access-list ipv6-ssh-only 50 permit tcp 2001:506:28::/56 any eq ssh
+ipv6 access-list ipv6-ssh-only 60 permit tcp 2001:506:28:400::/56 any eq ssh
+ipv6 access-list ipv6-ssh-only 70 permit tcp 2001:506:28:500::/56 any eq ssh
+ipv4 access-list SNMP_ACL 10 remark SNMP_ACL
+ipv4 access-list SNMP_ACL 20 permit udp 10.0.0.0/8 any
+ipv4 access-list SNMP_ACL 30 permit udp 100.64.0.0/10 any
+ipv4 access-list SNMP_ACL 40 permit udp 100.127.64.0/18 any
+ipv4 access-list SNMP_ACL 50 permit udp 100.126.0.0/16 any
+ipv4 access-list SNMP_ACL 60 permit udp 25.0.0.0/8 any
+ipv4 access-list everflow 10 remark NVS-SNIIssuer-ussouth-public
+ipv4 access-list everflow 20 permit ipv4 any any dscp 33
+ipv4 access-list ssh-only 10 remark ssh-only
+ipv4 access-list ssh-only 20 permit tcp 10.0.0.0/8 any eq ssh
+ipv4 access-list ssh-only 30 permit tcp 100.64.0.0/10 any eq ssh
+ipv4 access-list ssh-only 40 permit tcp 100.126.0.0/16 any eq ssh
+ipv4 access-list ssh-only 50 permit tcp 100.127.64.0/18 any eq ssh
+ipv4 access-list ssh-only 60 permit tcp 25.0.0.0/12 any eq ssh
+ipv4 access-list ssh-only 70 permit tcp 25.16.0.0/13 any eq ssh
+ipv4 access-list ssh-only 80 permit tcp 25.24.0.0/16 any eq ssh
+ipv4 access-list ssh-only 90 permit tcp 25.28.0.0/14 any eq ssh
+ipv4 access-list ssh-only 100 permit tcp 25.32.0.0/11 any eq ssh
+ipv4 access-list ssh-only 110 permit tcp 25.64.0.0/10 any eq ssh
+ipv4 access-list ssh-only 120 permit tcp 25.66.128.0/17 any eq ssh
+ipv4 access-list ssh-only 130 permit tcp 25.128.0.0/14 any eq ssh
+ipv4 access-list ssh-only 140 permit tcp 25.142.0.0/15 any eq ssh
+ipv4 access-list ssh-only 150 permit tcp 25.144.0.0/12 any eq ssh
+ipv4 access-list ssh-only 160 permit tcp 25.160.0.0/11 any eq ssh
+ipv4 access-list ssh-only 170 permit tcp 25.192.0.0/11 any eq ssh
+ipv4 access-list ssh-only 180 permit tcp 25.224.0.0/12 any eq ssh
+ipv4 access-list ssh-only 190 permit tcp 25.244.0.0/14 any eq ssh
+ipv4 access-list ssh-only 200 permit tcp 25.248.0.0/13 any eq ssh
+!
+class-map match-any RDMA
+ match dscp 4 
+ end-class-map
+! 
+class-map match-any VOIP
+ match dscp 46 
+ end-class-map
+! 
+class-map match-any PERFISO
+ match dscp 5 
+ end-class-map
+! 
+class-map match-any SCAVENGER
+ match dscp 8 
+ end-class-map
+! 
+class-map match-any TC6_Egress
+ match traffic-class 6 
+ end-class-map
+! 
+class-map match-any TC7_Egress
+ match traffic-class 7 
+ end-class-map
+! 
+class-map match-any LOSSLESSTCP
+ match dscp 3 
+ end-class-map
+! 
+class-map match-any RDMA_Egress
+ match traffic-class 4 
+ end-class-map
+! 
+class-map match-any VOIP_Egress
+ match traffic-class 1 
+ end-class-map
+! 
+class-map match-any PERFISO_Egress
+ match traffic-class 5 
+ end-class-map
+! 
+class-map match-any SCAVENGER_Egress
+ match traffic-class 2 
+ end-class-map
+! 
+class-map match-any LOSSLESSTCP_Egress
+ match traffic-class 3 
+ end-class-map
+! 
+policy-map P_SHAPER
+ class class-default
+  service-policy QOS_QUEUEING
+  shape average percent 99 
+ ! 
+ end-policy-map
+! 
+policy-map QOS_MARKING
+ class VOIP
+  set traffic-class 1
+ ! 
+ class SCAVENGER
+  set traffic-class 2
+ ! 
+ class LOSSLESSTCP
+  set traffic-class 3
+ ! 
+ class RDMA
+  set traffic-class 4
+ ! 
+ class PERFISO
+  set traffic-class 5
+ ! 
+ class class-default
+ ! 
+ end-policy-map
+! 
+policy-map QOS_QUEUEING
+ class TC7_Egress
+  priority level 1 
+  shape average percent 10 
+ ! 
+ class TC6_Egress
+  bandwidth remaining ratio 1 
+  queue-limit 18 ms 
+ ! 
+ class PERFISO_Egress
+  bandwidth remaining ratio 20 
+ ! 
+ class RDMA_Egress
+  bandwidth remaining ratio 20 
+  random-detect ecn 
+  random-detect 1 ms 2 ms 
+ ! 
+ class LOSSLESSTCP_Egress
+  bandwidth remaining ratio 20 
+  random-detect ecn 
+  random-detect 1 ms 2 ms 
+ ! 
+ class SCAVENGER_Egress
+  bandwidth remaining ratio 5 
+ ! 
+ class VOIP_Egress
+  bandwidth remaining ratio 5 
+ ! 
+ class class-default
+  bandwidth remaining ratio 20 
+ ! 
+ end-policy-map
+! 
+interface Bundle-Ether1 
+interface Bundle-Ether1 description BN6-0100-0100-01RHE:HundredGigE0/0/0/0
+interface Bundle-Ether1 mtu 9192
+interface Bundle-Ether1 service-policy input QOS_MARKING
+interface Bundle-Ether1 service-policy output P_SHAPER
+interface Bundle-Ether1 ipv4 address 10.10.0.17 255.255.255.254
+interface Bundle-Ether1 ipv6 nd suppress-ra
+interface Bundle-Ether1 ipv6 address 2603:10b0:504:8200::26/126
+interface Bundle-Ether1 lldp 
+interface Bundle-Ether1 lldp transmit disable
+interface Bundle-Ether1 bundle minimum-active links 1
+interface Bundle-Ether1 load-interval 30
+interface Bundle-Ether2 
+interface Bundle-Ether2 description BN6-0100-0100-02RHE:HundredGigE0/0/0/1
+interface Bundle-Ether2 mtu 9192
+interface Bundle-Ether2 service-policy input QOS_MARKING
+interface Bundle-Ether2 service-policy output P_SHAPER
+interface Bundle-Ether2 ipv4 address 10.10.0.81 255.255.255.254
+interface Bundle-Ether2 ipv6 nd suppress-ra
+interface Bundle-Ether2 ipv6 address 2603:10b0:504:8201::26/126
+interface Bundle-Ether2 lldp 
+interface Bundle-Ether2 lldp transmit disable
+interface Bundle-Ether2 bundle minimum-active links 1
+interface Bundle-Ether2 load-interval 30
+interface Bundle-Ether3 
+interface Bundle-Ether3 description BN6-0100-0100-03RHE:HundredGigE0/0/0/2
+interface Bundle-Ether3 mtu 9192
+interface Bundle-Ether3 service-policy input QOS_MARKING
+interface Bundle-Ether3 service-policy output P_SHAPER
+interface Bundle-Ether3 ipv4 address 10.10.2.129 255.255.255.254
+interface Bundle-Ether3 ipv6 nd suppress-ra
+interface Bundle-Ether3 ipv6 address 2603:10b0:504:8202::26/126
+interface Bundle-Ether3 lldp 
+interface Bundle-Ether3 lldp transmit disable
+interface Bundle-Ether3 bundle minimum-active links 1
+interface Bundle-Ether3 load-interval 30
+interface Bundle-Ether4 
+interface Bundle-Ether4 description BN6-0100-0100-04RHE:HundredGigE0/0/0/3
+interface Bundle-Ether4 mtu 9192
+interface Bundle-Ether4 service-policy input QOS_MARKING
+interface Bundle-Ether4 service-policy output P_SHAPER
+interface Bundle-Ether4 ipv4 address 10.10.2.193 255.255.255.254
+interface Bundle-Ether4 ipv6 nd suppress-ra
+interface Bundle-Ether4 ipv6 address 2603:10b0:504:8203::26/126
+interface Bundle-Ether4 lldp 
+interface Bundle-Ether4 lldp transmit disable
+interface Bundle-Ether4 bundle minimum-active links 1
+interface Bundle-Ether4 load-interval 30
+interface Bundle-Ether5 
+interface Bundle-Ether5 description BN6-0100-0100-05RHE:HundredGigE0/0/0/4
+interface Bundle-Ether5 mtu 9192
+interface Bundle-Ether5 service-policy input QOS_MARKING
+interface Bundle-Ether5 service-policy output P_SHAPER
+interface Bundle-Ether5 ipv4 address 10.10.3.1 255.255.255.254
+interface Bundle-Ether5 ipv6 nd suppress-ra
+interface Bundle-Ether5 ipv6 address 2603:10b0:504:8204::26/126
+interface Bundle-Ether5 lldp 
+interface Bundle-Ether5 lldp transmit disable
+interface Bundle-Ether5 bundle minimum-active links 1
+interface Bundle-Ether5 load-interval 30
+interface Bundle-Ether6 
+interface Bundle-Ether6 description BN6-0100-0100-06RHE:HundredGigE0/0/0/5
+interface Bundle-Ether6 mtu 9192
+interface Bundle-Ether6 service-policy input QOS_MARKING
+interface Bundle-Ether6 service-policy output P_SHAPER
+interface Bundle-Ether6 ipv4 address 10.10.3.65 255.255.255.254
+interface Bundle-Ether6 ipv6 nd suppress-ra
+interface Bundle-Ether6 ipv6 address 2603:10b0:504:8205::26/126
+interface Bundle-Ether6 lldp 
+interface Bundle-Ether6 lldp transmit disable
+interface Bundle-Ether6 bundle minimum-active links 1
+interface Bundle-Ether6 load-interval 30
+interface Bundle-Ether7 
+interface Bundle-Ether7 description BN6-0100-0100-07RHE:HundredGigE0/0/0/6
+interface Bundle-Ether7 mtu 9192
+interface Bundle-Ether7 service-policy input QOS_MARKING
+interface Bundle-Ether7 service-policy output P_SHAPER
+interface Bundle-Ether7 ipv4 address 10.10.3.129 255.255.255.254
+interface Bundle-Ether7 ipv6 nd suppress-ra
+interface Bundle-Ether7 ipv6 address 2603:10b0:504:8206::26/126
+interface Bundle-Ether7 lldp 
+interface Bundle-Ether7 lldp transmit disable
+interface Bundle-Ether7 bundle minimum-active links 1
+interface Bundle-Ether7 load-interval 30
+interface Bundle-Ether8 
+interface Bundle-Ether8 description BN6-0100-0100-08RHE:HundredGigE0/0/0/7
+interface Bundle-Ether8 mtu 9192
+interface Bundle-Ether8 service-policy input QOS_MARKING
+interface Bundle-Ether8 service-policy output P_SHAPER
+interface Bundle-Ether8 ipv4 address 10.10.3.193 255.255.255.254
+interface Bundle-Ether8 ipv6 nd suppress-ra
+interface Bundle-Ether8 ipv6 address 2603:10b0:504:8207::26/126
+interface Bundle-Ether8 lldp 
+interface Bundle-Ether8 lldp transmit disable
+interface Bundle-Ether8 bundle minimum-active links 1
+interface Bundle-Ether8 load-interval 30
+interface Bundle-Ether9 
+interface Bundle-Ether9 description BN6-0100-0200-01RHE:HundredGigE0/0/0/8
+interface Bundle-Ether9 mtu 9192
+interface Bundle-Ether9 service-policy input QOS_MARKING
+interface Bundle-Ether9 service-policy output P_SHAPER
+interface Bundle-Ether9 ipv4 address 10.10.4.1 255.255.255.254
+interface Bundle-Ether9 ipv6 nd suppress-ra
+interface Bundle-Ether9 ipv6 address 2603:10b0:504:9200::26/126
+interface Bundle-Ether9 lldp 
+interface Bundle-Ether9 lldp transmit disable
+interface Bundle-Ether9 bundle minimum-active links 1
+interface Bundle-Ether9 load-interval 30
+interface Bundle-Ether10 
+interface Bundle-Ether10 description BN6-0100-0200-02RHE:HundredGigE0/0/0/9
+interface Bundle-Ether10 mtu 9192
+interface Bundle-Ether10 service-policy input QOS_MARKING
+interface Bundle-Ether10 service-policy output P_SHAPER
+interface Bundle-Ether10 ipv4 address 10.10.4.65 255.255.255.254
+interface Bundle-Ether10 ipv6 nd suppress-ra
+interface Bundle-Ether10 ipv6 address 2603:10b0:504:9201::26/126
+interface Bundle-Ether10 lldp 
+interface Bundle-Ether10 lldp transmit disable
+interface Bundle-Ether10 bundle minimum-active links 1
+interface Bundle-Ether10 load-interval 30
+interface Bundle-Ether11 
+interface Bundle-Ether11 description BN6-0100-0200-03RHE:HundredGigE0/0/0/10
+interface Bundle-Ether11 mtu 9192
+interface Bundle-Ether11 service-policy input QOS_MARKING
+interface Bundle-Ether11 service-policy output P_SHAPER
+interface Bundle-Ether11 ipv4 address 10.10.4.129 255.255.255.254
+interface Bundle-Ether11 ipv6 nd suppress-ra
+interface Bundle-Ether11 ipv6 address 2603:10b0:504:9202::26/126
+interface Bundle-Ether11 lldp 
+interface Bundle-Ether11 lldp transmit disable
+interface Bundle-Ether11 bundle minimum-active links 1
+interface Bundle-Ether11 load-interval 30
+interface Bundle-Ether12 
+interface Bundle-Ether12 description BN6-0100-0200-04RHE:HundredGigE0/0/0/11
+interface Bundle-Ether12 mtu 9192
+interface Bundle-Ether12 service-policy input QOS_MARKING
+interface Bundle-Ether12 service-policy output P_SHAPER
+interface Bundle-Ether12 ipv4 address 10.10.4.193 255.255.255.254
+interface Bundle-Ether12 ipv6 nd suppress-ra
+interface Bundle-Ether12 ipv6 address 2603:10b0:504:9203::26/126
+interface Bundle-Ether12 lldp 
+interface Bundle-Ether12 lldp transmit disable
+interface Bundle-Ether12 bundle minimum-active links 1
+interface Bundle-Ether12 load-interval 30
+interface Bundle-Ether13 
+interface Bundle-Ether13 description BN6-0100-0200-05RHE:HundredGigE0/0/0/12
+interface Bundle-Ether13 mtu 9192
+interface Bundle-Ether13 service-policy input QOS_MARKING
+interface Bundle-Ether13 service-policy output P_SHAPER
+interface Bundle-Ether13 ipv4 address 10.10.5.1 255.255.255.254
+interface Bundle-Ether13 ipv6 nd suppress-ra
+interface Bundle-Ether13 ipv6 address 2603:10b0:504:9204::26/126
+interface Bundle-Ether13 lldp 
+interface Bundle-Ether13 lldp transmit disable
+interface Bundle-Ether13 bundle minimum-active links 1
+interface Bundle-Ether13 load-interval 30
+interface Bundle-Ether14 
+interface Bundle-Ether14 description BN6-0100-0200-06RHE:HundredGigE0/0/0/13
+interface Bundle-Ether14 mtu 9192
+interface Bundle-Ether14 service-policy input QOS_MARKING
+interface Bundle-Ether14 service-policy output P_SHAPER
+interface Bundle-Ether14 ipv4 address 10.10.5.65 255.255.255.254
+interface Bundle-Ether14 ipv6 nd suppress-ra
+interface Bundle-Ether14 ipv6 address 2603:10b0:504:9205::26/126
+interface Bundle-Ether14 lldp 
+interface Bundle-Ether14 lldp transmit disable
+interface Bundle-Ether14 bundle minimum-active links 1
+interface Bundle-Ether14 load-interval 30
+interface Bundle-Ether15 
+interface Bundle-Ether15 description BN6-0100-0200-07RHE:HundredGigE0/0/0/14
+interface Bundle-Ether15 mtu 9192
+interface Bundle-Ether15 service-policy input QOS_MARKING
+interface Bundle-Ether15 service-policy output P_SHAPER
+interface Bundle-Ether15 ipv4 address 10.10.5.129 255.255.255.254
+interface Bundle-Ether15 ipv6 nd suppress-ra
+interface Bundle-Ether15 ipv6 address 2603:10b0:504:9206::26/126
+interface Bundle-Ether15 lldp 
+interface Bundle-Ether15 lldp transmit disable
+interface Bundle-Ether15 bundle minimum-active links 1
+interface Bundle-Ether15 load-interval 30
+interface Bundle-Ether16 
+interface Bundle-Ether16 description BN6-0100-0200-08RHE:HundredGigE0/0/0/15
+interface Bundle-Ether16 mtu 9192
+interface Bundle-Ether16 service-policy input QOS_MARKING
+interface Bundle-Ether16 service-policy output P_SHAPER
+interface Bundle-Ether16 ipv4 address 10.10.5.193 255.255.255.254
+interface Bundle-Ether16 ipv6 nd suppress-ra
+interface Bundle-Ether16 ipv6 address 2603:10b0:504:9207::26/126
+interface Bundle-Ether16 lldp 
+interface Bundle-Ether16 lldp transmit disable
+interface Bundle-Ether16 bundle minimum-active links 1
+interface Bundle-Ether16 load-interval 30
+interface Bundle-Ether1001 
+interface Bundle-Ether1001 description LVL01-0101-0501-14T1:HundredGigE0/1/0/0
+interface Bundle-Ether1001 mtu 9192
+interface Bundle-Ether1001 service-policy input QOS_MARKING
+interface Bundle-Ether1001 service-policy output P_SHAPER
+interface Bundle-Ether1001 ipv4 address 10.106.96.0 255.255.255.254
+interface Bundle-Ether1001 ipv6 nd suppress-ra
+interface Bundle-Ether1001 ipv6 address 2603:10b0:531:18::5/126
+interface Bundle-Ether1001 lldp 
+interface Bundle-Ether1001 lldp transmit disable
+interface Bundle-Ether1001 bundle minimum-active links 1
+interface Bundle-Ether1001 load-interval 30
+interface Bundle-Ether1002 
+interface Bundle-Ether1002 description LVL01-0101-0502-14T1:HundredGigE0/1/0/1
+interface Bundle-Ether1002 mtu 9192
+interface Bundle-Ether1002 service-policy input QOS_MARKING
+interface Bundle-Ether1002 service-policy output P_SHAPER
+interface Bundle-Ether1002 ipv4 address 10.106.96.2 255.255.255.254
+interface Bundle-Ether1002 ipv6 nd suppress-ra
+interface Bundle-Ether1002 ipv6 address 2603:10b0:531:18::9/126
+interface Bundle-Ether1002 lldp 
+interface Bundle-Ether1002 lldp transmit disable
+interface Bundle-Ether1002 bundle minimum-active links 1
+interface Bundle-Ether1002 load-interval 30
+interface Bundle-Ether1003 
+interface Bundle-Ether1003 description LVL01-0101-0503-14T1:HundredGigE0/1/0/2
+interface Bundle-Ether1003 mtu 9192
+interface Bundle-Ether1003 service-policy input QOS_MARKING
+interface Bundle-Ether1003 service-policy output P_SHAPER
+interface Bundle-Ether1003 ipv4 address 10.106.96.4 255.255.255.254
+interface Bundle-Ether1003 ipv6 nd suppress-ra
+interface Bundle-Ether1003 ipv6 address 2603:10b0:531:18::d/126
+interface Bundle-Ether1003 lldp 
+interface Bundle-Ether1003 lldp transmit disable
+interface Bundle-Ether1003 bundle minimum-active links 1
+interface Bundle-Ether1003 load-interval 30
+interface Bundle-Ether1004 
+interface Bundle-Ether1004 description LVL01-0101-0504-14T1:HundredGigE0/1/0/3
+interface Bundle-Ether1004 mtu 9192
+interface Bundle-Ether1004 service-policy input QOS_MARKING
+interface Bundle-Ether1004 service-policy output P_SHAPER
+interface Bundle-Ether1004 ipv4 address 10.106.96.6 255.255.255.254
+interface Bundle-Ether1004 ipv6 nd suppress-ra
+interface Bundle-Ether1004 ipv6 address 2603:10b0:531:18::11/126
+interface Bundle-Ether1004 lldp 
+interface Bundle-Ether1004 lldp transmit disable
+interface Bundle-Ether1004 bundle minimum-active links 1
+interface Bundle-Ether1004 load-interval 30
+interface Bundle-Ether1005 
+interface Bundle-Ether1005 description LVL01-0101-0505-14T1:HundredGigE0/1/0/4
+interface Bundle-Ether1005 mtu 9192
+interface Bundle-Ether1005 service-policy input QOS_MARKING
+interface Bundle-Ether1005 service-policy output P_SHAPER
+interface Bundle-Ether1005 ipv4 address 10.106.96.8 255.255.255.254
+interface Bundle-Ether1005 ipv6 nd suppress-ra
+interface Bundle-Ether1005 ipv6 address 2603:10b0:531:18::15/126
+interface Bundle-Ether1005 lldp 
+interface Bundle-Ether1005 lldp transmit disable
+interface Bundle-Ether1005 bundle minimum-active links 1
+interface Bundle-Ether1005 load-interval 30
+interface Bundle-Ether1006 
+interface Bundle-Ether1006 description LVL01-0101-0506-14T1:HundredGigE0/1/0/5
+interface Bundle-Ether1006 mtu 9192
+interface Bundle-Ether1006 service-policy input QOS_MARKING
+interface Bundle-Ether1006 service-policy output P_SHAPER
+interface Bundle-Ether1006 ipv4 address 10.106.96.10 255.255.255.254
+interface Bundle-Ether1006 ipv6 nd suppress-ra
+interface Bundle-Ether1006 ipv6 address 2603:10b0:531:18::19/126
+interface Bundle-Ether1006 lldp 
+interface Bundle-Ether1006 lldp transmit disable
+interface Bundle-Ether1006 bundle minimum-active links 1
+interface Bundle-Ether1006 load-interval 30
+interface Bundle-Ether1007 
+interface Bundle-Ether1007 description LVL01-0101-0507-14T1:HundredGigE0/1/0/6
+interface Bundle-Ether1007 mtu 9192
+interface Bundle-Ether1007 service-policy input QOS_MARKING
+interface Bundle-Ether1007 service-policy output P_SHAPER
+interface Bundle-Ether1007 ipv4 address 10.106.96.12 255.255.255.254
+interface Bundle-Ether1007 ipv6 nd suppress-ra
+interface Bundle-Ether1007 ipv6 address 2603:10b0:531:18::1d/126
+interface Bundle-Ether1007 lldp 
+interface Bundle-Ether1007 lldp transmit disable
+interface Bundle-Ether1007 bundle minimum-active links 1
+interface Bundle-Ether1007 load-interval 30
+interface Bundle-Ether1008 
+interface Bundle-Ether1008 description LVL01-0101-0508-14T1:HundredGigE0/1/0/7
+interface Bundle-Ether1008 mtu 9192
+interface Bundle-Ether1008 service-policy input QOS_MARKING
+interface Bundle-Ether1008 service-policy output P_SHAPER
+interface Bundle-Ether1008 ipv4 address 10.106.96.14 255.255.255.254
+interface Bundle-Ether1008 ipv6 nd suppress-ra
+interface Bundle-Ether1008 ipv6 address 2603:10b0:531:18::21/126
+interface Bundle-Ether1008 lldp 
+interface Bundle-Ether1008 lldp transmit disable
+interface Bundle-Ether1008 bundle minimum-active links 1
+interface Bundle-Ether1008 load-interval 30
+interface Bundle-Ether1009 
+interface Bundle-Ether1009 description LVL01-0101-0509-14T1:HundredGigE0/1/0/8
+interface Bundle-Ether1009 mtu 9192
+interface Bundle-Ether1009 service-policy input QOS_MARKING
+interface Bundle-Ether1009 service-policy output P_SHAPER
+interface Bundle-Ether1009 ipv4 address 10.106.96.16 255.255.255.254
+interface Bundle-Ether1009 ipv6 nd suppress-ra
+interface Bundle-Ether1009 ipv6 address 2603:10b0:531:18::25/126
+interface Bundle-Ether1009 lldp 
+interface Bundle-Ether1009 lldp transmit disable
+interface Bundle-Ether1009 bundle minimum-active links 1
+interface Bundle-Ether1009 load-interval 30
+interface Bundle-Ether1010 
+interface Bundle-Ether1010 description LVL01-0101-0510-14T1:HundredGigE0/1/0/9
+interface Bundle-Ether1010 mtu 9192
+interface Bundle-Ether1010 service-policy input QOS_MARKING
+interface Bundle-Ether1010 service-policy output P_SHAPER
+interface Bundle-Ether1010 ipv4 address 10.106.96.18 255.255.255.254
+interface Bundle-Ether1010 ipv6 nd suppress-ra
+interface Bundle-Ether1010 ipv6 address 2603:10b0:531:18::29/126
+interface Bundle-Ether1010 lldp 
+interface Bundle-Ether1010 lldp transmit disable
+interface Bundle-Ether1010 bundle minimum-active links 1
+interface Bundle-Ether1010 load-interval 30
+interface Bundle-Ether1011 
+interface Bundle-Ether1011 description LVL01-0101-0511-14T1:HundredGigE0/1/0/10
+interface Bundle-Ether1011 mtu 9192
+interface Bundle-Ether1011 service-policy input QOS_MARKING
+interface Bundle-Ether1011 service-policy output P_SHAPER
+interface Bundle-Ether1011 ipv4 address 10.106.96.20 255.255.255.254
+interface Bundle-Ether1011 ipv6 nd suppress-ra
+interface Bundle-Ether1011 ipv6 address 2603:10b0:531:18::2d/126
+interface Bundle-Ether1011 lldp 
+interface Bundle-Ether1011 lldp transmit disable
+interface Bundle-Ether1011 bundle minimum-active links 1
+interface Bundle-Ether1011 load-interval 30
+interface Bundle-Ether1012 
+interface Bundle-Ether1012 description LVL01-0101-0512-14T1:HundredGigE0/1/0/11
+interface Bundle-Ether1012 mtu 9192
+interface Bundle-Ether1012 service-policy input QOS_MARKING
+interface Bundle-Ether1012 service-policy output P_SHAPER
+interface Bundle-Ether1012 ipv4 address 10.106.96.22 255.255.255.254
+interface Bundle-Ether1012 ipv6 nd suppress-ra
+interface Bundle-Ether1012 ipv6 address 2603:10b0:531:18::31/126
+interface Bundle-Ether1012 lldp 
+interface Bundle-Ether1012 lldp transmit disable
+interface Bundle-Ether1012 bundle minimum-active links 1
+interface Bundle-Ether1012 load-interval 30
+interface Bundle-Ether1013 
+interface Bundle-Ether1013 description LVL01-0101-0513-14T1:HundredGigE0/1/0/12
+interface Bundle-Ether1013 mtu 9192
+interface Bundle-Ether1013 service-policy input QOS_MARKING
+interface Bundle-Ether1013 service-policy output P_SHAPER
+interface Bundle-Ether1013 ipv4 address 10.106.96.24 255.255.255.254
+interface Bundle-Ether1013 ipv6 nd suppress-ra
+interface Bundle-Ether1013 ipv6 address 2603:10b0:531:18::35/126
+interface Bundle-Ether1013 lldp 
+interface Bundle-Ether1013 lldp transmit disable
+interface Bundle-Ether1013 bundle minimum-active links 1
+interface Bundle-Ether1013 load-interval 30
+interface Bundle-Ether1014 
+interface Bundle-Ether1014 description LVL01-0101-0514-14T1:HundredGigE0/1/0/13
+interface Bundle-Ether1014 mtu 9192
+interface Bundle-Ether1014 service-policy input QOS_MARKING
+interface Bundle-Ether1014 service-policy output P_SHAPER
+interface Bundle-Ether1014 ipv4 address 10.106.96.26 255.255.255.254
+interface Bundle-Ether1014 ipv6 nd suppress-ra
+interface Bundle-Ether1014 ipv6 address 2603:10b0:531:18::39/126
+interface Bundle-Ether1014 lldp 
+interface Bundle-Ether1014 lldp transmit disable
+interface Bundle-Ether1014 bundle minimum-active links 1
+interface Bundle-Ether1014 load-interval 30
+interface Bundle-Ether1015 
+interface Bundle-Ether1015 description LVL01-0101-0515-14T1:HundredGigE0/1/0/14
+interface Bundle-Ether1015 mtu 9192
+interface Bundle-Ether1015 service-policy input QOS_MARKING
+interface Bundle-Ether1015 service-policy output P_SHAPER
+interface Bundle-Ether1015 ipv4 address 10.106.96.28 255.255.255.254
+interface Bundle-Ether1015 ipv6 nd suppress-ra
+interface Bundle-Ether1015 ipv6 address 2603:10b0:531:18::3d/126
+interface Bundle-Ether1015 lldp 
+interface Bundle-Ether1015 lldp transmit disable
+interface Bundle-Ether1015 bundle minimum-active links 1
+interface Bundle-Ether1015 load-interval 30
+interface Bundle-Ether1016 
+interface Bundle-Ether1016 description LVL01-0101-0516-14T1:HundredGigE0/1/0/15
+interface Bundle-Ether1016 mtu 9192
+interface Bundle-Ether1016 service-policy input QOS_MARKING
+interface Bundle-Ether1016 service-policy output P_SHAPER
+interface Bundle-Ether1016 ipv4 address 10.106.96.30 255.255.255.254
+interface Bundle-Ether1016 ipv6 nd suppress-ra
+interface Bundle-Ether1016 ipv6 address 2603:10b0:531:18::41/126
+interface Bundle-Ether1016 lldp 
+interface Bundle-Ether1016 lldp transmit disable
+interface Bundle-Ether1016 bundle minimum-active links 1
+interface Bundle-Ether1016 load-interval 30
+interface Bundle-Ether1017 
+interface Bundle-Ether1017 description LVL01-0101-0517-14T1:HundredGigE0/1/0/16
+interface Bundle-Ether1017 mtu 9192
+interface Bundle-Ether1017 service-policy input QOS_MARKING
+interface Bundle-Ether1017 service-policy output P_SHAPER
+interface Bundle-Ether1017 ipv4 address 10.106.96.32 255.255.255.254
+interface Bundle-Ether1017 ipv6 nd suppress-ra
+interface Bundle-Ether1017 ipv6 address 2603:10b0:531:18::45/126
+interface Bundle-Ether1017 lldp 
+interface Bundle-Ether1017 lldp transmit disable
+interface Bundle-Ether1017 bundle minimum-active links 1
+interface Bundle-Ether1017 load-interval 30
+interface Bundle-Ether1018 
+interface Bundle-Ether1018 description LVL01-0101-0518-14T1:FortyGigE0/1/0/17
+interface Bundle-Ether1018 mtu 9192
+interface Bundle-Ether1018 service-policy input QOS_MARKING
+interface Bundle-Ether1018 service-policy output P_SHAPER
+interface Bundle-Ether1018 ipv4 address 10.106.96.34 255.255.255.254
+interface Bundle-Ether1018 ipv6 nd suppress-ra
+interface Bundle-Ether1018 ipv6 address 2603:10b0:531:18::49/126
+interface Bundle-Ether1018 lldp 
+interface Bundle-Ether1018 lldp transmit disable
+interface Bundle-Ether1018 bundle minimum-active links 1
+interface Bundle-Ether1018 load-interval 30
+interface Bundle-Ether1019 
+interface Bundle-Ether1019 description LVL01-0101-0519-14T1:HundredGigE0/1/0/18
+interface Bundle-Ether1019 mtu 9192
+interface Bundle-Ether1019 service-policy input QOS_MARKING
+interface Bundle-Ether1019 service-policy output P_SHAPER
+interface Bundle-Ether1019 ipv4 address 10.106.96.36 255.255.255.254
+interface Bundle-Ether1019 ipv6 nd suppress-ra
+interface Bundle-Ether1019 ipv6 address 2603:10b0:531:18::4d/126
+interface Bundle-Ether1019 lldp 
+interface Bundle-Ether1019 lldp transmit disable
+interface Bundle-Ether1019 bundle minimum-active links 1
+interface Bundle-Ether1019 load-interval 30
+interface Bundle-Ether1020 
+interface Bundle-Ether1020 description LVL01-0101-0520-14T1:FortyGigE0/1/0/19
+interface Bundle-Ether1020 mtu 9192
+interface Bundle-Ether1020 service-policy input QOS_MARKING
+interface Bundle-Ether1020 service-policy output P_SHAPER
+interface Bundle-Ether1020 ipv4 address 10.106.96.38 255.255.255.254
+interface Bundle-Ether1020 ipv6 nd suppress-ra
+interface Bundle-Ether1020 ipv6 address 2603:10b0:531:18::51/126
+interface Bundle-Ether1020 lldp 
+interface Bundle-Ether1020 lldp transmit disable
+interface Bundle-Ether1020 bundle minimum-active links 1
+interface Bundle-Ether1020 load-interval 30
+interface Bundle-Ether1021 
+interface Bundle-Ether1021 description LVL01-0101-0521-14T1:HundredGigE0/1/0/20
+interface Bundle-Ether1021 mtu 9192
+interface Bundle-Ether1021 service-policy input QOS_MARKING
+interface Bundle-Ether1021 service-policy output P_SHAPER
+interface Bundle-Ether1021 ipv4 address 10.106.96.40 255.255.255.254
+interface Bundle-Ether1021 ipv6 nd suppress-ra
+interface Bundle-Ether1021 ipv6 address 2603:10b0:531:18::55/126
+interface Bundle-Ether1021 lldp 
+interface Bundle-Ether1021 lldp transmit disable
+interface Bundle-Ether1021 bundle minimum-active links 1
+interface Bundle-Ether1021 load-interval 30
+interface Bundle-Ether1022 
+interface Bundle-Ether1022 description LVL01-0101-0522-14T1:HundredGigE0/1/0/21
+interface Bundle-Ether1022 mtu 9192
+interface Bundle-Ether1022 service-policy input QOS_MARKING
+interface Bundle-Ether1022 service-policy output P_SHAPER
+interface Bundle-Ether1022 ipv4 address 10.106.96.42 255.255.255.254
+interface Bundle-Ether1022 ipv6 nd suppress-ra
+interface Bundle-Ether1022 ipv6 address 2603:10b0:531:18::59/126
+interface Bundle-Ether1022 lldp 
+interface Bundle-Ether1022 lldp transmit disable
+interface Bundle-Ether1022 bundle minimum-active links 1
+interface Bundle-Ether1022 load-interval 30
+interface Bundle-Ether1023 
+interface Bundle-Ether1023 description LVL01-0101-0523-14T1:HundredGigE0/1/0/22
+interface Bundle-Ether1023 mtu 9192
+interface Bundle-Ether1023 service-policy input QOS_MARKING
+interface Bundle-Ether1023 service-policy output P_SHAPER
+interface Bundle-Ether1023 ipv4 address 10.106.96.44 255.255.255.254
+interface Bundle-Ether1023 ipv6 nd suppress-ra
+interface Bundle-Ether1023 ipv6 address 2603:10b0:531:18::5d/126
+interface Bundle-Ether1023 lldp 
+interface Bundle-Ether1023 lldp transmit disable
+interface Bundle-Ether1023 bundle minimum-active links 1
+interface Bundle-Ether1023 load-interval 30
+interface Bundle-Ether1024 
+interface Bundle-Ether1024 description LVL01-0101-0601-14T1:HundredGigE0/1/0/23
+interface Bundle-Ether1024 mtu 9192
+interface Bundle-Ether1024 service-policy input QOS_MARKING
+interface Bundle-Ether1024 service-policy output P_SHAPER
+interface Bundle-Ether1024 ipv4 address 10.106.96.46 255.255.255.254
+interface Bundle-Ether1024 ipv6 nd suppress-ra
+interface Bundle-Ether1024 ipv6 address 2603:10b0:531:18::61/126
+interface Bundle-Ether1024 lldp 
+interface Bundle-Ether1024 lldp transmit disable
+interface Bundle-Ether1024 bundle minimum-active links 1
+interface Bundle-Ether1024 load-interval 30
+interface Bundle-Ether1025 
+interface Bundle-Ether1025 description LVL01-0101-0602-14T1:HundredGigE0/1/0/24
+interface Bundle-Ether1025 mtu 9192
+interface Bundle-Ether1025 service-policy input QOS_MARKING
+interface Bundle-Ether1025 service-policy output P_SHAPER
+interface Bundle-Ether1025 ipv4 address 10.106.96.48 255.255.255.254
+interface Bundle-Ether1025 ipv6 nd suppress-ra
+interface Bundle-Ether1025 ipv6 address 2603:10b0:531:18::65/126
+interface Bundle-Ether1025 lldp 
+interface Bundle-Ether1025 lldp transmit disable
+interface Bundle-Ether1025 bundle minimum-active links 1
+interface Bundle-Ether1025 load-interval 30
+interface Bundle-Ether1026 
+interface Bundle-Ether1026 description LVL01-0101-0603-14T1:HundredGigE0/1/0/25
+interface Bundle-Ether1026 mtu 9192
+interface Bundle-Ether1026 service-policy input QOS_MARKING
+interface Bundle-Ether1026 service-policy output P_SHAPER
+interface Bundle-Ether1026 ipv4 address 10.106.96.50 255.255.255.254
+interface Bundle-Ether1026 ipv6 nd suppress-ra
+interface Bundle-Ether1026 ipv6 address 2603:10b0:531:18::69/126
+interface Bundle-Ether1026 lldp 
+interface Bundle-Ether1026 lldp transmit disable
+interface Bundle-Ether1026 bundle minimum-active links 1
+interface Bundle-Ether1026 load-interval 30
+interface Bundle-Ether1027 
+interface Bundle-Ether1027 description LVL01-0101-0604-14T1:HundredGigE0/1/0/26
+interface Bundle-Ether1027 mtu 9192
+interface Bundle-Ether1027 service-policy input QOS_MARKING
+interface Bundle-Ether1027 service-policy output P_SHAPER
+interface Bundle-Ether1027 ipv4 address 10.106.96.52 255.255.255.254
+interface Bundle-Ether1027 ipv6 nd suppress-ra
+interface Bundle-Ether1027 ipv6 address 2603:10b0:531:18::6d/126
+interface Bundle-Ether1027 lldp 
+interface Bundle-Ether1027 lldp transmit disable
+interface Bundle-Ether1027 bundle minimum-active links 1
+interface Bundle-Ether1027 load-interval 30
+interface Bundle-Ether1028 
+interface Bundle-Ether1028 description LVL01-0101-0605-14T1:HundredGigE0/1/0/27
+interface Bundle-Ether1028 mtu 9192
+interface Bundle-Ether1028 service-policy input QOS_MARKING
+interface Bundle-Ether1028 service-policy output P_SHAPER
+interface Bundle-Ether1028 ipv4 address 10.106.96.54 255.255.255.254
+interface Bundle-Ether1028 ipv6 nd suppress-ra
+interface Bundle-Ether1028 ipv6 address 2603:10b0:531:18::71/126
+interface Bundle-Ether1028 lldp 
+interface Bundle-Ether1028 lldp transmit disable
+interface Bundle-Ether1028 bundle minimum-active links 1
+interface Bundle-Ether1028 load-interval 30
+interface Bundle-Ether1029 
+interface Bundle-Ether1029 description LVL01-0101-0606-14T1:HundredGigE0/1/0/28
+interface Bundle-Ether1029 mtu 9192
+interface Bundle-Ether1029 service-policy input QOS_MARKING
+interface Bundle-Ether1029 service-policy output P_SHAPER
+interface Bundle-Ether1029 ipv4 address 10.106.96.56 255.255.255.254
+interface Bundle-Ether1029 ipv6 nd suppress-ra
+interface Bundle-Ether1029 ipv6 address 2603:10b0:531:18::75/126
+interface Bundle-Ether1029 lldp 
+interface Bundle-Ether1029 lldp transmit disable
+interface Bundle-Ether1029 bundle minimum-active links 1
+interface Bundle-Ether1029 load-interval 30
+interface Bundle-Ether1030 
+interface Bundle-Ether1030 description LVL01-0101-0607-14T1:HundredGigE0/1/0/29
+interface Bundle-Ether1030 mtu 9192
+interface Bundle-Ether1030 service-policy input QOS_MARKING
+interface Bundle-Ether1030 service-policy output P_SHAPER
+interface Bundle-Ether1030 ipv4 address 10.106.96.58 255.255.255.254
+interface Bundle-Ether1030 ipv6 nd suppress-ra
+interface Bundle-Ether1030 ipv6 address 2603:10b0:531:18::79/126
+interface Bundle-Ether1030 lldp 
+interface Bundle-Ether1030 lldp transmit disable
+interface Bundle-Ether1030 bundle minimum-active links 1
+interface Bundle-Ether1030 load-interval 30
+interface Bundle-Ether1031 
+interface Bundle-Ether1031 description LVL01-0101-0608-14T1:HundredGigE0/1/0/30
+interface Bundle-Ether1031 mtu 9192
+interface Bundle-Ether1031 service-policy input QOS_MARKING
+interface Bundle-Ether1031 service-policy output P_SHAPER
+interface Bundle-Ether1031 ipv4 address 10.106.96.60 255.255.255.254
+interface Bundle-Ether1031 ipv6 nd suppress-ra
+interface Bundle-Ether1031 ipv6 address 2603:10b0:531:18::7d/126
+interface Bundle-Ether1031 lldp 
+interface Bundle-Ether1031 lldp transmit disable
+interface Bundle-Ether1031 bundle minimum-active links 1
+interface Bundle-Ether1031 load-interval 30
+interface Bundle-Ether1032 
+interface Bundle-Ether1032 description LVL01-0101-0609-14T1:HundredGigE0/1/0/31
+interface Bundle-Ether1032 mtu 9192
+interface Bundle-Ether1032 service-policy input QOS_MARKING
+interface Bundle-Ether1032 service-policy output P_SHAPER
+interface Bundle-Ether1032 ipv4 address 10.106.96.62 255.255.255.254
+interface Bundle-Ether1032 ipv6 nd suppress-ra
+interface Bundle-Ether1032 ipv6 address 2603:10b0:531:18::81/126
+interface Bundle-Ether1032 lldp 
+interface Bundle-Ether1032 lldp transmit disable
+interface Bundle-Ether1032 bundle minimum-active links 1
+interface Bundle-Ether1032 load-interval 30
+interface Bundle-Ether1033 
+interface Bundle-Ether1033 description LVL01-0101-0610-14T1:HundredGigE0/1/0/32
+interface Bundle-Ether1033 mtu 9192
+interface Bundle-Ether1033 service-policy input QOS_MARKING
+interface Bundle-Ether1033 service-policy output P_SHAPER
+interface Bundle-Ether1033 ipv4 address 10.106.96.64 255.255.255.254
+interface Bundle-Ether1033 ipv6 nd suppress-ra
+interface Bundle-Ether1033 ipv6 address 2603:10b0:531:18::85/126
+interface Bundle-Ether1033 lldp 
+interface Bundle-Ether1033 lldp transmit disable
+interface Bundle-Ether1033 bundle minimum-active links 1
+interface Bundle-Ether1033 load-interval 30
+interface Bundle-Ether1034 
+interface Bundle-Ether1034 description LVL01-0101-0611-14T1:HundredGigE0/1/0/33
+interface Bundle-Ether1034 mtu 9192
+interface Bundle-Ether1034 service-policy input QOS_MARKING
+interface Bundle-Ether1034 service-policy output P_SHAPER
+interface Bundle-Ether1034 ipv4 address 10.106.96.66 255.255.255.254
+interface Bundle-Ether1034 ipv6 nd suppress-ra
+interface Bundle-Ether1034 ipv6 address 2603:10b0:531:18::89/126
+interface Bundle-Ether1034 lldp 
+interface Bundle-Ether1034 lldp transmit disable
+interface Bundle-Ether1034 bundle minimum-active links 1
+interface Bundle-Ether1034 load-interval 30
+interface Bundle-Ether1035 
+interface Bundle-Ether1035 description LVL01-0101-0612-14T1:HundredGigE0/1/0/34
+interface Bundle-Ether1035 mtu 9192
+interface Bundle-Ether1035 service-policy input QOS_MARKING
+interface Bundle-Ether1035 service-policy output P_SHAPER
+interface Bundle-Ether1035 ipv4 address 10.106.96.68 255.255.255.254
+interface Bundle-Ether1035 ipv6 nd suppress-ra
+interface Bundle-Ether1035 ipv6 address 2603:10b0:531:18::8d/126
+interface Bundle-Ether1035 lldp 
+interface Bundle-Ether1035 lldp transmit disable
+interface Bundle-Ether1035 bundle minimum-active links 1
+interface Bundle-Ether1035 load-interval 30
+interface Bundle-Ether1036 
+interface Bundle-Ether1036 description LVL01-0101-0901-14T1:HundredGigE0/1/0/35
+interface Bundle-Ether1036 mtu 9192
+interface Bundle-Ether1036 service-policy input QOS_MARKING
+interface Bundle-Ether1036 service-policy output P_SHAPER
+interface Bundle-Ether1036 ipv4 address 10.106.96.70 255.255.255.254
+interface Bundle-Ether1036 ipv6 nd suppress-ra
+interface Bundle-Ether1036 ipv6 address 2603:10b0:531:18::91/126
+interface Bundle-Ether1036 lldp 
+interface Bundle-Ether1036 lldp transmit disable
+interface Bundle-Ether1036 bundle minimum-active links 1
+interface Bundle-Ether1036 load-interval 30
+interface Bundle-Ether1037 
+interface Bundle-Ether1037 description LVL01-0101-0902-14T1:HundredGigE0/1/0/36
+interface Bundle-Ether1037 mtu 9192
+interface Bundle-Ether1037 service-policy input QOS_MARKING
+interface Bundle-Ether1037 service-policy output P_SHAPER
+interface Bundle-Ether1037 ipv4 address 10.106.96.72 255.255.255.254
+interface Bundle-Ether1037 ipv6 nd suppress-ra
+interface Bundle-Ether1037 ipv6 address 2603:10b0:531:18::95/126
+interface Bundle-Ether1037 lldp 
+interface Bundle-Ether1037 lldp transmit disable
+interface Bundle-Ether1037 bundle minimum-active links 1
+interface Bundle-Ether1037 load-interval 30
+interface Bundle-Ether1038 
+interface Bundle-Ether1038 description LVL01-0101-0903-14T1:HundredGigE0/1/0/37
+interface Bundle-Ether1038 mtu 9192
+interface Bundle-Ether1038 service-policy input QOS_MARKING
+interface Bundle-Ether1038 service-policy output P_SHAPER
+interface Bundle-Ether1038 ipv4 address 10.106.96.74 255.255.255.254
+interface Bundle-Ether1038 ipv6 nd suppress-ra
+interface Bundle-Ether1038 ipv6 address 2603:10b0:531:18::99/126
+interface Bundle-Ether1038 lldp 
+interface Bundle-Ether1038 lldp transmit disable
+interface Bundle-Ether1038 bundle minimum-active links 1
+interface Bundle-Ether1038 load-interval 30
+interface Bundle-Ether1039 
+interface Bundle-Ether1039 description LVL01-0101-0904-14T1:HundredGigE0/1/0/38
+interface Bundle-Ether1039 mtu 9192
+interface Bundle-Ether1039 service-policy input QOS_MARKING
+interface Bundle-Ether1039 service-policy output P_SHAPER
+interface Bundle-Ether1039 ipv4 address 10.106.96.76 255.255.255.254
+interface Bundle-Ether1039 ipv6 nd suppress-ra
+interface Bundle-Ether1039 ipv6 address 2603:10b0:531:18::9d/126
+interface Bundle-Ether1039 lldp 
+interface Bundle-Ether1039 lldp transmit disable
+interface Bundle-Ether1039 bundle minimum-active links 1
+interface Bundle-Ether1039 load-interval 30
+interface Bundle-Ether1040 
+interface Bundle-Ether1040 description LVL01-0101-0613-14T1:HundredGigE0/1/0/39
+interface Bundle-Ether1040 mtu 9192
+interface Bundle-Ether1040 service-policy input QOS_MARKING
+interface Bundle-Ether1040 service-policy output P_SHAPER
+interface Bundle-Ether1040 ipv4 address 10.106.96.78 255.255.255.254
+interface Bundle-Ether1040 ipv6 nd suppress-ra
+interface Bundle-Ether1040 ipv6 address 2603:10b0:531:18::a1/126
+interface Bundle-Ether1040 lldp 
+interface Bundle-Ether1040 lldp transmit disable
+interface Bundle-Ether1040 bundle minimum-active links 1
+interface Bundle-Ether1040 load-interval 30
+interface Bundle-Ether1041 
+interface Bundle-Ether1041 description LVL01-0101-0905-14T1:HundredGigE0/1/0/40
+interface Bundle-Ether1041 mtu 9192
+interface Bundle-Ether1041 service-policy input QOS_MARKING
+interface Bundle-Ether1041 service-policy output P_SHAPER
+interface Bundle-Ether1041 ipv4 address 10.106.96.80 255.255.255.254
+interface Bundle-Ether1041 ipv6 nd suppress-ra
+interface Bundle-Ether1041 ipv6 address 2603:10b0:531:18::a5/126
+interface Bundle-Ether1041 lldp 
+interface Bundle-Ether1041 lldp transmit disable
+interface Bundle-Ether1041 bundle minimum-active links 1
+interface Bundle-Ether1041 load-interval 30
+interface Bundle-Ether1042 
+interface Bundle-Ether1042 description LVL01-0101-0906-14T1:HundredGigE0/1/0/41
+interface Bundle-Ether1042 mtu 9192
+interface Bundle-Ether1042 service-policy input QOS_MARKING
+interface Bundle-Ether1042 service-policy output P_SHAPER
+interface Bundle-Ether1042 ipv4 address 10.106.96.82 255.255.255.254
+interface Bundle-Ether1042 ipv6 nd suppress-ra
+interface Bundle-Ether1042 ipv6 address 2603:10b0:531:18::a9/126
+interface Bundle-Ether1042 lldp 
+interface Bundle-Ether1042 lldp transmit disable
+interface Bundle-Ether1042 bundle minimum-active links 1
+interface Bundle-Ether1042 load-interval 30
+interface Bundle-Ether1043 
+interface Bundle-Ether1043 description LVL01-0101-0907-14T1:HundredGigE0/1/0/42
+interface Bundle-Ether1043 mtu 9192
+interface Bundle-Ether1043 service-policy input QOS_MARKING
+interface Bundle-Ether1043 service-policy output P_SHAPER
+interface Bundle-Ether1043 ipv4 address 10.106.96.84 255.255.255.254
+interface Bundle-Ether1043 ipv6 nd suppress-ra
+interface Bundle-Ether1043 ipv6 address 2603:10b0:531:18::ad/126
+interface Bundle-Ether1043 lldp 
+interface Bundle-Ether1043 lldp transmit disable
+interface Bundle-Ether1043 bundle minimum-active links 1
+interface Bundle-Ether1043 load-interval 30
+interface Bundle-Ether1044 
+interface Bundle-Ether1044 description LVL01-0101-0908-14T1:HundredGigE0/1/0/43
+interface Bundle-Ether1044 mtu 9192
+interface Bundle-Ether1044 service-policy input QOS_MARKING
+interface Bundle-Ether1044 service-policy output P_SHAPER
+interface Bundle-Ether1044 ipv4 address 10.106.96.86 255.255.255.254
+interface Bundle-Ether1044 ipv6 nd suppress-ra
+interface Bundle-Ether1044 ipv6 address 2603:10b0:531:18::b1/126
+interface Bundle-Ether1044 lldp 
+interface Bundle-Ether1044 lldp transmit disable
+interface Bundle-Ether1044 bundle minimum-active links 1
+interface Bundle-Ether1044 load-interval 30
+interface Bundle-Ether1045 
+interface Bundle-Ether1045 description LVL01-0101-0909-14T1:HundredGigE0/1/0/44
+interface Bundle-Ether1045 mtu 9192
+interface Bundle-Ether1045 service-policy input QOS_MARKING
+interface Bundle-Ether1045 service-policy output P_SHAPER
+interface Bundle-Ether1045 ipv4 address 10.106.96.88 255.255.255.254
+interface Bundle-Ether1045 ipv6 nd suppress-ra
+interface Bundle-Ether1045 ipv6 address 2603:10b0:531:18::b5/126
+interface Bundle-Ether1045 lldp 
+interface Bundle-Ether1045 lldp transmit disable
+interface Bundle-Ether1045 bundle minimum-active links 1
+interface Bundle-Ether1045 load-interval 30
+interface Bundle-Ether1046 
+interface Bundle-Ether1046 description LVL01-0101-0614-14T1:HundredGigE0/1/0/45
+interface Bundle-Ether1046 mtu 9192
+interface Bundle-Ether1046 service-policy input QOS_MARKING
+interface Bundle-Ether1046 service-policy output P_SHAPER
+interface Bundle-Ether1046 ipv4 address 10.106.96.90 255.255.255.254
+interface Bundle-Ether1046 ipv6 nd suppress-ra
+interface Bundle-Ether1046 ipv6 address 2603:10b0:531:18::b9/126
+interface Bundle-Ether1046 lldp 
+interface Bundle-Ether1046 lldp transmit disable
+interface Bundle-Ether1046 bundle minimum-active links 1
+interface Bundle-Ether1046 load-interval 30
+interface Bundle-Ether1047 
+interface Bundle-Ether1047 description LVL01-0101-0615-14T1:HundredGigE0/1/0/46
+interface Bundle-Ether1047 mtu 9192
+interface Bundle-Ether1047 service-policy input QOS_MARKING
+interface Bundle-Ether1047 service-policy output P_SHAPER
+interface Bundle-Ether1047 ipv4 address 10.106.96.92 255.255.255.254
+interface Bundle-Ether1047 ipv6 nd suppress-ra
+interface Bundle-Ether1047 ipv6 address 2603:10b0:531:18::bd/126
+interface Bundle-Ether1047 lldp 
+interface Bundle-Ether1047 lldp transmit disable
+interface Bundle-Ether1047 bundle minimum-active links 1
+interface Bundle-Ether1047 load-interval 30
+interface Bundle-Ether1048 
+interface Bundle-Ether1048 description LVL01-0101-0616-14T1:HundredGigE0/1/0/47
+interface Bundle-Ether1048 mtu 9192
+interface Bundle-Ether1048 service-policy input QOS_MARKING
+interface Bundle-Ether1048 service-policy output P_SHAPER
+interface Bundle-Ether1048 ipv4 address 10.106.96.94 255.255.255.254
+interface Bundle-Ether1048 ipv6 nd suppress-ra
+interface Bundle-Ether1048 ipv6 address 2603:10b0:531:18::c1/126
+interface Bundle-Ether1048 lldp 
+interface Bundle-Ether1048 lldp transmit disable
+interface Bundle-Ether1048 bundle minimum-active links 1
+interface Bundle-Ether1048 load-interval 30
+interface Bundle-Ether1049 
+interface Bundle-Ether1049 description LVL01-0101-0910-14T1:HundredGigE0/2/0/0
+interface Bundle-Ether1049 mtu 9192
+interface Bundle-Ether1049 service-policy input QOS_MARKING
+interface Bundle-Ether1049 service-policy output P_SHAPER
+interface Bundle-Ether1049 ipv4 address 10.106.96.96 255.255.255.254
+interface Bundle-Ether1049 ipv6 nd suppress-ra
+interface Bundle-Ether1049 ipv6 address 2603:10b0:531:18::c5/126
+interface Bundle-Ether1049 lldp 
+interface Bundle-Ether1049 lldp transmit disable
+interface Bundle-Ether1049 bundle minimum-active links 1
+interface Bundle-Ether1049 load-interval 30
+interface Bundle-Ether1050 
+interface Bundle-Ether1050 description LVL01-0101-0911-14T1:HundredGigE0/2/0/1
+interface Bundle-Ether1050 mtu 9192
+interface Bundle-Ether1050 service-policy input QOS_MARKING
+interface Bundle-Ether1050 service-policy output P_SHAPER
+interface Bundle-Ether1050 ipv4 address 10.106.96.98 255.255.255.254
+interface Bundle-Ether1050 ipv6 nd suppress-ra
+interface Bundle-Ether1050 ipv6 address 2603:10b0:531:18::c9/126
+interface Bundle-Ether1050 lldp 
+interface Bundle-Ether1050 lldp transmit disable
+interface Bundle-Ether1050 bundle minimum-active links 1
+interface Bundle-Ether1050 load-interval 30
+interface Bundle-Ether1051 
+interface Bundle-Ether1051 description LVL01-0101-0912-14T1:HundredGigE0/2/0/2
+interface Bundle-Ether1051 mtu 9192
+interface Bundle-Ether1051 service-policy input QOS_MARKING
+interface Bundle-Ether1051 service-policy output P_SHAPER
+interface Bundle-Ether1051 ipv4 address 10.106.96.100 255.255.255.254
+interface Bundle-Ether1051 ipv6 nd suppress-ra
+interface Bundle-Ether1051 ipv6 address 2603:10b0:531:18::cd/126
+interface Bundle-Ether1051 lldp 
+interface Bundle-Ether1051 lldp transmit disable
+interface Bundle-Ether1051 bundle minimum-active links 1
+interface Bundle-Ether1051 load-interval 30
+interface Bundle-Ether1052 
+interface Bundle-Ether1052 description LVL01-0101-0913-14T1:HundredGigE0/2/0/3
+interface Bundle-Ether1052 mtu 9192
+interface Bundle-Ether1052 service-policy input QOS_MARKING
+interface Bundle-Ether1052 service-policy output P_SHAPER
+interface Bundle-Ether1052 ipv4 address 10.106.96.102 255.255.255.254
+interface Bundle-Ether1052 ipv6 nd suppress-ra
+interface Bundle-Ether1052 ipv6 address 2603:10b0:531:18::d1/126
+interface Bundle-Ether1052 lldp 
+interface Bundle-Ether1052 lldp transmit disable
+interface Bundle-Ether1052 bundle minimum-active links 1
+interface Bundle-Ether1052 load-interval 30
+interface Bundle-Ether1053 
+interface Bundle-Ether1053 description LVL01-0101-0914-14T1:HundredGigE0/2/0/4
+interface Bundle-Ether1053 mtu 9192
+interface Bundle-Ether1053 service-policy input QOS_MARKING
+interface Bundle-Ether1053 service-policy output P_SHAPER
+interface Bundle-Ether1053 ipv4 address 10.106.96.104 255.255.255.254
+interface Bundle-Ether1053 ipv6 nd suppress-ra
+interface Bundle-Ether1053 ipv6 address 2603:10b0:531:18::d5/126
+interface Bundle-Ether1053 lldp 
+interface Bundle-Ether1053 lldp transmit disable
+interface Bundle-Ether1053 bundle minimum-active links 1
+interface Bundle-Ether1053 load-interval 30
+interface Bundle-Ether1054 
+interface Bundle-Ether1054 description LVL01-0101-0617-14T1:HundredGigE0/2/0/5
+interface Bundle-Ether1054 mtu 9192
+interface Bundle-Ether1054 service-policy input QOS_MARKING
+interface Bundle-Ether1054 service-policy output P_SHAPER
+interface Bundle-Ether1054 ipv4 address 10.106.96.106 255.255.255.254
+interface Bundle-Ether1054 ipv6 nd suppress-ra
+interface Bundle-Ether1054 ipv6 address 2603:10b0:531:18::d9/126
+interface Bundle-Ether1054 lldp 
+interface Bundle-Ether1054 lldp transmit disable
+interface Bundle-Ether1054 bundle minimum-active links 1
+interface Bundle-Ether1054 load-interval 30
+interface Bundle-Ether1055 
+interface Bundle-Ether1055 description LVL01-0101-0618-14T1:HundredGigE0/2/0/6
+interface Bundle-Ether1055 mtu 9192
+interface Bundle-Ether1055 service-policy input QOS_MARKING
+interface Bundle-Ether1055 service-policy output P_SHAPER
+interface Bundle-Ether1055 ipv4 address 10.106.96.108 255.255.255.254
+interface Bundle-Ether1055 ipv6 nd suppress-ra
+interface Bundle-Ether1055 ipv6 address 2603:10b0:531:18::dd/126
+interface Bundle-Ether1055 lldp 
+interface Bundle-Ether1055 lldp transmit disable
+interface Bundle-Ether1055 bundle minimum-active links 1
+interface Bundle-Ether1055 load-interval 30
+interface Bundle-Ether1056 
+interface Bundle-Ether1056 description LVL01-0101-0619-14T1:HundredGigE0/2/0/7
+interface Bundle-Ether1056 mtu 9192
+interface Bundle-Ether1056 service-policy input QOS_MARKING
+interface Bundle-Ether1056 service-policy output P_SHAPER
+interface Bundle-Ether1056 ipv4 address 10.106.96.110 255.255.255.254
+interface Bundle-Ether1056 ipv6 nd suppress-ra
+interface Bundle-Ether1056 ipv6 address 2603:10b0:531:18::e1/126
+interface Bundle-Ether1056 lldp 
+interface Bundle-Ether1056 lldp transmit disable
+interface Bundle-Ether1056 bundle minimum-active links 1
+interface Bundle-Ether1056 load-interval 30
+interface Bundle-Ether1057 
+interface Bundle-Ether1057 description LVL01-0101-0620-14T1:HundredGigE0/2/0/8
+interface Bundle-Ether1057 mtu 9192
+interface Bundle-Ether1057 service-policy input QOS_MARKING
+interface Bundle-Ether1057 service-policy output P_SHAPER
+interface Bundle-Ether1057 ipv4 address 10.106.96.112 255.255.255.254
+interface Bundle-Ether1057 ipv6 nd suppress-ra
+interface Bundle-Ether1057 ipv6 address 2603:10b0:531:18::e5/126
+interface Bundle-Ether1057 lldp 
+interface Bundle-Ether1057 lldp transmit disable
+interface Bundle-Ether1057 bundle minimum-active links 1
+interface Bundle-Ether1057 load-interval 30
+interface Bundle-Ether1058 
+interface Bundle-Ether1058 description LVL01-0101-0915-14T1:HundredGigE0/2/0/9
+interface Bundle-Ether1058 mtu 9192
+interface Bundle-Ether1058 service-policy input QOS_MARKING
+interface Bundle-Ether1058 service-policy output P_SHAPER
+interface Bundle-Ether1058 ipv4 address 10.106.96.114 255.255.255.254
+interface Bundle-Ether1058 ipv6 nd suppress-ra
+interface Bundle-Ether1058 ipv6 address 2603:10b0:531:18::e9/126
+interface Bundle-Ether1058 lldp 
+interface Bundle-Ether1058 lldp transmit disable
+interface Bundle-Ether1058 bundle minimum-active links 1
+interface Bundle-Ether1058 load-interval 30
+interface Bundle-Ether1059 
+interface Bundle-Ether1059 description LVL01-0101-0916-14T1:HundredGigE0/2/0/10
+interface Bundle-Ether1059 mtu 9192
+interface Bundle-Ether1059 service-policy input QOS_MARKING
+interface Bundle-Ether1059 service-policy output P_SHAPER
+interface Bundle-Ether1059 ipv4 address 10.106.96.116 255.255.255.254
+interface Bundle-Ether1059 ipv6 nd suppress-ra
+interface Bundle-Ether1059 ipv6 address 2603:10b0:531:18::ed/126
+interface Bundle-Ether1059 lldp 
+interface Bundle-Ether1059 lldp transmit disable
+interface Bundle-Ether1059 bundle minimum-active links 1
+interface Bundle-Ether1059 load-interval 30
+interface Bundle-Ether1060 
+interface Bundle-Ether1060 description LVL01-0101-0621-14T1:HundredGigE0/2/0/11
+interface Bundle-Ether1060 mtu 9192
+interface Bundle-Ether1060 service-policy input QOS_MARKING
+interface Bundle-Ether1060 service-policy output P_SHAPER
+interface Bundle-Ether1060 ipv4 address 10.106.96.118 255.255.255.254
+interface Bundle-Ether1060 ipv6 nd suppress-ra
+interface Bundle-Ether1060 ipv6 address 2603:10b0:531:18::f1/126
+interface Bundle-Ether1060 lldp 
+interface Bundle-Ether1060 lldp transmit disable
+interface Bundle-Ether1060 bundle minimum-active links 1
+interface Bundle-Ether1060 load-interval 30
+interface Bundle-Ether1061 
+interface Bundle-Ether1061 description LVL01-0101-0622-14T1:HundredGigE0/2/0/12
+interface Bundle-Ether1061 mtu 9192
+interface Bundle-Ether1061 service-policy input QOS_MARKING
+interface Bundle-Ether1061 service-policy output P_SHAPER
+interface Bundle-Ether1061 ipv4 address 10.106.96.120 255.255.255.254
+interface Bundle-Ether1061 ipv6 nd suppress-ra
+interface Bundle-Ether1061 ipv6 address 2603:10b0:531:18::f5/126
+interface Bundle-Ether1061 lldp 
+interface Bundle-Ether1061 lldp transmit disable
+interface Bundle-Ether1061 bundle minimum-active links 1
+interface Bundle-Ether1061 load-interval 30
+interface Bundle-Ether1062 
+interface Bundle-Ether1062 description LVL01-0101-0917-14T1:HundredGigE0/2/0/13
+interface Bundle-Ether1062 mtu 9192
+interface Bundle-Ether1062 service-policy input QOS_MARKING
+interface Bundle-Ether1062 service-policy output P_SHAPER
+interface Bundle-Ether1062 ipv4 address 10.106.96.122 255.255.255.254
+interface Bundle-Ether1062 ipv6 nd suppress-ra
+interface Bundle-Ether1062 ipv6 address 2603:10b0:531:18::f9/126
+interface Bundle-Ether1062 lldp 
+interface Bundle-Ether1062 lldp transmit disable
+interface Bundle-Ether1062 bundle minimum-active links 1
+interface Bundle-Ether1062 load-interval 30
+interface Bundle-Ether1063 
+interface Bundle-Ether1063 description LVL01-0101-0918-14T1:HundredGigE0/2/0/14
+interface Bundle-Ether1063 mtu 9192
+interface Bundle-Ether1063 service-policy input QOS_MARKING
+interface Bundle-Ether1063 service-policy output P_SHAPER
+interface Bundle-Ether1063 ipv4 address 10.106.96.124 255.255.255.254
+interface Bundle-Ether1063 ipv6 nd suppress-ra
+interface Bundle-Ether1063 ipv6 address 2603:10b0:531:18::fd/126
+interface Bundle-Ether1063 lldp 
+interface Bundle-Ether1063 lldp transmit disable
+interface Bundle-Ether1063 bundle minimum-active links 1
+interface Bundle-Ether1063 load-interval 30
+interface Bundle-Ether1064 
+interface Bundle-Ether1064 description LVL01-0101-0919-14T1:HundredGigE0/2/0/15
+interface Bundle-Ether1064 mtu 9192
+interface Bundle-Ether1064 service-policy input QOS_MARKING
+interface Bundle-Ether1064 service-policy output P_SHAPER
+interface Bundle-Ether1064 ipv4 address 10.106.96.126 255.255.255.254
+interface Bundle-Ether1064 ipv6 nd suppress-ra
+interface Bundle-Ether1064 ipv6 address 2603:10b0:531:18::101/126
+interface Bundle-Ether1064 lldp 
+interface Bundle-Ether1064 lldp transmit disable
+interface Bundle-Ether1064 bundle minimum-active links 1
+interface Bundle-Ether1064 load-interval 30
+interface Loopback0 
+interface Loopback0 ipv4 address 25.117.169.216 255.255.255.255
+interface Loopback0 ipv6 address 2603:10b0:531:18::/128
+interface tunnel-ip0 
+interface tunnel-ip0 ipv4 unnumbered Loopback0
+interface tunnel-ip0 load-interval 30
+interface tunnel-ip0 tunnel mode ipv4 decap
+interface tunnel-ip0 tunnel source Loopback0
+interface tunnel-ip2 
+interface tunnel-ip2 tunnel tos 32
+interface tunnel-ip2 tunnel mode gre ipv4
+interface tunnel-ip2 tunnel source 25.117.169.216
+interface tunnel-ip2 tunnel destination 10.1.214.130
+interface MgmtEth0/RP0/CPU0/0 vrf MGMT
+interface MgmtEth0/RP0/CPU0/0 ipv4 address 25.117.172.194 255.255.255.192
+interface MgmtEth0/RP0/CPU0/0 arp learning local
+interface MgmtEth0/RP0/CPU0/0 ipv6 address 2603:10e2:41:5403::2/64
+interface MgmtEth0/RP0/CPU0/0 load-interval 30
+interface HundredGigE0/0/0/0 description BN6-0100-0100-01RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/0 bundle id 1 mode active
+interface HundredGigE0/0/0/0 priority-flow-control mode on
+interface HundredGigE0/0/0/0 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/0 load-interval 30
+interface HundredGigE0/0/0/1 description BN6-0100-0100-02RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/1 bundle id 2 mode active
+interface HundredGigE0/0/0/1 priority-flow-control mode on
+interface HundredGigE0/0/0/1 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/1 load-interval 30
+interface HundredGigE0/0/0/2 description BN6-0100-0100-03RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/2 bundle id 3 mode active
+interface HundredGigE0/0/0/2 priority-flow-control mode on
+interface HundredGigE0/0/0/2 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/2 load-interval 30
+interface HundredGigE0/0/0/3 description BN6-0100-0100-04RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/3 bundle id 4 mode active
+interface HundredGigE0/0/0/3 priority-flow-control mode on
+interface HundredGigE0/0/0/3 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/3 load-interval 30
+interface HundredGigE0/0/0/4 description BN6-0100-0100-05RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/4 bundle id 5 mode active
+interface HundredGigE0/0/0/4 priority-flow-control mode on
+interface HundredGigE0/0/0/4 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/4 load-interval 30
+interface HundredGigE0/0/0/5 description BN6-0100-0100-06RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/5 bundle id 6 mode active
+interface HundredGigE0/0/0/5 priority-flow-control mode on
+interface HundredGigE0/0/0/5 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/5 load-interval 30
+interface HundredGigE0/0/0/6 description BN6-0100-0100-07RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/6 bundle id 7 mode active
+interface HundredGigE0/0/0/6 priority-flow-control mode on
+interface HundredGigE0/0/0/6 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/6 load-interval 30
+interface HundredGigE0/0/0/7 description BN6-0100-0100-08RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/7 bundle id 8 mode active
+interface HundredGigE0/0/0/7 priority-flow-control mode on
+interface HundredGigE0/0/0/7 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/7 load-interval 30
+interface HundredGigE0/0/0/8 description BN6-0100-0200-01RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/8 bundle id 9 mode active
+interface HundredGigE0/0/0/8 priority-flow-control mode on
+interface HundredGigE0/0/0/8 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/8 load-interval 30
+interface HundredGigE0/0/0/9 description BN6-0100-0200-02RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/9 bundle id 10 mode active
+interface HundredGigE0/0/0/9 priority-flow-control mode on
+interface HundredGigE0/0/0/9 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/9 load-interval 30
+interface HundredGigE0/0/0/10 description BN6-0100-0200-03RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/10 bundle id 11 mode active
+interface HundredGigE0/0/0/10 priority-flow-control mode on
+interface HundredGigE0/0/0/10 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/10 load-interval 30
+interface HundredGigE0/0/0/11 description BN6-0100-0200-04RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/11 bundle id 12 mode active
+interface HundredGigE0/0/0/11 priority-flow-control mode on
+interface HundredGigE0/0/0/11 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/11 load-interval 30
+interface HundredGigE0/0/0/12 description BN6-0100-0200-05RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/12 bundle id 13 mode active
+interface HundredGigE0/0/0/12 priority-flow-control mode on
+interface HundredGigE0/0/0/12 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/12 load-interval 30
+interface HundredGigE0/0/0/13 description BN6-0100-0200-06RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/13 bundle id 14 mode active
+interface HundredGigE0/0/0/13 priority-flow-control mode on
+interface HundredGigE0/0/0/13 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/13 load-interval 30
+interface HundredGigE0/0/0/14 description BN6-0100-0200-07RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/14 bundle id 15 mode active
+interface HundredGigE0/0/0/14 priority-flow-control mode on
+interface HundredGigE0/0/0/14 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/14 load-interval 30
+interface HundredGigE0/0/0/15 description BN6-0100-0200-08RHE:Ethernet11/17/1
+interface HundredGigE0/0/0/15 bundle id 16 mode active
+interface HundredGigE0/0/0/15 priority-flow-control mode on
+interface HundredGigE0/0/0/15 macsec psk-keychain macsec-primary fallback-psk-keychain macsec-fallback policy macsec-xpn
+interface HundredGigE0/0/0/15 load-interval 30
+interface HundredGigE0/0/0/16 shutdown
+interface HundredGigE0/0/0/17 shutdown
+interface HundredGigE0/0/0/18 shutdown
+interface HundredGigE0/0/0/19 shutdown
+interface HundredGigE0/0/0/20 shutdown
+interface HundredGigE0/0/0/21 shutdown
+interface HundredGigE0/0/0/22 shutdown
+interface HundredGigE0/0/0/23 shutdown
+interface HundredGigE0/0/0/24 shutdown
+interface HundredGigE0/0/0/25 shutdown
+interface HundredGigE0/0/0/26 shutdown
+interface HundredGigE0/0/0/27 shutdown
+interface HundredGigE0/0/0/28 shutdown
+interface HundredGigE0/0/0/29 shutdown
+interface HundredGigE0/0/0/30 shutdown
+interface HundredGigE0/0/0/31 shutdown
+interface HundredGigE0/0/0/32 shutdown
+interface HundredGigE0/0/0/33 shutdown
+interface HundredGigE0/0/0/34 shutdown
+interface HundredGigE0/0/0/35 shutdown
+interface HundredGigE0/0/0/36 shutdown
+interface HundredGigE0/0/0/37 shutdown
+interface HundredGigE0/0/0/38 shutdown
+interface HundredGigE0/0/0/39 shutdown
+interface HundredGigE0/0/0/40 shutdown
+interface HundredGigE0/0/0/41 shutdown
+interface HundredGigE0/0/0/42 shutdown
+interface HundredGigE0/0/0/43 shutdown
+interface HundredGigE0/0/0/44 shutdown
+interface HundredGigE0/0/0/45 shutdown
+interface HundredGigE0/0/0/46 shutdown
+interface HundredGigE0/0/0/47 shutdown
+interface HundredGigE0/1/0/0 description LVL01-0101-0501-14T1:etp25
+interface HundredGigE0/1/0/0 bundle id 1001 mode active
+interface HundredGigE0/1/0/0 priority-flow-control mode on
+interface HundredGigE0/1/0/0 load-interval 30
+interface HundredGigE0/1/0/1 description LVL01-0101-0502-14T1:etp25
+interface HundredGigE0/1/0/1 bundle id 1002 mode active
+interface HundredGigE0/1/0/1 priority-flow-control mode on
+interface HundredGigE0/1/0/1 load-interval 30
+interface HundredGigE0/1/0/2 description LVL01-0101-0503-14T1:etp25
+interface HundredGigE0/1/0/2 bundle id 1003 mode active
+interface HundredGigE0/1/0/2 priority-flow-control mode on
+interface HundredGigE0/1/0/2 load-interval 30
+interface HundredGigE0/1/0/3 description LVL01-0101-0504-14T1:etp25
+interface HundredGigE0/1/0/3 bundle id 1004 mode active
+interface HundredGigE0/1/0/3 priority-flow-control mode on
+interface HundredGigE0/1/0/3 load-interval 30
+interface HundredGigE0/1/0/4 description LVL01-0101-0505-14T1:etp25
+interface HundredGigE0/1/0/4 bundle id 1005 mode active
+interface HundredGigE0/1/0/4 priority-flow-control mode on
+interface HundredGigE0/1/0/4 load-interval 30
+interface HundredGigE0/1/0/5 description LVL01-0101-0506-14T1:etp25
+interface HundredGigE0/1/0/5 bundle id 1006 mode active
+interface HundredGigE0/1/0/5 priority-flow-control mode on
+interface HundredGigE0/1/0/5 load-interval 30
+interface HundredGigE0/1/0/6 description LVL01-0101-0507-14T1:etp25
+interface HundredGigE0/1/0/6 bundle id 1007 mode active
+interface HundredGigE0/1/0/6 priority-flow-control mode on
+interface HundredGigE0/1/0/6 load-interval 30
+interface HundredGigE0/1/0/7 description LVL01-0101-0508-14T1:Ethernet7/1
+interface HundredGigE0/1/0/7 bundle id 1008 mode active
+interface HundredGigE0/1/0/7 priority-flow-control mode on
+interface HundredGigE0/1/0/7 load-interval 30
+interface HundredGigE0/1/0/8 description LVL01-0101-0509-14T1:Ethernet7/1
+interface HundredGigE0/1/0/8 bundle id 1009 mode active
+interface HundredGigE0/1/0/8 priority-flow-control mode on
+interface HundredGigE0/1/0/8 load-interval 30
+interface HundredGigE0/1/0/9 description LVL01-0101-0510-14T1:etp25
+interface HundredGigE0/1/0/9 bundle id 1010 mode active
+interface HundredGigE0/1/0/9 priority-flow-control mode on
+interface HundredGigE0/1/0/9 load-interval 30
+interface HundredGigE0/1/0/10 description LVL01-0101-0511-14T1:Ethernet7/1
+interface HundredGigE0/1/0/10 bundle id 1011 mode active
+interface HundredGigE0/1/0/10 priority-flow-control mode on
+interface HundredGigE0/1/0/10 load-interval 30
+interface HundredGigE0/1/0/11 description LVL01-0101-0512-14T1:etp25
+interface HundredGigE0/1/0/11 bundle id 1012 mode active
+interface HundredGigE0/1/0/11 priority-flow-control mode on
+interface HundredGigE0/1/0/11 load-interval 30
+interface HundredGigE0/1/0/12 description LVL01-0101-0513-14T1:etp25
+interface HundredGigE0/1/0/12 bundle id 1013 mode active
+interface HundredGigE0/1/0/12 priority-flow-control mode on
+interface HundredGigE0/1/0/12 load-interval 30
+interface HundredGigE0/1/0/13 description LVL01-0101-0514-14T1:etp25
+interface HundredGigE0/1/0/13 bundle id 1014 mode active
+interface HundredGigE0/1/0/13 priority-flow-control mode on
+interface HundredGigE0/1/0/13 load-interval 30
+interface HundredGigE0/1/0/14 description LVL01-0101-0515-14T1:etp25
+interface HundredGigE0/1/0/14 bundle id 1015 mode active
+interface HundredGigE0/1/0/14 priority-flow-control mode on
+interface HundredGigE0/1/0/14 load-interval 30
+interface HundredGigE0/1/0/15 description LVL01-0101-0516-14T1:Ethernet7/1
+interface HundredGigE0/1/0/15 bundle id 1016 mode active
+interface HundredGigE0/1/0/15 priority-flow-control mode on
+interface HundredGigE0/1/0/15 load-interval 30
+interface HundredGigE0/1/0/16 description LVL01-0101-0517-14T1:etp25
+interface HundredGigE0/1/0/16 bundle id 1017 mode active
+interface HundredGigE0/1/0/16 priority-flow-control mode on
+interface HundredGigE0/1/0/16 load-interval 30
+interface FortyGigE0/1/0/17 description LVL01-0101-0518-14T1:Ethernet29
+interface FortyGigE0/1/0/17 bundle id 1018 mode active
+interface FortyGigE0/1/0/17 priority-flow-control mode on
+interface FortyGigE0/1/0/17 load-interval 30
+interface HundredGigE0/1/0/18 description LVL01-0101-0519-14T1:Ethernet7/1
+interface HundredGigE0/1/0/18 bundle id 1019 mode active
+interface HundredGigE0/1/0/18 priority-flow-control mode on
+interface HundredGigE0/1/0/18 load-interval 30
+interface FortyGigE0/1/0/19 description LVL01-0101-0520-14T1:Ethernet29
+interface FortyGigE0/1/0/19 bundle id 1020 mode active
+interface FortyGigE0/1/0/19 priority-flow-control mode on
+interface FortyGigE0/1/0/19 load-interval 30
+interface HundredGigE0/1/0/20 description LVL01-0101-0521-14T1:etp25
+interface HundredGigE0/1/0/20 bundle id 1021 mode active
+interface HundredGigE0/1/0/20 priority-flow-control mode on
+interface HundredGigE0/1/0/20 load-interval 30
+interface HundredGigE0/1/0/21 description LVL01-0101-0522-14T1:Ethernet7/1
+interface HundredGigE0/1/0/21 bundle id 1022 mode active
+interface HundredGigE0/1/0/21 priority-flow-control mode on
+interface HundredGigE0/1/0/21 load-interval 30
+interface HundredGigE0/1/0/22 description LVL01-0101-0523-14T1:Ethernet7/1
+interface HundredGigE0/1/0/22 bundle id 1023 mode active
+interface HundredGigE0/1/0/22 priority-flow-control mode on
+interface HundredGigE0/1/0/22 load-interval 30
+interface HundredGigE0/1/0/23 description LVL01-0101-0601-14T1:etp25
+interface HundredGigE0/1/0/23 bundle id 1024 mode active
+interface HundredGigE0/1/0/23 priority-flow-control mode on
+interface HundredGigE0/1/0/23 load-interval 30
+interface HundredGigE0/1/0/24 description LVL01-0101-0602-14T1:Ethernet7/1
+interface HundredGigE0/1/0/24 bundle id 1025 mode active
+interface HundredGigE0/1/0/24 priority-flow-control mode on
+interface HundredGigE0/1/0/24 load-interval 30
+interface HundredGigE0/1/0/25 description LVL01-0101-0603-14T1:Ethernet7/1
+interface HundredGigE0/1/0/25 bundle id 1026 mode active
+interface HundredGigE0/1/0/25 priority-flow-control mode on
+interface HundredGigE0/1/0/25 load-interval 30
+interface HundredGigE0/1/0/26 description LVL01-0101-0604-14T1:Ethernet7/1
+interface HundredGigE0/1/0/26 bundle id 1027 mode active
+interface HundredGigE0/1/0/26 priority-flow-control mode on
+interface HundredGigE0/1/0/26 load-interval 30
+interface HundredGigE0/1/0/27 description LVL01-0101-0605-14T1:Ethernet7/1
+interface HundredGigE0/1/0/27 bundle id 1028 mode active
+interface HundredGigE0/1/0/27 priority-flow-control mode on
+interface HundredGigE0/1/0/27 load-interval 30
+interface HundredGigE0/1/0/28 description LVL01-0101-0606-14T1:Ethernet7/1
+interface HundredGigE0/1/0/28 bundle id 1029 mode active
+interface HundredGigE0/1/0/28 priority-flow-control mode on
+interface HundredGigE0/1/0/28 load-interval 30
+interface HundredGigE0/1/0/29 description LVL01-0101-0607-14T1:Ethernet7/1
+interface HundredGigE0/1/0/29 bundle id 1030 mode active
+interface HundredGigE0/1/0/29 priority-flow-control mode on
+interface HundredGigE0/1/0/29 load-interval 30
+interface HundredGigE0/1/0/30 description LVL01-0101-0608-14T1:Ethernet7/1
+interface HundredGigE0/1/0/30 bundle id 1031 mode active
+interface HundredGigE0/1/0/30 priority-flow-control mode on
+interface HundredGigE0/1/0/30 load-interval 30
+interface HundredGigE0/1/0/31 description LVL01-0101-0609-14T1:Ethernet7/1
+interface HundredGigE0/1/0/31 bundle id 1032 mode active
+interface HundredGigE0/1/0/31 priority-flow-control mode on
+interface HundredGigE0/1/0/31 load-interval 30
+interface HundredGigE0/1/0/32 description LVL01-0101-0610-14T1:Ethernet7/1
+interface HundredGigE0/1/0/32 bundle id 1033 mode active
+interface HundredGigE0/1/0/32 priority-flow-control mode on
+interface HundredGigE0/1/0/32 load-interval 30
+interface HundredGigE0/1/0/33 description LVL01-0101-0611-14T1:Ethernet7/1
+interface HundredGigE0/1/0/33 bundle id 1034 mode active
+interface HundredGigE0/1/0/33 priority-flow-control mode on
+interface HundredGigE0/1/0/33 load-interval 30
+interface HundredGigE0/1/0/34 description LVL01-0101-0612-14T1:Ethernet7/1
+interface HundredGigE0/1/0/34 bundle id 1035 mode active
+interface HundredGigE0/1/0/34 priority-flow-control mode on
+interface HundredGigE0/1/0/34 load-interval 30
+interface HundredGigE0/1/0/35 description LVL01-0101-0901-14T1:Ethernet7/1
+interface HundredGigE0/1/0/35 bundle id 1036 mode active
+interface HundredGigE0/1/0/35 priority-flow-control mode on
+interface HundredGigE0/1/0/35 load-interval 30
+interface HundredGigE0/1/0/36 description LVL01-0101-0902-14T1:Ethernet7/1
+interface HundredGigE0/1/0/36 bundle id 1037 mode active
+interface HundredGigE0/1/0/36 priority-flow-control mode on
+interface HundredGigE0/1/0/36 load-interval 30
+interface HundredGigE0/1/0/37 description LVL01-0101-0903-14T1:Ethernet7/1
+interface HundredGigE0/1/0/37 bundle id 1038 mode active
+interface HundredGigE0/1/0/37 priority-flow-control mode on
+interface HundredGigE0/1/0/37 load-interval 30
+interface HundredGigE0/1/0/38 description LVL01-0101-0904-14T1:Ethernet7/1
+interface HundredGigE0/1/0/38 bundle id 1039 mode active
+interface HundredGigE0/1/0/38 priority-flow-control mode on
+interface HundredGigE0/1/0/38 load-interval 30
+interface HundredGigE0/1/0/39 description LVL01-0101-0613-14T1:Ethernet7/1
+interface HundredGigE0/1/0/39 bundle id 1040 mode active
+interface HundredGigE0/1/0/39 priority-flow-control mode on
+interface HundredGigE0/1/0/39 load-interval 30
+interface HundredGigE0/1/0/40 description LVL01-0101-0905-14T1:etp25
+interface HundredGigE0/1/0/40 bundle id 1041 mode active
+interface HundredGigE0/1/0/40 priority-flow-control mode on
+interface HundredGigE0/1/0/40 load-interval 30
+interface HundredGigE0/1/0/41 description LVL01-0101-0906-14T1:Ethernet7/1
+interface HundredGigE0/1/0/41 bundle id 1042 mode active
+interface HundredGigE0/1/0/41 priority-flow-control mode on
+interface HundredGigE0/1/0/41 load-interval 30
+interface HundredGigE0/1/0/42 description LVL01-0101-0907-14T1:Ethernet7/1
+interface HundredGigE0/1/0/42 bundle id 1043 mode active
+interface HundredGigE0/1/0/42 priority-flow-control mode on
+interface HundredGigE0/1/0/42 load-interval 30
+interface HundredGigE0/1/0/43 description LVL01-0101-0908-14T1:Ethernet7/1
+interface HundredGigE0/1/0/43 bundle id 1044 mode active
+interface HundredGigE0/1/0/43 priority-flow-control mode on
+interface HundredGigE0/1/0/43 load-interval 30
+interface HundredGigE0/1/0/44 description LVL01-0101-0909-14T1:Ethernet7/1
+interface HundredGigE0/1/0/44 bundle id 1045 mode active
+interface HundredGigE0/1/0/44 priority-flow-control mode on
+interface HundredGigE0/1/0/44 load-interval 30
+interface HundredGigE0/1/0/45 description LVL01-0101-0614-14T1:Ethernet7/1
+interface HundredGigE0/1/0/45 bundle id 1046 mode active
+interface HundredGigE0/1/0/45 priority-flow-control mode on
+interface HundredGigE0/1/0/45 load-interval 30
+interface HundredGigE0/1/0/46 description LVL01-0101-0615-14T1:Ethernet7/1
+interface HundredGigE0/1/0/46 bundle id 1047 mode active
+interface HundredGigE0/1/0/46 priority-flow-control mode on
+interface HundredGigE0/1/0/46 load-interval 30
+interface HundredGigE0/1/0/47 description LVL01-0101-0616-14T1:Ethernet7/1
+interface HundredGigE0/1/0/47 bundle id 1048 mode active
+interface HundredGigE0/1/0/47 priority-flow-control mode on
+interface HundredGigE0/1/0/47 load-interval 30
+interface HundredGigE0/2/0/0 description LVL01-0101-0910-14T1:Ethernet7/1
+interface HundredGigE0/2/0/0 bundle id 1049 mode active
+interface HundredGigE0/2/0/0 priority-flow-control mode on
+interface HundredGigE0/2/0/0 load-interval 30
+interface HundredGigE0/2/0/1 description LVL01-0101-0911-14T1:etp25
+interface HundredGigE0/2/0/1 bundle id 1050 mode active
+interface HundredGigE0/2/0/1 priority-flow-control mode on
+interface HundredGigE0/2/0/1 load-interval 30
+interface HundredGigE0/2/0/2 description LVL01-0101-0912-14T1:etp25
+interface HundredGigE0/2/0/2 bundle id 1051 mode active
+interface HundredGigE0/2/0/2 priority-flow-control mode on
+interface HundredGigE0/2/0/2 load-interval 30
+interface HundredGigE0/2/0/3 description LVL01-0101-0913-14T1:etp25
+interface HundredGigE0/2/0/3 bundle id 1052 mode active
+interface HundredGigE0/2/0/3 priority-flow-control mode on
+interface HundredGigE0/2/0/3 load-interval 30
+interface HundredGigE0/2/0/4 description LVL01-0101-0914-14T1:etp25
+interface HundredGigE0/2/0/4 bundle id 1053 mode active
+interface HundredGigE0/2/0/4 priority-flow-control mode on
+interface HundredGigE0/2/0/4 load-interval 30
+interface HundredGigE0/2/0/5 description LVL01-0101-0617-14T1:etp25
+interface HundredGigE0/2/0/5 bundle id 1054 mode active
+interface HundredGigE0/2/0/5 priority-flow-control mode on
+interface HundredGigE0/2/0/5 load-interval 30
+interface HundredGigE0/2/0/6 description LVL01-0101-0618-14T1:etp25
+interface HundredGigE0/2/0/6 bundle id 1055 mode active
+interface HundredGigE0/2/0/6 priority-flow-control mode on
+interface HundredGigE0/2/0/6 load-interval 30
+interface HundredGigE0/2/0/7 description LVL01-0101-0619-14T1:Ethernet7/1
+interface HundredGigE0/2/0/7 bundle id 1056 mode active
+interface HundredGigE0/2/0/7 priority-flow-control mode on
+interface HundredGigE0/2/0/7 load-interval 30
+interface HundredGigE0/2/0/8 description LVL01-0101-0620-14T1:Ethernet7/1
+interface HundredGigE0/2/0/8 bundle id 1057 mode active
+interface HundredGigE0/2/0/8 priority-flow-control mode on
+interface HundredGigE0/2/0/8 load-interval 30
+interface HundredGigE0/2/0/9 description LVL01-0101-0915-14T1:Ethernet7/1
+interface HundredGigE0/2/0/9 bundle id 1058 mode active
+interface HundredGigE0/2/0/9 priority-flow-control mode on
+interface HundredGigE0/2/0/9 load-interval 30
+interface HundredGigE0/2/0/10 description LVL01-0101-0916-14T1:Ethernet7/1
+interface HundredGigE0/2/0/10 bundle id 1059 mode active
+interface HundredGigE0/2/0/10 priority-flow-control mode on
+interface HundredGigE0/2/0/10 load-interval 30
+interface HundredGigE0/2/0/11 description LVL01-0101-0621-14T1:Ethernet7/1
+interface HundredGigE0/2/0/11 bundle id 1060 mode active
+interface HundredGigE0/2/0/11 priority-flow-control mode on
+interface HundredGigE0/2/0/11 load-interval 30
+interface HundredGigE0/2/0/12 description LVL01-0101-0622-14T1:Ethernet7/1
+interface HundredGigE0/2/0/12 bundle id 1061 mode active
+interface HundredGigE0/2/0/12 priority-flow-control mode on
+interface HundredGigE0/2/0/12 load-interval 30
+interface HundredGigE0/2/0/13 description LVL01-0101-0917-14T1:Ethernet7/1
+interface HundredGigE0/2/0/13 bundle id 1062 mode active
+interface HundredGigE0/2/0/13 priority-flow-control mode on
+interface HundredGigE0/2/0/13 load-interval 30
+interface HundredGigE0/2/0/14 description LVL01-0101-0918-14T1:Ethernet7/1
+interface HundredGigE0/2/0/14 bundle id 1063 mode active
+interface HundredGigE0/2/0/14 priority-flow-control mode on
+interface HundredGigE0/2/0/14 load-interval 30
+interface HundredGigE0/2/0/15 description LVL01-0101-0919-14T1:Ethernet7/1
+interface HundredGigE0/2/0/15 bundle id 1064 mode active
+interface HundredGigE0/2/0/15 priority-flow-control mode on
+interface HundredGigE0/2/0/15 load-interval 30
+interface HundredGigE0/2/0/16 shutdown
+interface HundredGigE0/2/0/17 shutdown
+interface HundredGigE0/2/0/18 shutdown
+interface HundredGigE0/2/0/19 shutdown
+interface HundredGigE0/2/0/20 shutdown
+interface HundredGigE0/2/0/21 shutdown
+interface HundredGigE0/2/0/22 shutdown
+interface HundredGigE0/2/0/23 shutdown
+interface HundredGigE0/2/0/24 shutdown
+interface HundredGigE0/2/0/25 shutdown
+interface HundredGigE0/2/0/26 shutdown
+interface HundredGigE0/2/0/27 shutdown
+interface HundredGigE0/2/0/28 shutdown
+interface HundredGigE0/2/0/29 shutdown
+interface HundredGigE0/2/0/30 shutdown
+interface HundredGigE0/2/0/31 shutdown
+interface HundredGigE0/2/0/32 shutdown
+interface HundredGigE0/2/0/33 shutdown
+interface HundredGigE0/2/0/34 shutdown
+interface HundredGigE0/2/0/35 shutdown
+interface HundredGigE0/2/0/36 shutdown
+interface HundredGigE0/2/0/37 shutdown
+interface HundredGigE0/2/0/38 shutdown
+interface HundredGigE0/2/0/39 shutdown
+interface HundredGigE0/2/0/40 shutdown
+interface HundredGigE0/2/0/41 shutdown
+interface HundredGigE0/2/0/42 shutdown
+interface HundredGigE0/2/0/43 shutdown
+interface HundredGigE0/2/0/44 shutdown
+interface HundredGigE0/2/0/45 shutdown
+interface HundredGigE0/2/0/46 shutdown
+interface HundredGigE0/2/0/47 shutdown
+interface PTP0/RP0/CPU0/0 shutdown
+interface preconfigure HundredGigE0/1/0/17 
+interface preconfigure HundredGigE0/1/0/17 shutdown
+interface preconfigure HundredGigE0/1/0/19 
+interface preconfigure HundredGigE0/1/0/19 shutdown
+!
+prefix-set SLASH32
+  0.0.0.0/0 ge 32
+end-set
+!
+prefix-set DEFAULT_IPV4
+  0.0.0.0/0
+end-set
+!
+prefix-set DEFAULT_IPV6
+  ::/0
+end-set
+!
+prefix-set PRIVATE_IPV4
+  10.0.0.0/8 le 32,
+  21.0.0.0/8 le 32,
+  22.0.0.0/8 le 32,
+  25.0.0.0/8 le 32,
+  100.64.0.0/10 le 32,
+  172.16.0.0/12 le 32,
+  192.168.0.0/16 le 32
+end-set
+!
+as-path-set SLB_ASN
+  ios-regex '_65511_',
+  ios-regex '_64523_'
+end-set
+!
+as-path-set WAN_ASNS
+  ios-regex '_8075_',
+  ios-regex '_8074_',
+  ios-regex '_8072_'
+end-set
+!
+as-path-set CORE_ASNS
+  ios-regex '_8075_'
+end-set
+!
+as-path-set T2_LOOPBACK
+  ios-regex '^$'
+end-set
+!
+community-set NO_EXPORT
+  no-export
+end-set
+!
+community-set LEAK_COMMUNITY
+  8075:10400
+end-set
+!
+community-set FABRIC_INFRA_COMMUNITY
+  8075:316
+end-set
+!
+community-set INREGION_LEAK_COMMUNITY
+  8075:8848
+end-set
+!
+route-policy TO_RH_V4
+  if (as-path in WAN_ASNS) then
+    drop
+  elseif (destination in DEFAULT_IPV4) then
+    drop
+  else
+    pass
+  endif
+end-policy
+!
+route-policy TO_RH_V6
+  if (as-path in WAN_ASNS) then
+    drop
+  elseif (destination in DEFAULT_IPV6) then
+    drop
+  else
+    pass
+  endif
+end-policy
+!
+route-policy FROM_RH_V4
+  if (destination in DEFAULT_IPV4) then
+    pass
+  elseif (community matches-any LEAK_COMMUNITY) then
+    pass
+  elseif (community matches-any INREGION_LEAK_COMMUNITY) then
+    pass
+  elseif (community matches-any FABRIC_INFRA_COMMUNITY) then
+    pass
+  else
+    drop
+  endif
+end-policy
+!
+route-policy FROM_RH_V6
+  if (destination in DEFAULT_IPV6) then
+    pass
+  elseif (community matches-any LEAK_COMMUNITY) then
+    pass
+  elseif (community matches-any INREGION_LEAK_COMMUNITY) then
+    pass
+  elseif (community matches-any FABRIC_INFRA_COMMUNITY) then
+    pass
+  else
+    drop
+  endif
+end-policy
+!
+route-policy TO_TIER1_V4
+  if (destination in DEFAULT_IPV4) then
+    pass
+  elseif (community matches-any LEAK_COMMUNITY) then
+    pass
+  elseif (community matches-any INREGION_LEAK_COMMUNITY) then
+    pass
+  elseif (as-path in SLB_ASN) then
+    drop
+  elseif (as-path in T2_LOOPBACK) then
+    pass
+  elseif (destination in SLASH32) then
+    drop
+  elseif (destination in PRIVATE_IPV4) then
+    pass
+  else
+    drop
+  endif
+end-policy
+!
+route-policy TO_TIER1_V6
+  if (destination in DEFAULT_IPV6) then
+    pass
+  elseif (community matches-any LEAK_COMMUNITY) then
+    pass
+  elseif (community matches-any INREGION_LEAK_COMMUNITY) then
+    pass
+  elseif (as-path in T2_LOOPBACK) then
+    pass
+  else
+    drop
+  endif
+end-policy
+!
+route-policy TO_TIER3_V4
+  pass
+end-policy
+!
+route-policy TO_TIER3_V6
+  pass
+end-policy
+!
+route-policy TO_BGPMON_V4
+  pass
+end-policy
+!
+route-policy TO_BGPMON_V6
+  pass
+end-policy
+!
+route-policy FROM_TIER1_V4
+  pass
+end-policy
+!
+route-policy FROM_TIER1_V6
+  pass
+end-policy
+!
+route-policy FROM_TIER3_V4
+  if (destination in DEFAULT_IPV4) then
+    pass
+  elseif (community matches-any LEAK_COMMUNITY) then
+    pass
+  elseif (as-path in CORE_ASNS) then
+    drop
+  elseif (community matches-any NO_EXPORT) then
+    pass
+  else
+    set community (no-export) additive
+  endif
+end-policy
+!
+route-policy FROM_TIER3_V6
+  if (destination in DEFAULT_IPV6) then
+    pass
+  elseif (community matches-any LEAK_COMMUNITY) then
+    pass
+  elseif (as-path in CORE_ASNS) then
+    drop
+  elseif (community matches-any NO_EXPORT) then
+    pass
+  else
+    set community (no-export) additive
+  endif
+end-policy
+!
+route-policy FROM_BGPMON_V4
+  drop
+end-policy
+!
+route-policy FROM_BGPMON_V6
+  drop
+end-policy
+!
+router static vrf MGMT 
+router static vrf MGMT address-family ipv4 unicast 0.0.0.0/0 25.117.172.193
+router static vrf MGMT address-family ipv6 unicast 2000::/3 2603:10e2:41:5403::1
+snmp-server traps isis all
+snmp-server traps ospfv3 errors bad-packet
+snmp-server traps ospfv3 errors config-error
+snmp-server traps ospfv3 errors virt-bad-packet
+snmp-server traps ospfv3 state-change if-state-change
+snmp-server traps ospfv3 state-change neighbor-state-change
+snmp-server traps ospfv3 state-change virtif-state-change
+snmp-server traps ospfv3 state-change virtneighbor-state-change
+snmp-server traps ospfv3 state-change restart-status-change
+snmp-server traps ospfv3 state-change restart-virtual-helper-status-change
+snmp-server traps bgp cbgp2
+snmp-server traps bgp
+router bgp 64922 
+router bgp 64922 bgp router-id 25.117.169.216
+router bgp 64922 bgp log neighbor changes detail
+router bgp 64922 nexthop resolution allow-default
+router bgp 64922 bgp bestpath as-path multipath-relax
+router bgp 64922 address-family ipv4 unicast 
+router bgp 64922 address-family ipv4 unicast maximum-paths eibgp 128
+router bgp 64922 address-family ipv4 unicast network 25.117.169.216/32
+router bgp 64922 address-family ipv6 unicast 
+router bgp 64922 address-family ipv6 unicast maximum-paths eibgp 128
+router bgp 64922 address-family ipv6 unicast network 2603:10b0:531:18::/128
+router bgp 64922 address-family ipv6 unicast aggregate-address 2603:10b0:531:18::/64 summary-only
+router bgp 64922 neighbor-group RH_V4 
+router bgp 64922 neighbor-group RH_V4 graceful-maintenance 
+router bgp 64922 neighbor-group RH_V4 graceful-maintenance as-prepends 3
+router bgp 64922 neighbor-group RH_V4 address-family ipv4 unicast 
+router bgp 64922 neighbor-group RH_V4 address-family ipv4 unicast send-community-ebgp
+router bgp 64922 neighbor-group RH_V4 address-family ipv4 unicast route-policy FROM_RH_V4 in
+router bgp 64922 neighbor-group RH_V4 address-family ipv4 unicast maximum-prefix 64000 90 warning-only
+router bgp 64922 neighbor-group RH_V4 address-family ipv4 unicast route-policy TO_RH_V4 out
+router bgp 64922 neighbor-group RH_V4 address-family ipv4 unicast soft-reconfiguration inbound always
+router bgp 64922 neighbor-group RH_V6 
+router bgp 64922 neighbor-group RH_V6 graceful-maintenance 
+router bgp 64922 neighbor-group RH_V6 graceful-maintenance as-prepends 3
+router bgp 64922 neighbor-group RH_V6 address-family ipv6 unicast 
+router bgp 64922 neighbor-group RH_V6 address-family ipv6 unicast send-community-ebgp
+router bgp 64922 neighbor-group RH_V6 address-family ipv6 unicast route-policy FROM_RH_V6 in
+router bgp 64922 neighbor-group RH_V6 address-family ipv6 unicast maximum-prefix 64000 90 warning-only
+router bgp 64922 neighbor-group RH_V6 address-family ipv6 unicast route-policy TO_RH_V6 out
+router bgp 64922 neighbor-group RH_V6 address-family ipv6 unicast soft-reconfiguration inbound always
+router bgp 64922 neighbor-group TIER1_V4 
+router bgp 64922 neighbor-group TIER1_V4 graceful-maintenance 
+router bgp 64922 neighbor-group TIER1_V4 graceful-maintenance as-prepends 3
+router bgp 64922 neighbor-group TIER1_V4 address-family ipv4 unicast 
+router bgp 64922 neighbor-group TIER1_V4 address-family ipv4 unicast send-community-ebgp
+router bgp 64922 neighbor-group TIER1_V4 address-family ipv4 unicast route-policy FROM_TIER1_V4 in
+router bgp 64922 neighbor-group TIER1_V4 address-family ipv4 unicast maximum-prefix 64000 90 warning-only
+router bgp 64922 neighbor-group TIER1_V4 address-family ipv4 unicast route-policy TO_TIER1_V4 out
+router bgp 64922 neighbor-group TIER1_V4 address-family ipv4 unicast soft-reconfiguration inbound always
+router bgp 64922 neighbor-group TIER1_V6 
+router bgp 64922 neighbor-group TIER1_V6 graceful-maintenance 
+router bgp 64922 neighbor-group TIER1_V6 graceful-maintenance as-prepends 3
+router bgp 64922 neighbor-group TIER1_V6 address-family ipv6 unicast 
+router bgp 64922 neighbor-group TIER1_V6 address-family ipv6 unicast send-community-ebgp
+router bgp 64922 neighbor-group TIER1_V6 address-family ipv6 unicast route-policy FROM_TIER1_V6 in
+router bgp 64922 neighbor-group TIER1_V6 address-family ipv6 unicast maximum-prefix 64000 90 warning-only
+router bgp 64922 neighbor-group TIER1_V6 address-family ipv6 unicast route-policy TO_TIER1_V6 out
+router bgp 64922 neighbor-group TIER1_V6 address-family ipv6 unicast soft-reconfiguration inbound always
+router bgp 64922 neighbor-group TIER3_V4 
+router bgp 64922 neighbor-group TIER3_V4 graceful-maintenance 
+router bgp 64922 neighbor-group TIER3_V4 graceful-maintenance as-prepends 3
+router bgp 64922 neighbor-group TIER3_V4 address-family ipv4 unicast 
+router bgp 64922 neighbor-group TIER3_V4 address-family ipv4 unicast send-community-ebgp
+router bgp 64922 neighbor-group TIER3_V4 address-family ipv4 unicast route-policy FROM_TIER3_V4 in
+router bgp 64922 neighbor-group TIER3_V4 address-family ipv4 unicast maximum-prefix 64000 90 warning-only
+router bgp 64922 neighbor-group TIER3_V4 address-family ipv4 unicast route-policy TO_TIER3_V4 out
+router bgp 64922 neighbor-group TIER3_V4 address-family ipv4 unicast soft-reconfiguration inbound always
+router bgp 64922 neighbor-group TIER3_V6 
+router bgp 64922 neighbor-group TIER3_V6 graceful-maintenance 
+router bgp 64922 neighbor-group TIER3_V6 graceful-maintenance as-prepends 3
+router bgp 64922 neighbor-group TIER3_V6 address-family ipv6 unicast 
+router bgp 64922 neighbor-group TIER3_V6 address-family ipv6 unicast send-community-ebgp
+router bgp 64922 neighbor-group TIER3_V6 address-family ipv6 unicast route-policy FROM_TIER3_V6 in
+router bgp 64922 neighbor-group TIER3_V6 address-family ipv6 unicast maximum-prefix 64000 90 warning-only
+router bgp 64922 neighbor-group TIER3_V6 address-family ipv6 unicast route-policy TO_TIER3_V6 out
+router bgp 64922 neighbor-group TIER3_V6 address-family ipv6 unicast soft-reconfiguration inbound always
+router bgp 64922 neighbor-group BGPMON_V4 
+router bgp 64922 neighbor-group BGPMON_V4 graceful-maintenance 
+router bgp 64922 neighbor-group BGPMON_V4 graceful-maintenance as-prepends 3
+router bgp 64922 neighbor-group BGPMON_V4 update-source Loopback0
+router bgp 64922 neighbor-group BGPMON_V4 address-family ipv4 unicast 
+router bgp 64922 neighbor-group BGPMON_V4 address-family ipv4 unicast route-policy FROM_BGPMON_V4 in
+router bgp 64922 neighbor-group BGPMON_V4 address-family ipv4 unicast route-policy TO_BGPMON_V4 out
+router bgp 64922 neighbor-group BGPMON_V4 address-family ipv6 unicast 
+router bgp 64922 neighbor-group BGPMON_V4 address-family ipv6 unicast route-policy FROM_BGPMON_V6 in
+router bgp 64922 neighbor-group BGPMON_V4 address-family ipv6 unicast route-policy TO_BGPMON_V6 out
+router bgp 64922 neighbor 10.10.3.0 
+router bgp 64922 neighbor 10.10.3.0 remote-as 64915
+router bgp 64922 neighbor 10.10.3.0 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.3.0 description BN6-0100-0100-05RHE
+router bgp 64922 neighbor 10.10.4.0 
+router bgp 64922 neighbor 10.10.4.0 remote-as 64915
+router bgp 64922 neighbor 10.10.4.0 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.4.0 shutdown
+router bgp 64922 neighbor 10.10.4.0 description BN6-0100-0200-01RHE
+router bgp 64922 neighbor 10.10.5.0 
+router bgp 64922 neighbor 10.10.5.0 remote-as 64915
+router bgp 64922 neighbor 10.10.5.0 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.5.0 shutdown
+router bgp 64922 neighbor 10.10.5.0 description BN6-0100-0200-05RHE
+router bgp 64922 neighbor 10.10.0.16 
+router bgp 64922 neighbor 10.10.0.16 remote-as 64915
+router bgp 64922 neighbor 10.10.0.16 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.0.16 description BN6-0100-0100-01RHE
+router bgp 64922 neighbor 10.10.0.80 
+router bgp 64922 neighbor 10.10.0.80 remote-as 64915
+router bgp 64922 neighbor 10.10.0.80 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.0.80 description BN6-0100-0100-02RHE
+router bgp 64922 neighbor 10.10.3.64 
+router bgp 64922 neighbor 10.10.3.64 remote-as 64915
+router bgp 64922 neighbor 10.10.3.64 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.3.64 shutdown
+router bgp 64922 neighbor 10.10.3.64 description BN6-0100-0100-06RHE
+router bgp 64922 neighbor 10.10.4.64 
+router bgp 64922 neighbor 10.10.4.64 remote-as 64915
+router bgp 64922 neighbor 10.10.4.64 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.4.64 description BN6-0100-0200-02RHE
+router bgp 64922 neighbor 10.10.5.64 
+router bgp 64922 neighbor 10.10.5.64 remote-as 64915
+router bgp 64922 neighbor 10.10.5.64 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.5.64 description BN6-0100-0200-06RHE
+router bgp 64922 neighbor 10.10.2.128 
+router bgp 64922 neighbor 10.10.2.128 remote-as 64915
+router bgp 64922 neighbor 10.10.2.128 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.2.128 description BN6-0100-0100-03RHE
+router bgp 64922 neighbor 10.10.2.192 
+router bgp 64922 neighbor 10.10.2.192 remote-as 64915
+router bgp 64922 neighbor 10.10.2.192 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.2.192 description BN6-0100-0100-04RHE
+router bgp 64922 neighbor 10.10.3.128 
+router bgp 64922 neighbor 10.10.3.128 remote-as 64915
+router bgp 64922 neighbor 10.10.3.128 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.3.128 description BN6-0100-0100-07RHE
+router bgp 64922 neighbor 10.10.3.192 
+router bgp 64922 neighbor 10.10.3.192 remote-as 64915
+router bgp 64922 neighbor 10.10.3.192 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.3.192 description BN6-0100-0100-08RHE
+router bgp 64922 neighbor 10.10.4.128 
+router bgp 64922 neighbor 10.10.4.128 remote-as 64915
+router bgp 64922 neighbor 10.10.4.128 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.4.128 description BN6-0100-0200-03RHE
+router bgp 64922 neighbor 10.10.4.192 
+router bgp 64922 neighbor 10.10.4.192 remote-as 64915
+router bgp 64922 neighbor 10.10.4.192 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.4.192 description BN6-0100-0200-04RHE
+router bgp 64922 neighbor 10.10.5.128 
+router bgp 64922 neighbor 10.10.5.128 remote-as 64915
+router bgp 64922 neighbor 10.10.5.128 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.5.128 description BN6-0100-0200-07RHE
+router bgp 64922 neighbor 10.10.5.192 
+router bgp 64922 neighbor 10.10.5.192 remote-as 64915
+router bgp 64922 neighbor 10.10.5.192 use neighbor-group RH_V4
+router bgp 64922 neighbor 10.10.5.192 description BN6-0100-0200-08RHE
+router bgp 64922 neighbor 10.106.96.1 
+router bgp 64922 neighbor 10.106.96.1 remote-as 64801
+router bgp 64922 neighbor 10.106.96.1 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.1 description LVL01-0101-0501-14T1
+router bgp 64922 neighbor 10.106.96.3 
+router bgp 64922 neighbor 10.106.96.3 remote-as 64802
+router bgp 64922 neighbor 10.106.96.3 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.3 description LVL01-0101-0502-14T1
+router bgp 64922 neighbor 10.106.96.5 
+router bgp 64922 neighbor 10.106.96.5 remote-as 64803
+router bgp 64922 neighbor 10.106.96.5 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.5 description LVL01-0101-0503-14T1
+router bgp 64922 neighbor 10.106.96.7 
+router bgp 64922 neighbor 10.106.96.7 remote-as 64804
+router bgp 64922 neighbor 10.106.96.7 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.7 description LVL01-0101-0504-14T1
+router bgp 64922 neighbor 10.106.96.9 
+router bgp 64922 neighbor 10.106.96.9 remote-as 64805
+router bgp 64922 neighbor 10.106.96.9 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.9 description LVL01-0101-0505-14T1
+router bgp 64922 neighbor 10.106.96.11 
+router bgp 64922 neighbor 10.106.96.11 remote-as 64806
+router bgp 64922 neighbor 10.106.96.11 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.11 description LVL01-0101-0506-14T1
+router bgp 64922 neighbor 10.106.96.13 
+router bgp 64922 neighbor 10.106.96.13 remote-as 64807
+router bgp 64922 neighbor 10.106.96.13 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.13 description LVL01-0101-0507-14T1
+router bgp 64922 neighbor 10.106.96.15 
+router bgp 64922 neighbor 10.106.96.15 remote-as 64808
+router bgp 64922 neighbor 10.106.96.15 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.15 description LVL01-0101-0508-14T1
+router bgp 64922 neighbor 10.106.96.17 
+router bgp 64922 neighbor 10.106.96.17 remote-as 64809
+router bgp 64922 neighbor 10.106.96.17 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.17 description LVL01-0101-0509-14T1
+router bgp 64922 neighbor 10.106.96.19 
+router bgp 64922 neighbor 10.106.96.19 remote-as 64810
+router bgp 64922 neighbor 10.106.96.19 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.19 description LVL01-0101-0510-14T1
+router bgp 64922 neighbor 10.106.96.21 
+router bgp 64922 neighbor 10.106.96.21 remote-as 64811
+router bgp 64922 neighbor 10.106.96.21 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.21 description LVL01-0101-0511-14T1
+router bgp 64922 neighbor 10.106.96.23 
+router bgp 64922 neighbor 10.106.96.23 remote-as 64812
+router bgp 64922 neighbor 10.106.96.23 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.23 description LVL01-0101-0512-14T1
+router bgp 64922 neighbor 10.106.96.25 
+router bgp 64922 neighbor 10.106.96.25 remote-as 64813
+router bgp 64922 neighbor 10.106.96.25 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.25 description LVL01-0101-0513-14T1
+router bgp 64922 neighbor 10.106.96.27 
+router bgp 64922 neighbor 10.106.96.27 remote-as 64814
+router bgp 64922 neighbor 10.106.96.27 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.27 description LVL01-0101-0514-14T1
+router bgp 64922 neighbor 10.106.96.29 
+router bgp 64922 neighbor 10.106.96.29 remote-as 64815
+router bgp 64922 neighbor 10.106.96.29 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.29 description LVL01-0101-0515-14T1
+router bgp 64922 neighbor 10.106.96.31 
+router bgp 64922 neighbor 10.106.96.31 remote-as 64816
+router bgp 64922 neighbor 10.106.96.31 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.31 description LVL01-0101-0516-14T1
+router bgp 64922 neighbor 10.106.96.33 
+router bgp 64922 neighbor 10.106.96.33 remote-as 64817
+router bgp 64922 neighbor 10.106.96.33 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.33 description LVL01-0101-0517-14T1
+router bgp 64922 neighbor 10.106.96.35 
+router bgp 64922 neighbor 10.106.96.35 remote-as 64818
+router bgp 64922 neighbor 10.106.96.35 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.35 description LVL01-0101-0518-14T1
+router bgp 64922 neighbor 10.106.96.37 
+router bgp 64922 neighbor 10.106.96.37 remote-as 64819
+router bgp 64922 neighbor 10.106.96.37 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.37 description LVL01-0101-0519-14T1
+router bgp 64922 neighbor 10.106.96.39 
+router bgp 64922 neighbor 10.106.96.39 remote-as 64820
+router bgp 64922 neighbor 10.106.96.39 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.39 description LVL01-0101-0520-14T1
+router bgp 64922 neighbor 10.106.96.41 
+router bgp 64922 neighbor 10.106.96.41 remote-as 64821
+router bgp 64922 neighbor 10.106.96.41 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.41 description LVL01-0101-0521-14T1
+router bgp 64922 neighbor 10.106.96.43 
+router bgp 64922 neighbor 10.106.96.43 remote-as 64822
+router bgp 64922 neighbor 10.106.96.43 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.43 description LVL01-0101-0522-14T1
+router bgp 64922 neighbor 10.106.96.45 
+router bgp 64922 neighbor 10.106.96.45 remote-as 64823
+router bgp 64922 neighbor 10.106.96.45 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.45 description LVL01-0101-0523-14T1
+router bgp 64922 neighbor 10.106.96.47 
+router bgp 64922 neighbor 10.106.96.47 remote-as 64824
+router bgp 64922 neighbor 10.106.96.47 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.47 description LVL01-0101-0601-14T1
+router bgp 64922 neighbor 10.106.96.49 
+router bgp 64922 neighbor 10.106.96.49 remote-as 64825
+router bgp 64922 neighbor 10.106.96.49 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.49 description LVL01-0101-0602-14T1
+router bgp 64922 neighbor 10.106.96.51 
+router bgp 64922 neighbor 10.106.96.51 remote-as 64826
+router bgp 64922 neighbor 10.106.96.51 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.51 description LVL01-0101-0603-14T1
+router bgp 64922 neighbor 10.106.96.53 
+router bgp 64922 neighbor 10.106.96.53 remote-as 64827
+router bgp 64922 neighbor 10.106.96.53 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.53 description LVL01-0101-0604-14T1
+router bgp 64922 neighbor 10.106.96.55 
+router bgp 64922 neighbor 10.106.96.55 remote-as 64828
+router bgp 64922 neighbor 10.106.96.55 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.55 description LVL01-0101-0605-14T1
+router bgp 64922 neighbor 10.106.96.57 
+router bgp 64922 neighbor 10.106.96.57 remote-as 64829
+router bgp 64922 neighbor 10.106.96.57 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.57 description LVL01-0101-0606-14T1
+router bgp 64922 neighbor 10.106.96.59 
+router bgp 64922 neighbor 10.106.96.59 remote-as 64830
+router bgp 64922 neighbor 10.106.96.59 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.59 description LVL01-0101-0607-14T1
+router bgp 64922 neighbor 10.106.96.61 
+router bgp 64922 neighbor 10.106.96.61 remote-as 64831
+router bgp 64922 neighbor 10.106.96.61 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.61 description LVL01-0101-0608-14T1
+router bgp 64922 neighbor 10.106.96.63 
+router bgp 64922 neighbor 10.106.96.63 remote-as 64832
+router bgp 64922 neighbor 10.106.96.63 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.63 description LVL01-0101-0609-14T1
+router bgp 64922 neighbor 10.106.96.65 
+router bgp 64922 neighbor 10.106.96.65 remote-as 64833
+router bgp 64922 neighbor 10.106.96.65 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.65 description LVL01-0101-0610-14T1
+router bgp 64922 neighbor 10.106.96.67 
+router bgp 64922 neighbor 10.106.96.67 remote-as 64834
+router bgp 64922 neighbor 10.106.96.67 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.67 description LVL01-0101-0611-14T1
+router bgp 64922 neighbor 10.106.96.69 
+router bgp 64922 neighbor 10.106.96.69 remote-as 64835
+router bgp 64922 neighbor 10.106.96.69 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.69 description LVL01-0101-0612-14T1
+router bgp 64922 neighbor 10.106.96.71 
+router bgp 64922 neighbor 10.106.96.71 remote-as 64836
+router bgp 64922 neighbor 10.106.96.71 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.71 description LVL01-0101-0901-14T1
+router bgp 64922 neighbor 10.106.96.73 
+router bgp 64922 neighbor 10.106.96.73 remote-as 64837
+router bgp 64922 neighbor 10.106.96.73 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.73 description LVL01-0101-0902-14T1
+router bgp 64922 neighbor 10.106.96.75 
+router bgp 64922 neighbor 10.106.96.75 remote-as 64838
+router bgp 64922 neighbor 10.106.96.75 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.75 description LVL01-0101-0903-14T1
+router bgp 64922 neighbor 10.106.96.77 
+router bgp 64922 neighbor 10.106.96.77 remote-as 64839
+router bgp 64922 neighbor 10.106.96.77 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.77 description LVL01-0101-0904-14T1
+router bgp 64922 neighbor 10.106.96.79 
+router bgp 64922 neighbor 10.106.96.79 remote-as 64840
+router bgp 64922 neighbor 10.106.96.79 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.79 description LVL01-0101-0613-14T1
+router bgp 64922 neighbor 10.106.96.81 
+router bgp 64922 neighbor 10.106.96.81 remote-as 64841
+router bgp 64922 neighbor 10.106.96.81 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.81 description LVL01-0101-0905-14T1
+router bgp 64922 neighbor 10.106.96.83 
+router bgp 64922 neighbor 10.106.96.83 remote-as 64842
+router bgp 64922 neighbor 10.106.96.83 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.83 description LVL01-0101-0906-14T1
+router bgp 64922 neighbor 10.106.96.85 
+router bgp 64922 neighbor 10.106.96.85 remote-as 64843
+router bgp 64922 neighbor 10.106.96.85 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.85 description LVL01-0101-0907-14T1
+router bgp 64922 neighbor 10.106.96.87 
+router bgp 64922 neighbor 10.106.96.87 remote-as 64844
+router bgp 64922 neighbor 10.106.96.87 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.87 description LVL01-0101-0908-14T1
+router bgp 64922 neighbor 10.106.96.89 
+router bgp 64922 neighbor 10.106.96.89 remote-as 64845
+router bgp 64922 neighbor 10.106.96.89 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.89 description LVL01-0101-0909-14T1
+router bgp 64922 neighbor 10.106.96.91 
+router bgp 64922 neighbor 10.106.96.91 remote-as 64846
+router bgp 64922 neighbor 10.106.96.91 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.91 description LVL01-0101-0614-14T1
+router bgp 64922 neighbor 10.106.96.93 
+router bgp 64922 neighbor 10.106.96.93 remote-as 64847
+router bgp 64922 neighbor 10.106.96.93 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.93 description LVL01-0101-0615-14T1
+router bgp 64922 neighbor 10.106.96.95 
+router bgp 64922 neighbor 10.106.96.95 remote-as 64848
+router bgp 64922 neighbor 10.106.96.95 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.95 description LVL01-0101-0616-14T1
+router bgp 64922 neighbor 10.106.96.97 
+router bgp 64922 neighbor 10.106.96.97 remote-as 64849
+router bgp 64922 neighbor 10.106.96.97 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.97 description LVL01-0101-0910-14T1
+router bgp 64922 neighbor 10.106.96.99 
+router bgp 64922 neighbor 10.106.96.99 remote-as 64850
+router bgp 64922 neighbor 10.106.96.99 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.99 description LVL01-0101-0911-14T1
+router bgp 64922 neighbor 10.106.96.101 
+router bgp 64922 neighbor 10.106.96.101 remote-as 64851
+router bgp 64922 neighbor 10.106.96.101 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.101 description LVL01-0101-0912-14T1
+router bgp 64922 neighbor 10.106.96.103 
+router bgp 64922 neighbor 10.106.96.103 remote-as 64852
+router bgp 64922 neighbor 10.106.96.103 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.103 description LVL01-0101-0913-14T1
+router bgp 64922 neighbor 10.106.96.105 
+router bgp 64922 neighbor 10.106.96.105 remote-as 64853
+router bgp 64922 neighbor 10.106.96.105 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.105 description LVL01-0101-0914-14T1
+router bgp 64922 neighbor 10.106.96.107 
+router bgp 64922 neighbor 10.106.96.107 remote-as 64854
+router bgp 64922 neighbor 10.106.96.107 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.107 description LVL01-0101-0617-14T1
+router bgp 64922 neighbor 10.106.96.109 
+router bgp 64922 neighbor 10.106.96.109 remote-as 64855
+router bgp 64922 neighbor 10.106.96.109 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.109 description LVL01-0101-0618-14T1
+router bgp 64922 neighbor 10.106.96.111 
+router bgp 64922 neighbor 10.106.96.111 remote-as 64856
+router bgp 64922 neighbor 10.106.96.111 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.111 description LVL01-0101-0619-14T1
+router bgp 64922 neighbor 10.106.96.113 
+router bgp 64922 neighbor 10.106.96.113 remote-as 64857
+router bgp 64922 neighbor 10.106.96.113 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.113 description LVL01-0101-0620-14T1
+router bgp 64922 neighbor 10.106.96.115 
+router bgp 64922 neighbor 10.106.96.115 remote-as 64858
+router bgp 64922 neighbor 10.106.96.115 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.115 description LVL01-0101-0915-14T1
+router bgp 64922 neighbor 10.106.96.117 
+router bgp 64922 neighbor 10.106.96.117 remote-as 64859
+router bgp 64922 neighbor 10.106.96.117 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.117 description LVL01-0101-0916-14T1
+router bgp 64922 neighbor 10.106.96.119 
+router bgp 64922 neighbor 10.106.96.119 remote-as 64860
+router bgp 64922 neighbor 10.106.96.119 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.119 description LVL01-0101-0621-14T1
+router bgp 64922 neighbor 10.106.96.121 
+router bgp 64922 neighbor 10.106.96.121 remote-as 64861
+router bgp 64922 neighbor 10.106.96.121 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.121 description LVL01-0101-0622-14T1
+router bgp 64922 neighbor 10.106.96.123 
+router bgp 64922 neighbor 10.106.96.123 remote-as 64862
+router bgp 64922 neighbor 10.106.96.123 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.123 description LVL01-0101-0917-14T1
+router bgp 64922 neighbor 10.106.96.125 
+router bgp 64922 neighbor 10.106.96.125 remote-as 64863
+router bgp 64922 neighbor 10.106.96.125 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.125 description LVL01-0101-0918-14T1
+router bgp 64922 neighbor 10.106.96.127 
+router bgp 64922 neighbor 10.106.96.127 remote-as 64864
+router bgp 64922 neighbor 10.106.96.127 use neighbor-group TIER1_V4
+router bgp 64922 neighbor 10.106.96.127 description LVL01-0101-0919-14T1
+router bgp 64922 neighbor 10.52.180.163 
+router bgp 64922 neighbor 10.52.180.163 remote-as 64922
+router bgp 64922 neighbor 10.52.180.163 use neighbor-group BGPMON_V4
+router bgp 64922 neighbor 10.52.180.163 description BGPMonitor
+router bgp 64922 neighbor 2603:10b0:531:18::6 
+router bgp 64922 neighbor 2603:10b0:531:18::6 remote-as 64801
+router bgp 64922 neighbor 2603:10b0:531:18::6 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::6 description LVL01-0101-0501-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::a 
+router bgp 64922 neighbor 2603:10b0:531:18::a remote-as 64802
+router bgp 64922 neighbor 2603:10b0:531:18::a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::a description LVL01-0101-0502-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::e 
+router bgp 64922 neighbor 2603:10b0:531:18::e remote-as 64803
+router bgp 64922 neighbor 2603:10b0:531:18::e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::e description LVL01-0101-0503-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::12 
+router bgp 64922 neighbor 2603:10b0:531:18::12 remote-as 64804
+router bgp 64922 neighbor 2603:10b0:531:18::12 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::12 description LVL01-0101-0504-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::16 
+router bgp 64922 neighbor 2603:10b0:531:18::16 remote-as 64805
+router bgp 64922 neighbor 2603:10b0:531:18::16 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::16 description LVL01-0101-0505-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::1a 
+router bgp 64922 neighbor 2603:10b0:531:18::1a remote-as 64806
+router bgp 64922 neighbor 2603:10b0:531:18::1a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::1a description LVL01-0101-0506-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::1e 
+router bgp 64922 neighbor 2603:10b0:531:18::1e remote-as 64807
+router bgp 64922 neighbor 2603:10b0:531:18::1e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::1e description LVL01-0101-0507-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::22 
+router bgp 64922 neighbor 2603:10b0:531:18::22 remote-as 64808
+router bgp 64922 neighbor 2603:10b0:531:18::22 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::22 description LVL01-0101-0508-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::26 
+router bgp 64922 neighbor 2603:10b0:531:18::26 remote-as 64809
+router bgp 64922 neighbor 2603:10b0:531:18::26 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::26 description LVL01-0101-0509-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::2a 
+router bgp 64922 neighbor 2603:10b0:531:18::2a remote-as 64810
+router bgp 64922 neighbor 2603:10b0:531:18::2a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::2a description LVL01-0101-0510-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::2e 
+router bgp 64922 neighbor 2603:10b0:531:18::2e remote-as 64811
+router bgp 64922 neighbor 2603:10b0:531:18::2e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::2e description LVL01-0101-0511-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::32 
+router bgp 64922 neighbor 2603:10b0:531:18::32 remote-as 64812
+router bgp 64922 neighbor 2603:10b0:531:18::32 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::32 description LVL01-0101-0512-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::32 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::32 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::36 
+router bgp 64922 neighbor 2603:10b0:531:18::36 remote-as 64813
+router bgp 64922 neighbor 2603:10b0:531:18::36 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::36 description LVL01-0101-0513-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::3a 
+router bgp 64922 neighbor 2603:10b0:531:18::3a remote-as 64814
+router bgp 64922 neighbor 2603:10b0:531:18::3a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::3a description LVL01-0101-0514-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::3a address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::3a address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::3e 
+router bgp 64922 neighbor 2603:10b0:531:18::3e remote-as 64815
+router bgp 64922 neighbor 2603:10b0:531:18::3e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::3e description LVL01-0101-0515-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::42 
+router bgp 64922 neighbor 2603:10b0:531:18::42 remote-as 64816
+router bgp 64922 neighbor 2603:10b0:531:18::42 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::42 description LVL01-0101-0516-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::42 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::42 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::46 
+router bgp 64922 neighbor 2603:10b0:531:18::46 remote-as 64817
+router bgp 64922 neighbor 2603:10b0:531:18::46 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::46 description LVL01-0101-0517-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::46 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::46 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::4a 
+router bgp 64922 neighbor 2603:10b0:531:18::4a remote-as 64818
+router bgp 64922 neighbor 2603:10b0:531:18::4a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::4a description LVL01-0101-0518-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::4a address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::4a address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::4e 
+router bgp 64922 neighbor 2603:10b0:531:18::4e remote-as 64819
+router bgp 64922 neighbor 2603:10b0:531:18::4e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::4e description LVL01-0101-0519-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::4e address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::4e address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::52 
+router bgp 64922 neighbor 2603:10b0:531:18::52 remote-as 64820
+router bgp 64922 neighbor 2603:10b0:531:18::52 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::52 description LVL01-0101-0520-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::52 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::52 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::56 
+router bgp 64922 neighbor 2603:10b0:531:18::56 remote-as 64821
+router bgp 64922 neighbor 2603:10b0:531:18::56 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::56 description LVL01-0101-0521-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::56 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::56 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::5a 
+router bgp 64922 neighbor 2603:10b0:531:18::5a remote-as 64822
+router bgp 64922 neighbor 2603:10b0:531:18::5a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::5a description LVL01-0101-0522-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::5e 
+router bgp 64922 neighbor 2603:10b0:531:18::5e remote-as 64823
+router bgp 64922 neighbor 2603:10b0:531:18::5e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::5e description LVL01-0101-0523-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::5e address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::5e address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::62 
+router bgp 64922 neighbor 2603:10b0:531:18::62 remote-as 64824
+router bgp 64922 neighbor 2603:10b0:531:18::62 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::62 description LVL01-0101-0601-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::62 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::62 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::66 
+router bgp 64922 neighbor 2603:10b0:531:18::66 remote-as 64825
+router bgp 64922 neighbor 2603:10b0:531:18::66 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::66 description LVL01-0101-0602-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::6a 
+router bgp 64922 neighbor 2603:10b0:531:18::6a remote-as 64826
+router bgp 64922 neighbor 2603:10b0:531:18::6a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::6a description LVL01-0101-0603-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::6e 
+router bgp 64922 neighbor 2603:10b0:531:18::6e remote-as 64827
+router bgp 64922 neighbor 2603:10b0:531:18::6e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::6e description LVL01-0101-0604-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::72 
+router bgp 64922 neighbor 2603:10b0:531:18::72 remote-as 64828
+router bgp 64922 neighbor 2603:10b0:531:18::72 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::72 description LVL01-0101-0605-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::72 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::72 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::76 
+router bgp 64922 neighbor 2603:10b0:531:18::76 remote-as 64829
+router bgp 64922 neighbor 2603:10b0:531:18::76 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::76 description LVL01-0101-0606-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::7a 
+router bgp 64922 neighbor 2603:10b0:531:18::7a remote-as 64830
+router bgp 64922 neighbor 2603:10b0:531:18::7a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::7a description LVL01-0101-0607-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::7e 
+router bgp 64922 neighbor 2603:10b0:531:18::7e remote-as 64831
+router bgp 64922 neighbor 2603:10b0:531:18::7e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::7e description LVL01-0101-0608-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::82 
+router bgp 64922 neighbor 2603:10b0:531:18::82 remote-as 64832
+router bgp 64922 neighbor 2603:10b0:531:18::82 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::82 description LVL01-0101-0609-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::82 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::82 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::86 
+router bgp 64922 neighbor 2603:10b0:531:18::86 remote-as 64833
+router bgp 64922 neighbor 2603:10b0:531:18::86 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::86 description LVL01-0101-0610-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::8a 
+router bgp 64922 neighbor 2603:10b0:531:18::8a remote-as 64834
+router bgp 64922 neighbor 2603:10b0:531:18::8a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::8a description LVL01-0101-0611-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::8a address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::8a address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::8e 
+router bgp 64922 neighbor 2603:10b0:531:18::8e remote-as 64835
+router bgp 64922 neighbor 2603:10b0:531:18::8e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::8e description LVL01-0101-0612-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::8e address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::8e address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::92 
+router bgp 64922 neighbor 2603:10b0:531:18::92 remote-as 64836
+router bgp 64922 neighbor 2603:10b0:531:18::92 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::92 description LVL01-0101-0901-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::96 
+router bgp 64922 neighbor 2603:10b0:531:18::96 remote-as 64837
+router bgp 64922 neighbor 2603:10b0:531:18::96 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::96 description LVL01-0101-0902-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::9a 
+router bgp 64922 neighbor 2603:10b0:531:18::9a remote-as 64838
+router bgp 64922 neighbor 2603:10b0:531:18::9a use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::9a description LVL01-0101-0903-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::9e 
+router bgp 64922 neighbor 2603:10b0:531:18::9e remote-as 64839
+router bgp 64922 neighbor 2603:10b0:531:18::9e use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::9e description LVL01-0101-0904-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::a2 
+router bgp 64922 neighbor 2603:10b0:531:18::a2 remote-as 64840
+router bgp 64922 neighbor 2603:10b0:531:18::a2 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::a2 description LVL01-0101-0613-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::a2 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::a2 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::a6 
+router bgp 64922 neighbor 2603:10b0:531:18::a6 remote-as 64841
+router bgp 64922 neighbor 2603:10b0:531:18::a6 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::a6 description LVL01-0101-0905-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::a6 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::a6 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::aa 
+router bgp 64922 neighbor 2603:10b0:531:18::aa remote-as 64842
+router bgp 64922 neighbor 2603:10b0:531:18::aa use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::aa description LVL01-0101-0906-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::ae 
+router bgp 64922 neighbor 2603:10b0:531:18::ae remote-as 64843
+router bgp 64922 neighbor 2603:10b0:531:18::ae use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::ae description LVL01-0101-0907-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::b2 
+router bgp 64922 neighbor 2603:10b0:531:18::b2 remote-as 64844
+router bgp 64922 neighbor 2603:10b0:531:18::b2 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::b2 description LVL01-0101-0908-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::b6 
+router bgp 64922 neighbor 2603:10b0:531:18::b6 remote-as 64845
+router bgp 64922 neighbor 2603:10b0:531:18::b6 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::b6 description LVL01-0101-0909-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::b6 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::b6 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::ba 
+router bgp 64922 neighbor 2603:10b0:531:18::ba remote-as 64846
+router bgp 64922 neighbor 2603:10b0:531:18::ba use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::ba description LVL01-0101-0614-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::be 
+router bgp 64922 neighbor 2603:10b0:531:18::be remote-as 64847
+router bgp 64922 neighbor 2603:10b0:531:18::be use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::be description LVL01-0101-0615-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::c2 
+router bgp 64922 neighbor 2603:10b0:531:18::c2 remote-as 64848
+router bgp 64922 neighbor 2603:10b0:531:18::c2 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::c2 description LVL01-0101-0616-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::c6 
+router bgp 64922 neighbor 2603:10b0:531:18::c6 remote-as 64849
+router bgp 64922 neighbor 2603:10b0:531:18::c6 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::c6 description LVL01-0101-0910-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::c6 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::c6 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::ca 
+router bgp 64922 neighbor 2603:10b0:531:18::ca remote-as 64850
+router bgp 64922 neighbor 2603:10b0:531:18::ca use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::ca description LVL01-0101-0911-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::ce 
+router bgp 64922 neighbor 2603:10b0:531:18::ce remote-as 64851
+router bgp 64922 neighbor 2603:10b0:531:18::ce use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::ce description LVL01-0101-0912-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::d2 
+router bgp 64922 neighbor 2603:10b0:531:18::d2 remote-as 64852
+router bgp 64922 neighbor 2603:10b0:531:18::d2 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::d2 description LVL01-0101-0913-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::d6 
+router bgp 64922 neighbor 2603:10b0:531:18::d6 remote-as 64853
+router bgp 64922 neighbor 2603:10b0:531:18::d6 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::d6 description LVL01-0101-0914-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::da 
+router bgp 64922 neighbor 2603:10b0:531:18::da remote-as 64854
+router bgp 64922 neighbor 2603:10b0:531:18::da use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::da description LVL01-0101-0617-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::da address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::da address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::de 
+router bgp 64922 neighbor 2603:10b0:531:18::de remote-as 64855
+router bgp 64922 neighbor 2603:10b0:531:18::de use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::de description LVL01-0101-0618-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::de address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::de address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::e2 
+router bgp 64922 neighbor 2603:10b0:531:18::e2 remote-as 64856
+router bgp 64922 neighbor 2603:10b0:531:18::e2 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::e2 description LVL01-0101-0619-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::e6 
+router bgp 64922 neighbor 2603:10b0:531:18::e6 remote-as 64857
+router bgp 64922 neighbor 2603:10b0:531:18::e6 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::e6 description LVL01-0101-0620-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::ea 
+router bgp 64922 neighbor 2603:10b0:531:18::ea remote-as 64858
+router bgp 64922 neighbor 2603:10b0:531:18::ea use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::ea description LVL01-0101-0915-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::ee 
+router bgp 64922 neighbor 2603:10b0:531:18::ee remote-as 64859
+router bgp 64922 neighbor 2603:10b0:531:18::ee use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::ee description LVL01-0101-0916-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::f2 
+router bgp 64922 neighbor 2603:10b0:531:18::f2 remote-as 64860
+router bgp 64922 neighbor 2603:10b0:531:18::f2 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::f2 description LVL01-0101-0621-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::f6 
+router bgp 64922 neighbor 2603:10b0:531:18::f6 remote-as 64861
+router bgp 64922 neighbor 2603:10b0:531:18::f6 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::f6 description LVL01-0101-0622-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::fa 
+router bgp 64922 neighbor 2603:10b0:531:18::fa remote-as 64862
+router bgp 64922 neighbor 2603:10b0:531:18::fa use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::fa description LVL01-0101-0917-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::fe 
+router bgp 64922 neighbor 2603:10b0:531:18::fe remote-as 64863
+router bgp 64922 neighbor 2603:10b0:531:18::fe use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::fe description LVL01-0101-0918-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::fe address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::fe address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::102 
+router bgp 64922 neighbor 2603:10b0:531:18::102 remote-as 64864
+router bgp 64922 neighbor 2603:10b0:531:18::102 use neighbor-group TIER1_V6
+router bgp 64922 neighbor 2603:10b0:531:18::102 description LVL01-0101-0919-14T1
+router bgp 64922 neighbor 2603:10b0:531:18::102 address-family ipv4 unicast 
+router bgp 64922 neighbor 2603:10b0:531:18::102 address-family ipv6 unicast 
+router bgp 64922 neighbor 2603:10b0:504:8200::25 
+router bgp 64922 neighbor 2603:10b0:504:8200::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:8200::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:8200::25 description BN6-0100-0100-01RHE
+router bgp 64922 neighbor 2603:10b0:504:8201::25 
+router bgp 64922 neighbor 2603:10b0:504:8201::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:8201::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:8201::25 description BN6-0100-0100-02RHE
+router bgp 64922 neighbor 2603:10b0:504:8202::25 
+router bgp 64922 neighbor 2603:10b0:504:8202::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:8202::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:8202::25 description BN6-0100-0100-03RHE
+router bgp 64922 neighbor 2603:10b0:504:8203::25 
+router bgp 64922 neighbor 2603:10b0:504:8203::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:8203::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:8203::25 description BN6-0100-0100-04RHE
+router bgp 64922 neighbor 2603:10b0:504:8204::25 
+router bgp 64922 neighbor 2603:10b0:504:8204::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:8204::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:8204::25 description BN6-0100-0100-05RHE
+router bgp 64922 neighbor 2603:10b0:504:8205::25 
+router bgp 64922 neighbor 2603:10b0:504:8205::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:8205::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:8205::25 shutdown
+router bgp 64922 neighbor 2603:10b0:504:8205::25 description BN6-0100-0100-06RHE
+router bgp 64922 neighbor 2603:10b0:504:8206::25 
+router bgp 64922 neighbor 2603:10b0:504:8206::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:8206::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:8206::25 description BN6-0100-0100-07RHE
+router bgp 64922 neighbor 2603:10b0:504:8207::25 
+router bgp 64922 neighbor 2603:10b0:504:8207::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:8207::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:8207::25 description BN6-0100-0100-08RHE
+router bgp 64922 neighbor 2603:10b0:504:9200::25 
+router bgp 64922 neighbor 2603:10b0:504:9200::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:9200::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:9200::25 shutdown
+router bgp 64922 neighbor 2603:10b0:504:9200::25 description BN6-0100-0200-01RHE
+router bgp 64922 neighbor 2603:10b0:504:9201::25 
+router bgp 64922 neighbor 2603:10b0:504:9201::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:9201::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:9201::25 description BN6-0100-0200-02RHE
+router bgp 64922 neighbor 2603:10b0:504:9202::25 
+router bgp 64922 neighbor 2603:10b0:504:9202::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:9202::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:9202::25 description BN6-0100-0200-03RHE
+router bgp 64922 neighbor 2603:10b0:504:9203::25 
+router bgp 64922 neighbor 2603:10b0:504:9203::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:9203::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:9203::25 description BN6-0100-0200-04RHE
+router bgp 64922 neighbor 2603:10b0:504:9204::25 
+router bgp 64922 neighbor 2603:10b0:504:9204::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:9204::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:9204::25 shutdown
+router bgp 64922 neighbor 2603:10b0:504:9204::25 description BN6-0100-0200-05RHE
+router bgp 64922 neighbor 2603:10b0:504:9205::25 
+router bgp 64922 neighbor 2603:10b0:504:9205::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:9205::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:9205::25 description BN6-0100-0200-06RHE
+router bgp 64922 neighbor 2603:10b0:504:9206::25 
+router bgp 64922 neighbor 2603:10b0:504:9206::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:9206::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:9206::25 description BN6-0100-0200-07RHE
+router bgp 64922 neighbor 2603:10b0:504:9207::25 
+router bgp 64922 neighbor 2603:10b0:504:9207::25 remote-as 64915
+router bgp 64922 neighbor 2603:10b0:504:9207::25 use neighbor-group RH_V6
+router bgp 64922 neighbor 2603:10b0:504:9207::25 description BN6-0100-0200-08RHE
+snmp-server traps hsrp
+snmp-server traps vrrp events
+snmp-server traps vpls all
+snmp-server traps vpls status
+snmp-server traps vpls full-clear
+snmp-server traps vpls full-raise
+snmp-server traps l2vpn all
+snmp-server traps l2vpn vc-up
+snmp-server traps l2vpn vc-down
+snmp-server traps mpls traffic-eng up
+snmp-server traps mpls traffic-eng down
+snmp-server traps mpls traffic-eng reroute
+snmp-server traps mpls traffic-eng reoptimize
+snmp-server traps mpls frr all
+snmp-server traps mpls frr protected
+snmp-server traps mpls frr unprotected
+snmp-server traps mpls ldp up
+snmp-server traps mpls ldp down
+snmp-server traps mpls ldp threshold
+snmp-server traps mpls traffic-eng p2mp up
+snmp-server traps mpls traffic-eng p2mp down
+snmp-server traps rsvp all
+snmp-server traps rsvp new-flow
+snmp-server traps rsvp lost-flow
+snmp-server traps mpls l3vpn all
+snmp-server traps mpls l3vpn vrf-up
+snmp-server traps mpls l3vpn vrf-down
+snmp-server traps mpls l3vpn max-threshold-cleared
+snmp-server traps mpls l3vpn max-threshold-exceeded
+snmp-server traps mpls l3vpn mid-threshold-exceeded
+snmp-server traps mpls l3vpn max-threshold-reissue-notif-time 1
+snmp-server traps pim neighbor-change
+snmp-server traps pim invalid-message-received
+snmp-server traps pim rp-mapping-change
+snmp-server traps pim interface-state-change
+snmp-server traps msdp peer-state-change
+xml agent tty 
+xml agent tty session timeout 1440
+snmp-server traps sensor
+snmp-server traps fru-ctrl
+snmp-server traps ospf lsa lsa-maxage
+snmp-server traps ospf lsa lsa-originate
+snmp-server traps ospf errors bad-packet
+snmp-server traps ospf errors authentication-failure
+snmp-server traps ospf errors config-error
+snmp-server traps ospf errors virt-bad-packet
+snmp-server traps ospf errors virt-authentication-failure
+snmp-server traps ospf errors virt-config-error
+snmp-server traps ospf retransmit packets
+snmp-server traps ospf retransmit virt-packets
+snmp-server traps ospf state-change if-state-change
+snmp-server traps ospf state-change neighbor-state-change
+snmp-server traps ospf state-change virtif-state-change
+snmp-server traps ospf state-change virtneighbor-state-change
+lldp 
+lldp management enable
+macsec-policy macsec-xpn 
+macsec-policy macsec-xpn security-policy must-secure
+macsec-policy macsec-xpn cipher-suite GCM-AES-XPN-256
+macsec-policy macsec-xpn include-icv-indicator
+macsec-policy macsec-xpn key-server-priority 4
+macsec-policy macsec-xpn enable-legacy-fallback
+macsec-policy macsec-xpn sak-rekey-interval seconds 1800
+macsec-policy macsec-regional 
+macsec-policy macsec-regional security-policy should-secure
+macsec-policy macsec-regional cipher-suite GCM-AES-XPN-256
+macsec-policy macsec-regional include-icv-indicator
+macsec-policy macsec-regional key-server-priority 4
+macsec-policy macsec-regional enable-legacy-fallback
+macsec-policy macsec-regional sak-rekey-interval seconds 1800
+snmp-server traps fabric plane
+snmp-server traps fabric bundle link
+snmp-server traps fabric bundle state
+controller fabric mode five-fc FC-0-2-4-5-6
+snmp-server traps ipsec tunnel stop
+snmp-server traps ipsec tunnel start
+snmp-server traps isakmp tunnel stop
+snmp-server traps isakmp tunnel start
+ssh server logging
+ssh timeout 120
+ssh server rate-limit 600
+ssh server session-limit 20
+ssh server v2
+ssh server vrf MGMT ipv4 access-list ssh-only
+ssh server vrf default ipv4 access-list ssh-only
+hw-module profile cef ttl tunnel-ip decrement disable
+hw-module profile priority-flow-control location 0/0/CPU0 buffer-extended traffic-class 3 pause-threshold 3300 us
+hw-module profile priority-flow-control location 0/0/CPU0 buffer-extended traffic-class 4 pause-threshold 3300 us
+hw-module profile priority-flow-control location 0/1/CPU0 buffer-internal traffic-class 3 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/1/CPU0 buffer-internal traffic-class 4 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/2/CPU0 buffer-internal traffic-class 3 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/2/CPU0 buffer-internal traffic-class 4 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/3/CPU0 buffer-internal traffic-class 3 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/3/CPU0 buffer-internal traffic-class 4 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/4/CPU0 buffer-internal traffic-class 3 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/4/CPU0 buffer-internal traffic-class 4 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/5/CPU0 buffer-internal traffic-class 3 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/5/CPU0 buffer-internal traffic-class 4 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/6/CPU0 buffer-internal traffic-class 3 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/6/CPU0 buffer-internal traffic-class 4 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/7/CPU0 buffer-internal traffic-class 3 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+hw-module profile priority-flow-control location 0/7/CPU0 buffer-internal traffic-class 4 pause-threshold 403200 bytes headroom 441600 bytes ecn 224640 bytes
+snmp-server traps ipsla
+end
+

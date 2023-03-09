@@ -1,0 +1,1509 @@
+!Command: show running-config
+!Running configuration last done at: Thu Apr  7 23:49:41 2022
+!Time: Sat Apr 30 14:22:06 2022
+version 7.0(3)I7(7a) Bios:version 08.26 
+hostname AMS20-0101-0502-08T0
+class-map type network-qos RDMA
+match qos-group 4
+class-map type network-qos VOIP
+match qos-group 1
+class-map type network-qos PERFISO
+match qos-group 5
+class-map type network-qos SCAVENGER
+match qos-group 2
+class-map type network-qos LOSSLESSTCP
+match qos-group 3
+policy-map type network-qos QOS_NETWORK
+  class type network-qos VOIP
+    mtu 9100
+  class type network-qos SCAVENGER
+    mtu 9100
+  class type network-qos LOSSLESSTCP
+    mtu 2240
+    pause pfc-cos 3
+  class type network-qos RDMA
+    mtu 2240
+    pause pfc-cos 4
+  class type network-qos PERFISO
+    mtu 9100
+  class type network-qos class-default
+    mtu 9100
+vdc AMS20-0101-0502-08T0 id 1
+  limit-resource vlan minimum 16 maximum 4094
+  limit-resource vrf minimum 2 maximum 4096
+  limit-resource port-channel minimum 0 maximum 511
+  limit-resource u4route-mem minimum 248 maximum 248
+  limit-resource u6route-mem minimum 96 maximum 96
+  limit-resource m4route-mem minimum 58 maximum 58
+  limit-resource m6route-mem minimum 8 maximum 8
+feature bash-shell
+feature scp-server
+feature tacacs+
+feature bgp
+feature interface-vlan
+feature lacp
+feature dhcp
+feature tunnel
+feature lldp
+logging level ipfib 4
+mac address-table aging-time 14410
+role name default-role
+  description This is a system defined role and applies to all users.
+  rule 5 permit command show feature environment
+  rule 4 permit command show feature hardware
+  rule 3 permit command show feature module
+  rule 2 permit command show feature snmp
+  rule 1 permit command show feature system 
+role name tier1-ro
+  description Tier1 RO accounts
+  rule 6 permit command copy running-config *
+  rule 5 permit command telnet *
+  rule 4 permit command ssh *
+  rule 3 permit command traceroute *
+  rule 2 permit command ping *
+  rule 1 permit read  
+role name tier1-rw
+  description Tier1 RW Accounts
+  rule 7 permit command copy running-config *
+  rule 6 permit command clear *
+  rule 5 permit command telnet *
+  rule 4 permit command ssh *
+  rule 3 permit command traceroute *
+  rule 2 permit command ping *
+  rule 1 permit read  
+role name tools
+  description Tools Accounts
+  rule 2 permit command copy running-config *
+  rule 1 permit read  
+role name no-access
+  description No Access Accounts
+  rule 1 deny command *
+no password $PASS$
+username admin password 5 $PASS$  role network-admin
+username failback password 5 $PASS$  role network-admin
+no ip domain-lookup
+ip domain-name ntwk.msn.net use-vrf management
+tacacs-server key 7 $PASS$
+tacacs-server host 10.20.17.1 
+tacacs-server host 10.20.17.2 
+tacacs-server host 10.20.17.3 
+aaa group server tacacs+ tacacs 
+    server 10.20.17.1 
+    server 10.20.17.2 
+    server 10.20.17.3 
+    use-vrf management
+    source-interface mgmt0
+spanning-tree mode mst
+system jumbomtu 9100
+no logging event link-status default
+logging level ethpm link-up error
+logging level ethpm link-down error
+errdisable recovery interval 600
+errdisable recovery cause link-flap
+errdisable recovery cause bpduguard
+ip access-list SNMP_ACL
+  10 remark SNMP_ACL
+  20 permit udp 10.154.232.0/21 any 
+  30 permit udp 25.65.16.0/20 any 
+  40 permit udp 10.20.0.0/16 any 
+  50 permit udp 25.66.128.0/17 any 
+  60 permit udp 100.126.0.0/16 any 
+  70 permit udp 100.127.64.0/18 any 
+  80 permit udp 25.157.64.0/22 any 
+  90 permit udp 25.158.72.0/21 any 
+  100 permit udp 25.157.72.0/21 any 
+  110 permit udp 25.158.64.0/22 any 
+  120 permit udp 25.157.96.0/24 any 
+  130 permit udp 25.157.97.0/26 any 
+  140 permit udp 25.157.98.0/25 any 
+  150 permit udp 25.158.99.0/25 any 
+  160 permit udp 10.1.16.0/20 any 
+  170 permit udp 10.1.192.0/19 any 
+  180 remark permit PF
+ip access-list azure-snmp-only
+  10 remark azure-snmp-only
+  20 remark permit property access
+  30 permit udp 10.154.232.0/21 any eq snmp 
+  40 permit udp 25.65.16.0/20 any eq snmp 
+  50 remark permit PF
+  60 permit udp 25.66.128.0/17 any eq snmp 
+  80 permit udp 10.20.192.0/18 any eq snmp 
+  90 permit udp 10.61.255.87/32 any eq snmp 
+  100 permit udp 10.61.255.88/30 any eq snmp 
+  110 permit udp 10.61.255.92/32 any eq snmp 
+  120 permit udp 10.86.225.88/29 any eq snmp 
+  130 permit udp 10.86.225.96/27 any eq snmp 
+  140 permit udp 10.86.225.128/28 any eq snmp 
+  150 permit udp 10.234.124.64/27 any eq snmp 
+  160 permit udp 10.234.124.96/28 any eq snmp 
+  170 permit udp 10.234.124.112/29 any eq snmp 
+  180 permit udp 10.254.32.0/20 any eq snmp 
+  200 permit udp 25.66.129.48/32 any eq snmp 
+  210 permit udp 25.66.129.56/32 any eq snmp 
+  220 permit udp 25.66.140.175/32 any eq snmp 
+  230 permit udp 25.66.140.207/32 any eq snmp 
+  240 permit udp 25.66.168.221/32 any eq snmp 
+  250 permit udp 25.66.168.222/31 any eq snmp 
+  260 permit udp 25.66.168.251/32 any eq snmp 
+  270 permit udp 25.66.169.55/32 any eq snmp 
+  280 permit udp 25.75.16.82/32 any eq snmp 
+  290 permit udp 25.75.38.146/32 any eq snmp 
+  300 permit udp 25.75.38.210/32 any eq snmp 
+  330 permit udp 100.126.0.0/16 any eq snmp 
+  340 permit udp 100.127.64.0/18 any eq snmp 
+  350 permit udp 25.157.64.0/22 any eq snmp 
+  360 permit udp 25.158.72.0/21 any eq snmp 
+  370 permit udp 25.157.72.0/21 any eq snmp 
+  380 permit udp 25.158.64.0/22 any eq snmp 
+  390 permit udp 25.157.96.0/24 any eq snmp 
+  400 permit udp 25.157.97.0/26 any eq snmp 
+  410 permit udp 25.157.98.0/25 any eq snmp 
+  420 permit udp 25.158.99.0/25 any eq snmp 
+  430 permit udp 10.1.16.0/20 any eq snmp 
+  440 permit udp 10.1.192.0/19 any eq snmp 
+  450 permit udp 10.20.0.0/18 any eq snmp 
+  460 permit udp 10.97.136.0/22 any eq snmp 
+  470 permit udp 10.218.32.0/28 any eq snmp 
+  480 permit udp 10.254.45.128/27 any eq snmp 
+ip access-list everflow
+  10 remark NVS-Everflow_client
+  20 permit ip any 137.117.198.76/32 
+  30 permit ip 10.94.86.10/32 10.169.245.96/32 
+  40 permit ip 10.94.86.10/32 10.169.240.249/32 
+ipv6 access-list ipv6-ssh-only
+  10 remark ipv6-ssh-only
+  20 deny ipv6 any any 
+ip access-list mgmt-only
+  10 remark mgmt-only
+  20 remark ssh access for the vty.
+  30 permit tcp 10.20.0.0/18 any eq 22 
+  40 remark snmp access from the GIL.
+  50 permit udp 10.20.0.0/18 any eq snmp 
+  60 remark ICMP access for pings and traceroute
+  70 permit icmp any any 
+  80 remark general return traffic
+  90 permit tcp any any established 
+  100 remark NTP return traffic
+  110 permit udp 10.20.0.0/16 any eq ntp 
+  120 remark DNS return traffic
+  130 permit udp 10.20.0.0/16 eq domain any gt 1023 
+  140 remark traceroute return
+  150 permit udp any any range 33434 33523 
+  160 remark active ftp to the GIL.
+  170 permit tcp 10.20.0.0/18 eq ftp-data any gt 1023 
+  180 remark tftp to the GIL
+  190 permit udp 10.20.0.0/18 any gt 1023 
+  200 remark vpc packets
+  210 permit udp 10.0.0.0/8 any eq 3200 
+  220 remark permit SNMP Hosts
+  230 permit udp 10.20.0.0/16 any eq snmp 
+  240 permit udp 10.154.232.0/21 any eq snmp 
+  250 permit udp 25.65.16.0/20 any eq snmp 
+  260 remark permit PF
+  270 permit udp 25.66.128.0/17 any eq snmp 
+  280 permit tcp 25.66.128.0/17 any eq 22 
+  300 permit tcp 10.20.192.0/18 any eq 22 
+  310 permit tcp 10.61.255.87/32 any eq 22 
+  320 permit tcp 10.61.255.88/30 any eq 22 
+  330 permit tcp 10.61.255.92/32 any eq 22 
+  340 permit tcp 10.86.225.88/29 any eq 22 
+  350 permit tcp 10.86.225.96/27 any eq 22 
+  360 permit tcp 10.86.225.128/28 any eq 22 
+  370 permit tcp 10.234.124.64/27 any eq 22 
+  380 permit tcp 10.234.124.96/28 any eq 22 
+  390 permit tcp 10.234.124.112/29 any eq 22 
+  400 permit tcp 10.254.32.0/20 any eq 22 
+  420 permit tcp 25.66.129.48/32 any eq 22 
+  430 permit tcp 25.66.129.56/32 any eq 22 
+  440 permit tcp 25.66.140.175/32 any eq 22 
+  450 permit tcp 25.66.140.207/32 any eq 22 
+  460 permit tcp 25.66.168.221/32 any eq 22 
+  470 permit tcp 25.66.168.222/31 any eq 22 
+  480 permit tcp 25.66.168.251/32 any eq 22 
+  490 permit tcp 25.66.169.55/32 any eq 22 
+  500 permit tcp 25.75.16.82/32 any eq 22 
+  510 permit tcp 25.75.38.146/32 any eq 22 
+  520 permit tcp 25.75.38.210/32 any eq 22 
+  560 permit udp 10.20.192.0/18 any eq snmp 
+  570 permit udp 10.61.255.87/32 any eq snmp 
+  580 permit udp 10.61.255.88/30 any eq snmp 
+  590 permit udp 10.61.255.92/32 any eq snmp 
+  600 permit udp 10.86.225.88/29 any eq snmp 
+  610 permit udp 10.86.225.96/27 any eq snmp 
+  620 permit udp 10.86.225.128/28 any eq snmp 
+  630 permit udp 10.234.124.64/27 any eq snmp 
+  640 permit udp 10.234.124.96/28 any eq snmp 
+  650 permit udp 10.234.124.112/29 any eq snmp 
+  660 permit udp 10.254.32.0/20 any eq snmp 
+  680 permit udp 25.66.129.48/32 any eq snmp 
+  690 permit udp 25.66.129.56/32 any eq snmp 
+  700 permit udp 25.66.140.175/32 any eq snmp 
+  710 permit udp 25.66.140.207/32 any eq snmp 
+  720 permit udp 25.66.168.221/32 any eq snmp 
+  730 permit udp 25.66.168.222/31 any eq snmp 
+  740 permit udp 25.66.168.251/32 any eq snmp 
+  750 permit udp 25.66.169.55/32 any eq snmp 
+  760 permit udp 25.75.16.82/32 any eq snmp 
+  770 permit udp 25.75.38.146/32 any eq snmp 
+  780 permit udp 25.75.38.210/32 any eq snmp 
+  810 permit udp 100.126.0.0/16 any eq snmp 
+  820 permit tcp 100.126.0.0/16 any eq 22 
+  830 permit udp 100.127.64.0/18 any eq snmp 
+  840 permit tcp 100.127.64.0/18 any eq 22 
+  850 permit udp 25.157.64.0/22 any eq snmp 
+  860 permit tcp 25.157.64.0/22 any eq 22 
+  870 permit udp 25.158.72.0/21 any eq snmp 
+  880 permit tcp 25.158.72.0/21 any eq 22 
+  890 permit udp 25.157.72.0/21 any eq snmp 
+  900 permit tcp 25.157.72.0/21 any eq 22 
+  910 permit udp 25.158.64.0/22 any eq snmp 
+  920 permit tcp 25.158.64.0/22 any eq 22 
+  930 permit udp 25.157.96.0/24 any eq snmp 
+  940 permit tcp 25.157.96.0/24 any eq 22 
+  950 permit udp 25.157.97.0/26 any eq snmp 
+  960 permit tcp 25.157.97.0/26 any eq 22 
+  970 permit udp 25.157.98.0/25 any eq snmp 
+  980 permit tcp 25.157.98.0/25 any eq 22 
+  990 permit udp 25.158.99.0/25 any eq snmp 
+  1000 permit tcp 25.158.99.0/25 any eq 22 
+  1010 permit udp 10.1.16.0/20 any eq snmp 
+  1020 permit tcp 10.1.16.0/20 any eq 22 
+  1030 permit udp 10.1.192.0/19 any eq snmp 
+  1040 permit tcp 10.1.192.0/19 any eq 22 
+  1050 permit tcp 10.97.136.0/22 any eq 22 
+  1060 permit tcp 10.218.32.0/28 any eq 22 
+  1070 permit tcp 10.254.45.128/27 any eq 22 
+  1080 permit udp 10.97.136.0/22 any eq snmp 
+  1090 permit udp 10.218.32.0/28 any eq snmp 
+  1100 permit udp 10.254.45.128/27 any eq snmp 
+ip access-list ntp-deny
+  10 remark ntp-deny
+  20 deny ip any any 
+ip access-list ntp-peers
+  10 remark ntp-peers
+  20 permit ip 10.64.18.50/32 any 
+  30 permit ip 10.64.18.51/32 any 
+  40 permit ip 10.64.9.161/32 any 
+  50 permit ip 10.64.9.162/32 any 
+  60 permit ip 10.20.37.176/28 any 
+ip access-list snmp-only
+  10 remark snmp-only
+  20 permit udp 10.20.0.0/18 any 
+  40 permit udp 10.20.192.0/18 any eq snmp 
+  50 permit udp 10.61.255.87/32 any eq snmp 
+  60 permit udp 10.61.255.88/30 any eq snmp 
+  70 permit udp 10.61.255.92/32 any eq snmp 
+  80 permit udp 10.86.225.88/29 any eq snmp 
+  90 permit udp 10.86.225.96/27 any eq snmp 
+  100 permit udp 10.86.225.128/28 any eq snmp 
+  110 permit udp 10.234.124.64/27 any eq snmp 
+  120 permit udp 10.234.124.96/28 any eq snmp 
+  130 permit udp 10.234.124.112/29 any eq snmp 
+  140 permit udp 10.254.32.0/20 any eq snmp 
+  160 permit udp 25.66.129.48/32 any eq snmp 
+  170 permit udp 25.66.129.56/32 any eq snmp 
+  180 permit udp 25.66.140.175/32 any eq snmp 
+  190 permit udp 25.66.140.207/32 any eq snmp 
+  200 permit udp 25.66.168.221/32 any eq snmp 
+  210 permit udp 25.66.168.222/31 any eq snmp 
+  220 permit udp 25.66.168.251/32 any eq snmp 
+  230 permit udp 25.66.169.55/32 any eq snmp 
+  240 permit udp 25.75.16.82/32 any eq snmp 
+  250 permit udp 25.75.38.146/32 any eq snmp 
+  260 permit udp 25.75.38.210/32 any eq snmp 
+  290 permit udp 25.66.128.0/17 any 
+  300 permit udp 100.126.0.0/16 any 
+  310 permit udp 100.127.64.0/18 any 
+  320 permit udp 25.157.64.0/22 any 
+  330 permit udp 25.158.72.0/21 any 
+  340 permit udp 25.157.72.0/21 any 
+  350 permit udp 25.158.64.0/22 any 
+  360 permit udp 25.157.96.0/24 any 
+  370 permit udp 25.157.97.0/26 any 
+  380 permit udp 25.157.98.0/25 any 
+  390 permit udp 25.158.99.0/25 any 
+  400 permit udp 10.1.16.0/20 any 
+  410 permit udp 10.1.192.0/19 any 
+  420 permit udp 10.20.0.0/18 any eq snmp 
+  430 permit udp 10.97.136.0/22 any eq snmp 
+  440 permit udp 10.218.32.0/28 any eq snmp 
+  450 permit udp 10.254.45.128/27 any eq snmp 
+  460 remark permit PF
+ip access-list ssh-only
+  10 remark ssh-only
+  20 remark ACL used for VTY access controls
+  30 permit tcp 10.20.0.0/18 any eq 22 
+  40 remark permit PF
+  50 permit tcp 25.66.128.0/17 any eq 22 
+  60 permit tcp 100.126.0.0/16 any eq 22 
+  70 permit tcp 100.127.64.0/18 any eq 22 
+  80 permit tcp 25.157.64.0/22 any eq 22 
+  90 permit tcp 25.158.72.0/21 any eq 22 
+  100 permit tcp 25.157.72.0/21 any eq 22 
+  110 permit tcp 25.158.64.0/22 any eq 22 
+  120 permit tcp 25.157.96.0/24 any eq 22 
+  130 permit tcp 25.157.97.0/26 any eq 22 
+  140 permit tcp 25.157.98.0/25 any eq 22 
+  150 permit tcp 25.158.99.0/25 any eq 22 
+  160 permit tcp 10.1.16.0/20 any eq 22 
+  170 permit tcp 10.1.192.0/19 any eq 22 
+  180 permit tcp 10.20.192.0/18 any eq 22 
+  190 permit tcp 10.61.255.87/32 any eq 22 
+  200 permit tcp 10.61.255.88/30 any eq 22 
+  210 permit tcp 10.61.255.92/32 any eq 22 
+  220 permit tcp 10.86.225.88/29 any eq 22 
+  230 permit tcp 10.86.225.96/27 any eq 22 
+  240 permit tcp 10.86.225.128/28 any eq 22 
+  250 permit tcp 10.97.136.0/22 any eq 22 
+  260 permit tcp 10.218.32.0/28 any eq 22 
+  270 permit tcp 10.234.124.64/27 any eq 22 
+  280 permit tcp 10.234.124.96/28 any eq 22 
+  290 permit tcp 10.234.124.112/29 any eq 22 
+  300 permit tcp 10.254.32.0/20 any eq 22 
+  310 permit tcp 10.254.45.128/27 any eq 22 
+  320 permit tcp 25.66.129.48/32 any eq 22 
+  330 permit tcp 25.66.129.56/32 any eq 22 
+  340 permit tcp 25.66.140.175/32 any eq 22 
+  350 permit tcp 25.66.140.207/32 any eq 22 
+  360 permit tcp 25.66.168.221/32 any eq 22 
+  370 permit tcp 25.66.168.222/31 any eq 22 
+  380 permit tcp 25.66.168.251/32 any eq 22 
+  390 permit tcp 25.66.169.55/32 any eq 22 
+  400 permit tcp 25.75.16.82/32 any eq 22 
+  410 permit tcp 25.75.38.146/32 any eq 22 
+  420 permit tcp 25.75.38.210/32 any eq 22 
+vlan access-map everflow 10
+  match ip address everflow
+  action forward
+class-map type qos match-all RDMA
+  match dscp 4
+class-map type qos match-all VOIP
+  match dscp 46
+class-map type qos match-all PERFISO
+  match dscp 5
+class-map type qos match-all SCAVENGER
+  match dscp 8
+class-map type qos match-all LOSSLESSTCP
+  match dscp 3
+policy-map type qos QOS_MARKING
+  class VOIP
+    set qos-group 1
+  class SCAVENGER
+    set qos-group 2
+  class LOSSLESSTCP
+    set qos-group 3
+    set dlb-disable
+  class RDMA
+    set qos-group 4
+    set dlb-disable
+  class PERFISO
+    set qos-group 5
+policy-map type queuing QOS_QUEUEING
+  class type queuing c-out-8q-q1
+    bandwidth percent 5
+  class type queuing c-out-8q-q2
+    bandwidth percent 5
+  class type queuing c-out-8q-q3
+    bandwidth percent 20
+    random-detect minimum-threshold 1000 kbytes maximum-threshold 2000 kbytes drop-probability 5 weight 0 cap-average ecn
+  class type queuing c-out-8q-q4
+    bandwidth percent 20
+    random-detect minimum-threshold 1000 kbytes maximum-threshold 2000 kbytes drop-probability 5 weight 0 cap-average ecn
+  class type queuing c-out-8q-q5
+    bandwidth percent 20
+  class type queuing c-out-8q-q6
+    bandwidth percent 0
+  class type queuing c-out-8q-q7
+    bandwidth percent 0
+  class type queuing c-out-8q-q-default
+    bandwidth percent 20
+system qos
+  service-policy type queuing output QOS_QUEUEING
+  service-policy type network-qos QOS_NETWORK
+copp profile strict
+ip tftp source-interface loopback0
+snmp-server source-interface traps mgmt0
+snmp-server user admin network-admin auth md5 $PASS$ priv $PASS$ localizedkey
+snmp-server user failback network-admin auth md5 $PASS$ priv $PASS$ localizedkey
+snmp-server host 10.20.6.16 traps version 2c $PASS$
+snmp-server host 10.20.6.16 $PASS$ management
+rmon event 1 log trap public description FATAL(1) owner PMON@FATAL
+rmon event 2 log trap public description CRITICAL(2) owner PMON@CRITICAL
+rmon event 3 log trap public description ERROR(3) owner PMON@ERROR
+rmon event 4 log trap public description WARNING(4) owner PMON@WARNING
+rmon event 5 log trap public description INFORMATION(5) owner PMON@INFO
+snmp-server enable traps callhome event-notify
+snmp-server enable traps callhome smtp-send-fail
+snmp-server enable traps cfs state-change-notif
+snmp-server enable traps lldp lldpRemTablesChange
+snmp-server enable traps cfs merge-failure
+snmp-server enable traps aaa server-state-change
+snmp-server enable traps feature-control FeatureOpStatusChange
+snmp-server enable traps sysmgr cseFailSwCoreNotifyExtended
+snmp-server enable traps config ccmCLIRunningConfigChanged
+snmp-server enable traps snmp authentication
+snmp-server enable traps link cisco-xcvr-mon-status-chg
+snmp-server enable traps vtp notifs
+snmp-server enable traps vtp vlancreate
+snmp-server enable traps vtp vlandelete
+snmp-server enable traps bridge newroot
+snmp-server enable traps bridge topologychange
+snmp-server enable traps stpx inconsistency
+snmp-server enable traps stpx root-inconsistency
+snmp-server enable traps stpx loop-inconsistency
+snmp-server enable traps system Clock-change-notification
+snmp-server enable traps feature-control ciscoFeatOpStatusChange
+snmp-server community $PASS$ group network-operator
+snmp-server community $PASS$ group network-operator
+snmp-server community $PASS$ use-acl SNMP_ACL
+snmp-server community $PASS$ use-acl azure-snmp-only
+ntp server 10.64.9.161 use-vrf management
+ntp server 10.64.9.162 use-vrf management
+ntp server 10.64.18.50 use-vrf management
+ntp server 10.64.18.51 use-vrf management
+ntp source-interface  mgmt0
+ntp access-group peer ntp-peers
+ntp access-group serve ntp-deny
+ntp access-group serve-only ntp-deny
+ntp access-group query-only ntp-deny
+aaa authentication login default group tacacs 
+aaa authentication login console group tacacs 
+aaa authorization config-commands default group tacacs local 
+aaa authorization commands default group tacacs local 
+aaa accounting default group tacacs 
+aaa authentication login error-enable 
+aaa authentication login ascii-authentication 
+ip route 192.0.2.1/32 Null0
+ip source loopback0 icmp-errors
+ip icmp-errors source-interface loopback0
+ip arp timeout 300
+vlan 1,308,708,808
+spanning-tree port type edge bpduguard default
+no spanning-tree mst simulate pvst global
+ip prefix-list ALL_PREFIXES seq 5 permit 0.0.0.0/0 le 32 
+ip prefix-list Loopback1 seq 5 permit 10.20.8.199/32 
+ip prefix-list P2P_SUBNETS seq 5 permit 0.0.0.0/0 eq 31 
+ipv6 prefix-list ALL_PREFIXES_V6 seq 5 permit 0::/0 le 128 
+ipv6 prefix-list P2P_SUBNETS_V6 seq 5 permit 0::/0 eq 126 
+route-map DIRECT_ALLOW_V4 deny 10
+  match ip address prefix-list P2P_SUBNETS 
+route-map DIRECT_ALLOW_V4 deny 20
+  match ip address prefix-list Loopback1 
+route-map DIRECT_ALLOW_V4 permit 1000
+route-map DIRECT_ALLOW_V6 deny 10
+  match ipv6 address prefix-list P2P_SUBNETS_V6 
+route-map DIRECT_ALLOW_V6 permit 1000
+route-map FROM_BGP_MONITOR deny 1000
+  match ip address prefix-list ALL_PREFIXES 
+route-map FROM_BGP_MONITOR_V6 deny 1000
+  match ipv6 address prefix-list ALL_PREFIXES_V6 
+route-map FROM_BGP_SPEAKER permit 1000
+  match ip address prefix-list ALL_PREFIXES 
+route-map FROM_BGP_SPEAKER_V6 permit 1000
+  match ipv6 address prefix-list ALL_PREFIXES_V6 
+route-map TO_BGP_MONITOR permit 1000
+  match ip address prefix-list ALL_PREFIXES 
+route-map TO_BGP_MONITOR_V6 permit 1000
+  match ipv6 address prefix-list ALL_PREFIXES_V6 
+route-map TO_BGP_SPEAKER deny 1000
+  match ip address prefix-list ALL_PREFIXES 
+route-map TO_BGP_SPEAKER_V6 deny 1000
+  match ipv6 address prefix-list ALL_PREFIXES_V6 
+service dhcp
+ip dhcp relay
+ip dhcp relay information option
+ipv6 dhcp relay
+vrf context management
+  ip route 0.0.0.0/0 25.80.38.65
+  ipv6 route ::/0 2603:10e2:30:88c2::1
+hardware access-list tcam region racl 512
+hardware access-list tcam region vpc-convergence 0
+hardware access-list tcam region ifacl 512
+hardware access-list tcam region qos 256
+system routing non-hierarchical
+switching-mode store-forward
+priority-flow-control watch-dog shutdown-multiplier 2
+priority-flow-control auto-restore multiplier 2
+priority-flow-control watch-dog-interval on
+priority-flow-control watch-dog internal-interface-multiplier 0
+interface Vlan1
+  no autostate
+interface Vlan308
+  no shutdown
+  mtu 9100
+  no autostate
+  no ip redirects
+  ip address 10.86.224.241/29
+interface Vlan708
+  no shutdown
+  mtu 9100
+  no autostate
+  no ip redirects
+  ip address 10.94.20.1/22
+  ipv6 address 2603:10a0:308:8444::1/64
+  ipv6 nd managed-config-flag
+  ipv6 nd prefix 2603:10a0:308:8444::/64 infinite infinite no-autoconfig
+  ip dhcp relay address 13.107.184.176 
+  ip dhcp relay address 13.107.184.177 
+  ip dhcp relay address 13.107.184.178 
+  ip dhcp relay address 13.107.184.179 
+  ip dhcp relay address 10.254.45.159 
+  ip dhcp relay address 10.86.225.95 
+  ip dhcp relay address 10.86.225.103 
+  ip dhcp relay address 10.86.225.111 
+  ip dhcp relay address 10.86.225.119 
+  ip dhcp relay address 10.86.225.127 
+  ip dhcp relay address 10.86.225.135 
+  ip dhcp relay address 10.86.225.143 
+  ip dhcp relay address 10.254.40.79 
+  ip dhcp relay address 10.254.40.95 
+  ip dhcp relay address 10.254.45.143 
+interface Vlan808
+  no shutdown
+  mtu 9100
+  no autostate
+  no ip redirects
+  ip address 10.94.86.1/23
+  ipv6 address 2603:10a0:308:8458::1/64
+  ipv6 nd managed-config-flag
+  ipv6 nd prefix 2603:10a0:308:8458::/64 infinite infinite no-autoconfig
+  ip dhcp relay address 13.107.184.176 
+  ip dhcp relay address 13.107.184.177 
+  ip dhcp relay address 13.107.184.178 
+  ip dhcp relay address 13.107.184.179 
+  ip dhcp relay address 10.254.45.159 
+  ip dhcp relay address 10.86.225.95 
+  ip dhcp relay address 10.86.225.103 
+  ip dhcp relay address 10.86.225.111 
+  ip dhcp relay address 10.86.225.119 
+  ip dhcp relay address 10.86.225.127 
+  ip dhcp relay address 10.86.225.135 
+  ip dhcp relay address 10.86.225.143 
+  ip dhcp relay address 10.254.40.79 
+  ip dhcp relay address 10.254.40.95 
+  ip dhcp relay address 10.254.45.143 
+interface port-channel1
+  description AMS20-0101-0502-11T1:Ethernet1/1
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  logging event port link-status
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no ip redirects
+  ip address 10.10.192.23/31
+  ipv6 address 2603:10a0:308:3aa::32/126
+  ipv6 nd suppress-ra
+interface port-channel2
+  description AMS20-0101-0502-12T1:Ethernet1/2
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  logging event port link-status
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no ip redirects
+  ip address 10.10.193.23/31
+  ipv6 address 2603:10a0:308:3ab::32/126
+  ipv6 nd suppress-ra
+interface port-channel3
+  description AMS20-0101-0502-13T1:Ethernet1/3
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  logging event port link-status
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no ip redirects
+  ip address 10.10.194.23/31
+  ipv6 address 2603:10a0:308:3ac::32/126
+  ipv6 nd suppress-ra
+interface port-channel4
+  description AMS20-0101-0502-14T1:Ethernet1/4
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  logging event port link-status
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no ip redirects
+  ip address 10.10.195.23/31
+  ipv6 address 2603:10a0:308:3ad::32/126
+  ipv6 nd suppress-ra
+interface port-channel5
+  description AMS20-0101-0502-15T1:Ethernet1/5
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  logging event port link-status
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no ip redirects
+  ip address 10.10.196.23/31
+  ipv6 address 2603:10a0:308:3ae::32/126
+  ipv6 nd suppress-ra
+interface port-channel6
+  description AMS20-0101-0502-16T1:Ethernet1/6
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  logging event port link-status
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no ip redirects
+  ip address 10.10.197.23/31
+  ipv6 address 2603:10a0:308:3af::32/126
+  ipv6 nd suppress-ra
+interface port-channel7
+  description AMS20-0101-0502-17T1:Ethernet1/7
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  logging event port link-status
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no ip redirects
+  ip address 10.10.198.23/31
+  ipv6 address 2603:10a0:308:3b0::32/126
+  ipv6 nd suppress-ra
+interface port-channel8
+  description AMS20-0101-0502-18T1:Ethernet1/8
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  logging event port link-status
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no ip redirects
+  ip address 10.10.199.23/31
+  ipv6 address 2603:10a0:308:3b1::32/126
+  ipv6 nd suppress-ra
+interface Tunnel1
+  tunnel mode ipip decapsulate-any ip
+  tunnel source loopback0
+  mtu 1476
+  no shutdown
+interface Ethernet1/1
+  description AMS20-0101-0502-11T1:Ethernet13/1
+  priority-flow-control mode on
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  logging event port link-status
+  channel-group 1 mode active
+  no shutdown
+interface Ethernet1/2
+  description AMS20-0101-0502-12T1:Ethernet13/1
+  priority-flow-control mode on
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  logging event port link-status
+  channel-group 2 mode active
+  no shutdown
+interface Ethernet1/3
+  description AMS20-0101-0502-13T1:Ethernet13/1
+  priority-flow-control mode on
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  logging event port link-status
+  channel-group 3 mode active
+  no shutdown
+interface Ethernet1/4
+  description AMS20-0101-0502-14T1:Ethernet13/1
+  priority-flow-control mode on
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  logging event port link-status
+  channel-group 4 mode active
+  no shutdown
+interface Ethernet1/5
+  description AMS20-0101-0502-15T1:Ethernet13/1
+  priority-flow-control mode on
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  logging event port link-status
+  channel-group 5 mode active
+  no shutdown
+interface Ethernet1/6
+  description AMS20-0101-0502-16T1:Ethernet13/1
+  priority-flow-control mode on
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  logging event port link-status
+  channel-group 6 mode active
+  no shutdown
+interface Ethernet1/7
+  description AMS20-0101-0502-17T1:Ethernet13/1
+  priority-flow-control mode on
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  logging event port link-status
+  channel-group 7 mode active
+  no shutdown
+interface Ethernet1/8
+  description AMS20-0101-0502-18T1:Ethernet13/1
+  priority-flow-control mode on
+  mtu 9100
+  speed 40000
+  no negotiate auto
+  logging event port link-status
+  channel-group 8 mode active
+  no shutdown
+interface Ethernet1/9
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/10
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/11
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/12
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/13
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/14
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/15
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/16
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/17
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/18
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/19
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/20
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/21
+interface Ethernet1/22
+interface Ethernet1/23
+interface Ethernet1/24
+interface Ethernet1/25
+interface Ethernet1/26
+interface Ethernet1/27
+interface Ethernet1/28
+interface Ethernet1/29
+interface Ethernet1/30
+interface Ethernet1/31
+interface Ethernet1/32
+interface Ethernet1/33
+  no cdp enable
+  switchport
+  switchport access vlan 308
+  priority-flow-control mode off
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 1000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/34
+  no cdp enable
+  switchport
+  switchport access vlan 308
+  priority-flow-control mode off
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 1000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/35
+  no cdp enable
+  switchport
+  switchport access vlan 308
+  priority-flow-control mode off
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 1000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/36
+interface Ethernet1/37
+interface Ethernet1/38
+interface Ethernet1/39
+interface Ethernet1/40
+interface Ethernet1/41
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/42
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/43
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/44
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/45
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/46
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/47
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/48
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/49
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/50
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/51
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/52
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/53
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/54
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/55
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/56
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/57
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/58
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/59
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/60
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/61
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/62
+  no cdp enable
+  switchport
+  switchport access vlan 808
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/63
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface Ethernet1/64
+  no cdp enable
+  switchport
+  switchport access vlan 708
+  priority-flow-control mode on
+  priority-flow-control watch-dog-interval on
+  spanning-tree port type edge
+  no snmp trap link-status
+  mtu 9100
+  speed 40000
+  duplex full
+  no negotiate auto
+  service-policy type qos input QOS_MARKING no-stats
+  no shutdown
+interface mgmt0
+  ip access-group mgmt-only in
+  vrf member management
+  no ip redirects
+  ip address 25.80.38.75/26
+  ipv6 address 2603:10e2:30:88c2::b/64
+interface loopback0
+  ip address 25.80.7.149/32
+  ipv6 address 2603:10a0:308:3b9::/128
+  ipv6 nd suppress-ra
+interface loopback1
+  ip address 10.20.8.199/32
+line console
+  exec-timeout 10
+line vty
+  session-limit 16
+  exec-timeout 10
+  access-class ssh-only in
+  ipv6 access-class ipv6-ssh-only in
+boot nxos bootflash:/nxos.7.0.3.I7.7a.bin 
+ip load-sharing address source-destination port source-destination
+router bgp 64608
+  router-id 25.80.7.149
+  bestpath as-path multipath-relax
+  log-neighbor-changes
+  address-family ipv4 unicast
+    network 25.80.7.149/32
+    redistribute direct route-map DIRECT_ALLOW_V4
+    maximum-paths 64
+  address-family ipv6 unicast
+    redistribute direct route-map DIRECT_ALLOW_V6
+    aggregate-address 2603:10a0:308:3b9::/64 summary-only
+    maximum-paths 64
+  template peer BGPMON
+    update-source loopback0
+    address-family ipv4 unicast
+      send-community
+      route-map FROM_BGP_MONITOR in
+      route-map TO_BGP_MONITOR out
+    address-family ipv6 unicast
+      send-community
+      route-map FROM_BGP_MONITOR_V6 in
+      route-map TO_BGP_MONITOR_V6 out
+  template peer BGP_SPEAKER
+    description BGPSharpSpeaker
+    ebgp-multihop 255
+    address-family ipv4 unicast
+      send-community
+      route-map FROM_BGP_SPEAKER in
+      route-map TO_BGP_SPEAKER out
+    address-family ipv6 unicast
+      send-community
+      route-map FROM_BGP_SPEAKER_V6 in
+      route-map TO_BGP_SPEAKER_V6 out
+  template peer TIER_1_V4
+    address-family ipv4 unicast
+      allowas-in 1
+      send-community
+      soft-reconfiguration inbound
+  template peer TIER_1_V6
+    address-family ipv6 unicast
+      allowas-in 1
+      send-community
+      soft-reconfiguration inbound
+  neighbor 2603:10a0:308:3aa::31
+    inherit peer TIER_1_V6
+    remote-as 64844
+    description AMS20-0101-0502-11T1
+    address-family ipv6 unicast
+      disable-peer-as-check
+  neighbor 2603:10a0:308:3ab::31
+    inherit peer TIER_1_V6
+    remote-as 64844
+    description AMS20-0101-0502-12T1
+    address-family ipv6 unicast
+      disable-peer-as-check
+  neighbor 2603:10a0:308:3ac::31
+    inherit peer TIER_1_V6
+    remote-as 64844
+    description AMS20-0101-0502-13T1
+    address-family ipv6 unicast
+      disable-peer-as-check
+  neighbor 2603:10a0:308:3ad::31
+    inherit peer TIER_1_V6
+    remote-as 64844
+    description AMS20-0101-0502-14T1
+    address-family ipv6 unicast
+      disable-peer-as-check
+  neighbor 2603:10a0:308:3ae::31
+    inherit peer TIER_1_V6
+    remote-as 64844
+    description AMS20-0101-0502-15T1
+    address-family ipv6 unicast
+      disable-peer-as-check
+  neighbor 2603:10a0:308:3af::31
+    inherit peer TIER_1_V6
+    remote-as 64844
+    description AMS20-0101-0502-16T1
+    address-family ipv6 unicast
+      disable-peer-as-check
+  neighbor 2603:10a0:308:3b0::31
+    inherit peer TIER_1_V6
+    remote-as 64844
+    description AMS20-0101-0502-17T1
+    address-family ipv6 unicast
+      disable-peer-as-check
+  neighbor 2603:10a0:308:3b1::31
+    inherit peer TIER_1_V6
+    remote-as 64844
+    description AMS20-0101-0502-18T1
+    address-family ipv6 unicast
+      disable-peer-as-check
+  neighbor 10.10.192.22
+    inherit peer TIER_1_V4
+    remote-as 64844
+    description AMS20-0101-0502-11T1
+    address-family ipv4 unicast
+      disable-peer-as-check
+  neighbor 10.10.193.22
+    inherit peer TIER_1_V4
+    remote-as 64844
+    description AMS20-0101-0502-12T1
+    address-family ipv4 unicast
+      disable-peer-as-check
+  neighbor 10.10.194.22
+    inherit peer TIER_1_V4
+    remote-as 64844
+    description AMS20-0101-0502-13T1
+    address-family ipv4 unicast
+      disable-peer-as-check
+  neighbor 10.10.195.22
+    inherit peer TIER_1_V4
+    remote-as 64844
+    description AMS20-0101-0502-14T1
+    address-family ipv4 unicast
+      disable-peer-as-check
+  neighbor 10.10.196.22
+    inherit peer TIER_1_V4
+    remote-as 64844
+    description AMS20-0101-0502-15T1
+    address-family ipv4 unicast
+      disable-peer-as-check
+  neighbor 10.10.197.22
+    inherit peer TIER_1_V4
+    remote-as 64844
+    description AMS20-0101-0502-16T1
+    address-family ipv4 unicast
+      disable-peer-as-check
+  neighbor 10.10.198.22
+    inherit peer TIER_1_V4
+    remote-as 64844
+    description AMS20-0101-0502-17T1
+    address-family ipv4 unicast
+      disable-peer-as-check
+  neighbor 10.10.199.22
+    inherit peer TIER_1_V4
+    remote-as 64844
+    description AMS20-0101-0502-18T1
+    address-family ipv4 unicast
+      disable-peer-as-check
+  neighbor 10.12.103.119
+    inherit peer BGPMON
+    remote-as 64608
+  neighbor 25.71.45.41
+    inherit peer BGPMON
+    remote-as 64608
+  neighbor 10.94.20.0/22
+    inherit peer BGP_SPEAKER
+    remote-as 65511
+    update-source loopback1
+  neighbor 10.94.86.0/23
+    inherit peer BGP_SPEAKER
+    remote-as 65511
+    update-source loopback1
+monitor erspan origin ip-address 25.80.7.149 global
+xml server timeout 0
+logging server 10.20.6.16 6 use-vrf management
+logging server 10.20.2.36 6 use-vrf management
+logging source-interface mgmt0
+logging timestamp milliseconds
+logging monitor 7
+logging level authpri 5
+no logging console
+

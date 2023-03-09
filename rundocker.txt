@@ -1,0 +1,2 @@
+docker run --name data-processing-container data-processing
+docker logs data-processing-container
