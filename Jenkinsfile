@@ -65,7 +65,7 @@ pipeline {
             steps {
                 script {
                     notifyStart()
-                    sh 'make lint-python VIRTUALENV=$"{VIRTUALENV}"'
+                    sh 'make lint-python VIRTUALENV="${VIRTUALENV}"'
                     notifySuccess()
                 }
             }
