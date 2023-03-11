@@ -26,7 +26,6 @@ pipeline {
                 script {
                     notifyStart()
                     sh 'make install-venv VIRTUALENV="${VIRTUALENV}"'
-		    sh '. myenv/bin/activate'
                     notifySuccess()
                 }
             }
