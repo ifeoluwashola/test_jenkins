@@ -54,7 +54,7 @@ lint-docker:
 .PHONY: lint-python
 lint-python:
 	# Note that Pylint must be run from within the virtual environment
-	pip -r install pylint
+	pip install -r pylint
 	. $(VIRTUALENV)/bin/activate && pylint --disable=R,C,W1203,W1202 main.py
 
 # Define a target that builds the Docker image and tags it
